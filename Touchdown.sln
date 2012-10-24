@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouchdownUI", "src\TouchdownUI\TouchdownUI.csproj", "{B8124BF3-7BB4-4BFE-A2D0-8280637A0148}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Touchdown", "src\Touchdown.Core\Touchdown.csproj", "{A961A00B-B2BB-4129-9E51-BEB2BC2DD7B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BF145594-03D0-4A8A-9953-70210C6C727F}"
+	ProjectSection(SolutionItems) = preProject
+		src\GlobalAssemblyInfo.cs = src\GlobalAssemblyInfo.cs
+		nant.build = nant.build
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5A736C24-AE99-408F-8F96-399474627FD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouchdownTests", "test\TouchdownTests\TouchdownTests.csproj", "{4A9FE975-2F69-470C-9FF2-ECFBE68D721F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+		Default|Any CPU = Default|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A9FE975-2F69-470C-9FF2-ECFBE68D721F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4A9FE975-2F69-470C-9FF2-ECFBE68D721F}.Debug|x86.Build.0 = Debug|Any CPU
+		{4A9FE975-2F69-470C-9FF2-ECFBE68D721F}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A9FE975-2F69-470C-9FF2-ECFBE68D721F}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{4A9FE975-2F69-470C-9FF2-ECFBE68D721F}.Release|x86.ActiveCfg = Release|Any CPU
+		{4A9FE975-2F69-470C-9FF2-ECFBE68D721F}.Release|x86.Build.0 = Release|Any CPU
+		{A961A00B-B2BB-4129-9E51-BEB2BC2DD7B3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A961A00B-B2BB-4129-9E51-BEB2BC2DD7B3}.Debug|x86.Build.0 = Debug|Any CPU
+		{A961A00B-B2BB-4129-9E51-BEB2BC2DD7B3}.Release|x86.ActiveCfg = Release|Any CPU
+		{A961A00B-B2BB-4129-9E51-BEB2BC2DD7B3}.Release|x86.Build.0 = Release|Any CPU
+		{B8124BF3-7BB4-4BFE-A2D0-8280637A0148}.Debug|x86.ActiveCfg = Debug|x86
+		{B8124BF3-7BB4-4BFE-A2D0-8280637A0148}.Debug|x86.Build.0 = Debug|x86
+		{B8124BF3-7BB4-4BFE-A2D0-8280637A0148}.Release|x86.ActiveCfg = Release|x86
+		{B8124BF3-7BB4-4BFE-A2D0-8280637A0148}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4A9FE975-2F69-470C-9FF2-ECFBE68D721F} = {5A736C24-AE99-408F-8F96-399474627FD5}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = src\TouchdownUI\TouchdownUI.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		$0.TextStylePolicy = $2
+		$2.FileWidth = 120
+		$2.TabWidth = 4
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/plain
+		$2.scope = text/plain
+		$0.TextStylePolicy = $3
+		$3.inheritsSet = null
+		$3.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $4
+		$4.IndentSwitchBody = True
+		$4.AlignEmbeddedUsingStatements = False
+		$4.AlignEmbeddedIfStatements = False
+		$4.NamespaceBraceStyle = EndOfLine
+		$4.ClassBraceStyle = EndOfLine
+		$4.InterfaceBraceStyle = EndOfLine
+		$4.StructBraceStyle = EndOfLine
+		$4.EnumBraceStyle = EndOfLine
+		$4.MethodBraceStyle = EndOfLine
+		$4.ConstructorBraceStyle = EndOfLine
+		$4.DestructorBraceStyle = EndOfLine
+		$4.IfElseBraceForcement = AddBraces
+		$4.ForBraceForcement = AddBraces
+		$4.WhileBraceForcement = AddBraces
+		$4.UsingBraceForcement = AddBraces
+		$4.BeforeMethodDeclarationParentheses = False
+		$4.BeforeConstructorDeclarationParentheses = False
+		$4.BeforeIndexerDeclarationBracket = False
+		$4.BeforeDelegateDeclarationParentheses = False
+		$4.inheritsSet = Mono
+		$4.inheritsScope = text/x-csharp
+		$4.scope = text/x-csharp
+	EndGlobalSection
+EndGlobal
