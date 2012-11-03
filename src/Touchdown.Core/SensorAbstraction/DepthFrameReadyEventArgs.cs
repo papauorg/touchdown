@@ -2,23 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Touch2Much.Frames
-{
-	public class DepthFrameReadyEventArgs : FrameReadyEventArgs
+namespace Touchdown.SensorAbstraction {
+
+	/// <summary>
+	/// Raised when an DepthFrame from the Kinect sensor is ready.
+	/// </summary>
+	public class DepthFrameReadyEventArgs : FrameReadyEventArgs<DepthFrame>
 	{
-		private DepthFrame _depthFrame;
-
-		public DepthFrameReadyEventArgs(DepthFrame frame)
-		{
-			throw new NotImplementedException();
-		}
-
-		public DepthFrame DepthFrame
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-		}
+		
 	}
 }

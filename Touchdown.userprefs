@@ -1,18 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/TouchdownUI/MainWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/Touchdown.Core/SensorAbstraction/TouchFrame.cs">
     <Files>
-      <File FileName="src/TouchdownUI/MainWindow.cs" Line="18" Column="3" />
+      <File FileName="src/Touchdown.Core/SensorAbstraction/TouchFrame.cs" Line="11" Column="2" />
+      <File FileName="src/Touchdown.Core/SensorAbstraction/Frame.cs" Line="53" Column="1" />
+      <File FileName="src/Touchdown.Core/SensorAbstraction/IKinectSensorProvider.cs" Line="16" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Solution Items" expanded="True" />
-          <Node name="Tests" expanded="True" />
-          <Node name="Touchdown" expanded="True" />
-          <Node name="TouchdownUI" expanded="True">
-            <Node name="References" expanded="True" selected="True" />
+          <Option id="ShowAllFiles" value="True" />
+          <Node name="Touchdown" expanded="True">
+            <Node name="SensorAbstraction" expanded="True">
+              <Node name="TouchFrame.cs" selected="True" />
+            </Node>
           </Node>
+          <Node name="TouchdownUI" expanded="True" />
         </State>
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">

@@ -10,6 +10,21 @@ namespace Touchdown.SensorAbstraction {
 		
 		private int _depthMap;
 
+		#region Constructors / Destructors
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.DepthFrame"/> class.
+		/// </summary>
+		/// <param name='frameTime'>
+		/// Frame time.
+		/// </param>
+		/// <param name='data'>
+		/// Data.
+		/// </param>
+		public DepthFrame(DateTime frameTime, SensorData data) : base(frameTime, data){
+			throw new NotImplementedException("Calculate depth map is missing");
+		}
+		#endregion
+
 		/// <summary>
 		/// Gets the depth map.
 		/// </summary>

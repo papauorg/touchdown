@@ -10,14 +10,32 @@ namespace Touchdown.SensorAbstraction {
 	public class SimpleTouchFrame : Frame {
 	
 		#region Constructors / Destructors
-		public SimpleTouchFrame() : base(){
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.SimpleTouchFrame"/> class.
+		/// </summary>
+		/// <param name='frameTime'>
+		/// Frame time.
+		/// </param>
+		/// <param name='data'>
+		/// Data.
+		/// </param>
+		public SimpleTouchFrame(DateTime frameTime, SensorData data) : base(frameTime, data){
 		
 		}
 		#endregion
+		
+		#region Properties
+		/// <summary>
+		/// Gets the touch points.
+		/// </summary>
+		/// <value>
+		/// The touch points.
+		/// </value>
 		public IEnumerable<TouchPoint> TouchPoints {
 			get {
 				throw new NotImplementedException ();
 			}
 		}
+		#endregion
 	}
 }

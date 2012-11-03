@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Touch2Much.Frames
-{
-	public class RGBFrame : Frame
-	{
+namespace Touchdown.SensorAbstraction {
+	/// <summary>
+	/// Represents a RGB frame. Used for recognition by colour.
+	/// </summary>
+	public class RGBFrame : Frame {
+	
 	}
 }
