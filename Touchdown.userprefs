@@ -1,21 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/Touchdown.Core/SensorAbstraction/TouchFrame.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Tochdown.Freenect/AssemblyInfo.cs">
     <Files>
-      <File FileName="src/Touchdown.Core/SensorAbstraction/TouchFrame.cs" Line="11" Column="2" />
-      <File FileName="src/Touchdown.Core/SensorAbstraction/Frame.cs" Line="53" Column="1" />
-      <File FileName="src/Touchdown.Core/SensorAbstraction/IKinectSensorProvider.cs" Line="16" Column="14" />
+      <File FileName="src/Touchdown.Core/SensorAbstraction/RGBFrameReadyEventArgs.cs" Line="12" Column="2" />
+      <File FileName="src/Touchdown.Core/SensorAbstraction/FrameReadyEventArgs.cs" Line="39" Column="13" />
+      <File FileName="src/Touchdown.Core/SensorAbstraction/Frame.cs" Line="5" Column="1" />
+      <File FileName="src/Touchdown.Core/SensorAbstraction/DepthFrame.cs" Line="23" Column="51" />
+      <File FileName="src/Touchdown.Core/SensorAbstraction/SimpleTouchFrame.cs" Line="29" Column="29" />
+      <File FileName="Tochdown.Freenect/AssemblyInfo.cs" Line="9" Column="1" />
+      <File FileName="src/GlobalAssemblyInfo.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Option id="ShowAllFiles" value="True" />
-          <Node name="Touchdown" expanded="True">
-            <Node name="SensorAbstraction" expanded="True">
-              <Node name="TouchFrame.cs" selected="True" />
-            </Node>
+          <Node name="Tochdown.Freenect" expanded="True" selected="True">
+            <Node name="References" expanded="True" />
           </Node>
-          <Node name="TouchdownUI" expanded="True" />
         </State>
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">

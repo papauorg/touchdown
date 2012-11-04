@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5A736C24
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouchdownTests", "test\TouchdownTests\TouchdownTests.csproj", "{4A9FE975-2F69-470C-9FF2-ECFBE68D721F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tochdown.Freenect", "src\Tochdown.Freenect\Tochdown.Freenect.csproj", "{5579CC71-587D-4267-AD30-1A14942895DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -28,6 +30,12 @@ Global
 		{4A9FE975-2F69-470C-9FF2-ECFBE68D721F}.Default|Any CPU.Build.0 = Debug|Any CPU
 		{4A9FE975-2F69-470C-9FF2-ECFBE68D721F}.Release|x86.ActiveCfg = Release|Any CPU
 		{4A9FE975-2F69-470C-9FF2-ECFBE68D721F}.Release|x86.Build.0 = Release|Any CPU
+		{5579CC71-587D-4267-AD30-1A14942895DA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5579CC71-587D-4267-AD30-1A14942895DA}.Debug|x86.Build.0 = Debug|Any CPU
+		{5579CC71-587D-4267-AD30-1A14942895DA}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{5579CC71-587D-4267-AD30-1A14942895DA}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{5579CC71-587D-4267-AD30-1A14942895DA}.Release|x86.ActiveCfg = Release|Any CPU
+		{5579CC71-587D-4267-AD30-1A14942895DA}.Release|x86.Build.0 = Release|Any CPU
 		{A961A00B-B2BB-4129-9E51-BEB2BC2DD7B3}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{A961A00B-B2BB-4129-9E51-BEB2BC2DD7B3}.Debug|x86.Build.0 = Debug|Any CPU
 		{A961A00B-B2BB-4129-9E51-BEB2BC2DD7B3}.Release|x86.ActiveCfg = Release|Any CPU

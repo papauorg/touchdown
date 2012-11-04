@@ -9,6 +9,20 @@ namespace Touchdown.SensorAbstraction {
 	/// </summary>
 	public class DepthFrameReadyEventArgs : FrameReadyEventArgs<DepthFrame>
 	{
-		
+		#region Constructors / Destructors
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.RGBFrameReadyEventArgs"/> class.
+			/// </summary>
+			/// <param name='frame'>
+			/// Frame.
+			/// </param>
+			/// <exception cref="ArgumentNullException">if frame is null</exception>
+		public DepthFrameReadyEventArgs(RGBFrame frame){
+			if (frame == null){
+				throw new ArgumentNullException("frame");
+			}
+			base._frame = frame;
+		}
+		#endregion
 	}
 }
