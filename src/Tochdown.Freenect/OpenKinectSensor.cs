@@ -4,6 +4,7 @@ using System.Text;
 using freenect;
 using Touchdown.SensorAbstraction;
 using System.Threading;
+using log4net;
 
 namespace Touchdown.Freenect {
 	/// <summary>
@@ -13,6 +14,8 @@ namespace Touchdown.Freenect {
 		private freenect.Kinect _sensor;
 		private bool _isRunning;
 
+		private static ILog _log = LogManager.GetLogger(typeof(OpenKinectSensor));
+		
 		#region Objectevents
 		public event EventHandler<DepthFrameReadyEventArgs> DepthFrameReady;
 		public event EventHandler<RGBFrameReadyEventArgs> RGBFrameReady;
@@ -26,7 +29,7 @@ namespace Touchdown.Freenect {
 		/// Sensor.
 		/// </param>
 		/// <exception cref="ArgumentNullException">if the sensor is null</exception>
-		public OpenKinectSensor(libfreenect.Kinect sensor) {
+		public OpenKinectSensor(freenect.Kinect sensor) {
 			if(sensor == null){
 				throw new ArgumentNullException("sensor");
 			}
@@ -34,6 +37,7 @@ namespace Touchdown.Freenect {
 			// open the sensor if necessary
 			_sensor = sensor;
 			if (!_sensor.IsOpen){
+				_log.Debug("Try to open sensor.");
 				_sensor.Open();
 			}
 			
@@ -51,6 +55,8 @@ namespace Touchdown.Freenect {
 		/// Start this instance.
 		/// </summary>
 		public void Start() {
+			_log.Debug("Try to start sensor loop.");
+			
 			if (!_isRunning){
 				// Start cameras
 				_sensor.VideoCamera.Start();
@@ -65,9 +71,15 @@ namespace Touchdown.Freenect {
 				Thread runner = new Thread(new ThreadStart(delegate() {
 					while(this._isRunning){
 						_sensor.UpdateStatus();
-						_sensor.ProcessEvents();
+						
+						freenect.Kinect.ProcessEvents();
 					}
 				}));
+				
+				_log.DebugFormat("Started sensor loop. Thread: [{0}]", runner.ManagedThreadId);
+				
+			} else {
+				_log.Debug("Already running");
 			}
 			
 		}
@@ -122,7 +134,7 @@ namespace Touchdown.Freenect {
 			// and fire the touchdown event
 			if (this.DepthFrameReady != null){
 				DepthFrame result;
-				result = this.TransformToRGBFrame((DepthMap)e.Data, e.Timestamp);
+				result = this.TransformToDepthFrame((DepthMap)e.Data, e.Timestamp);
 			
 				DepthFrameReadyEventArgs args = new DepthFrameReadyEventArgs(result);
 				this.DepthFrameReady(this, args);
@@ -138,9 +150,11 @@ namespace Touchdown.Freenect {
 		/// <param name='map'>
 		/// Map.
 		/// </param>
-		private DepthFrame TransformToDepthFrame(freenect.DepthMap map) {
-			// ToDo: convert datamap to depthframe
-			throw new NotImplementedException();
+		private DepthFrame TransformToDepthFrame(freenect.DepthMap map, DateTime timeStamp) {
+			SensorData data = new SensorData(map.Width, map.Height, map.Data);
+			DepthFrame result = new DepthFrame(timeStamp, data);
+			
+			return result;
 		}
 
 		/// <summary>
@@ -152,9 +166,11 @@ namespace Touchdown.Freenect {
 		/// <param name='map'>
 		/// Map.
 		/// </param>
-		private RGBFrame TransformToRGBFrame(freenect.ImageMap map) {
-			// ToDo: convert datamap to rgbframe
-			throw new NotImplementedException();
+		private RGBFrame TransformToRGBFrame(freenect.ImageMap map, DateTime timeStamp) {
+			SensorData data = new SensorData(map.Width, map.Height, map.Data);
+			RGBFrame result = new RGBFrame(timeStamp, data);
+			
+			return result;
 		}
 		#endregion
 		

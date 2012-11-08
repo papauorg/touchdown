@@ -8,7 +8,7 @@ namespace Touchdown.SensorAbstraction {
 	/// </summary>
 	public class DepthFrame : Frame {
 		
-		private int _depthMap;
+		private int[] _depthMap;
 
 		#region Constructors / Destructors
 		/// <summary>
@@ -22,6 +22,19 @@ namespace Touchdown.SensorAbstraction {
 		/// </param>
 		public DepthFrame(DateTime frameTime, SensorData data) : base(frameTime, data){
 			throw new NotImplementedException("Calculate depth map is missing");
+		}
+		#endregion
+
+		#region Public Methods
+		/// <summary>
+		///  Creates a visual representation of the frame. 
+		/// </summary>
+		/// <returns>
+		///  The bitmap. 
+		/// </returns>
+		public override System.Drawing.Bitmap CreateBitmap() {
+			// ToDo: create depth bitmap.
+			return null;
 		}
 		#endregion
 

@@ -12,13 +12,13 @@ namespace Touchdown.SensorAbstraction {
 		protected T _frame;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.FrameReadyEventArgs"/> class.
+		/// Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.FrameReadyEventArgs"/> class.
 		/// </summary>
 		/// <param name='frame'>
 		/// Frame.
 		/// </param>
 		public FrameReadyEventArgs(T frame) {
-			if (frame = null){
+			if (frame == null){
 				throw new ArgumentNullException("frame");
 			}
 			_frame = frame;

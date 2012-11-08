@@ -4,5 +4,239 @@
         <name>/home/tuxford/Develop/NET/Touchdown/src/Touchdown.Core/bin/Debug/TouchdownCore</name>
     </assembly>
     <members>
+        <member name="T:Touchdown.SensorAbstraction.IKinectSensorProvider">
+            <summary>
+                <para>
+            		Basic operations that all Kinect providers must implement in order to use the
+            		touchdown framework.
+            	</para>
+                <para>
+            		Provides an abstraction for the frames of the depth sensor and the rgb sensor
+            		of the Kinect. This way you will be able to use the Microsoft Kinect SDK as well
+            		as the OpenKinect SDK
+            	</para>
+            </summary>
+        </member>
+        <member name="E:Touchdown.SensorAbstraction.IKinectSensorProvider.DepthFrameReady">
+            <summary>
+            Occurs when the depth frame is ready and can be used for further recognition.
+            </summary>
+        </member>
+        <member name="E:Touchdown.SensorAbstraction.IKinectSensorProvider.RGBFrameReady">
+            <summary>
+            Occurs when the RGB frame is ready and can be used for further recognition.
+            </summary>
+        </member>
+        <member name="M:Touchdown.SensorAbstraction.IKinectSensorProvider.Start">
+            <summary>
+            Start this instance. From this point on the <see cref="E:Touchdown.SensorAbstraction.IKinectSensorProvider.DepthFrameReady" /> and
+            <see cref="E:Touchdown.SensorAbstraction.IKinectSensorProvider.RGBFrameReady" /> events will be fired.
+            </summary>
+        </member>
+        <member name="M:Touchdown.SensorAbstraction.IKinectSensorProvider.Stop">
+            <summary>
+            Stop this instance. the <see cref="E:Touchdown.SensorAbstraction.IKinectSensorProvider.DepthFrameReady" /> and
+            <see cref="E:Touchdown.SensorAbstraction.IKinectSensorProvider.RGBFrameReady" /> events will stop being fired.
+            </summary>
+        </member>
+        <member name="T:Touchdown.SensorAbstraction.FrameReadyEventArgs`1">
+            <summary>
+            Frame ready event arguments. Contains information for when a frame is ready.
+            Inherited from System.EventArgs to be able to use EventHandlers
+            </summary>
+        </member>
+        <member name="M:Touchdown.SensorAbstraction.FrameReadyEventArgs`1.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.FrameReadyEventArgs" /> class.
+            </summary>
+            <param name="frame">
+            Frame.
+            </param>
+        </member>
+        <member name="P:Touchdown.SensorAbstraction.FrameReadyEventArgs`1.FrameData">
+            <summary>
+            Gets the frame data.
+            </summary>
+            <value>
+            The frame data.
+            </value>
+        </member>
+        <member name="T:Touchdown.SensorAbstraction.Frame">
+            <summary>
+            Represents a frame. Contains basic information about it.
+            </summary>
+        </member>
+        <member name="M:Touchdown.SensorAbstraction.Frame.#ctor(System.DateTime,Touchdown.SensorAbstraction.SensorData)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.Frame" /> class.
+            </summary>
+            <param name="frameTime">
+            Frame time.
+            </param>
+            <param name="data">
+            Data.
+            </param>
+        </member>
+        <member name="P:Touchdown.SensorAbstraction.Frame.FrameTime">
+            <summary>
+            Gets the frame time.
+            </summary>
+            <value>
+            The frame time.
+            </value>
+        </member>
+        <member name="M:Touchdown.SensorAbstraction.Frame.CreateBitmap">
+            <summary>
+            Creates a visual representation of the frame.
+            </summary>
+            <returns>
+            The bitmap.
+            </returns>
+        </member>
+        <member name="T:Touchdown.SensorAbstraction.DepthFrame">
+            <summary>
+            Represents a Depth frame. Contains depth data for recognizing by depth.
+            </summary>
+        </member>
+        <member name="M:Touchdown.SensorAbstraction.DepthFrame.#ctor(System.DateTime,Touchdown.SensorAbstraction.SensorData)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.DepthFrame" /> class.
+            </summary>
+            <param name="frameTime">
+            Frame time.
+            </param>
+            <param name="data">
+            Data.
+            </param>
+        </member>
+        <member name="P:Touchdown.SensorAbstraction.DepthFrame.DepthMap">
+            <summary>
+            Gets the depth map.
+            </summary>
+            <value>
+            The depth map.
+            </value>
+        </member>
+        <member name="M:Touchdown.SensorAbstraction.DepthFrame.CreateBitmap">
+            <summary>
+            Creates a visual representation of the frame.
+            </summary>
+            <returns>
+            The bitmap.
+            </returns>
+        </member>
+        <member name="T:Touchdown.SensorAbstraction.RGBFrame">
+            <summary>
+            Represents a RGB frame. Used for recognition by colour.
+            </summary>
+        </member>
+        <member name="M:Touchdown.SensorAbstraction.RGBFrame.#ctor(System.DateTime,Touchdown.SensorAbstraction.SensorData)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.RGBFrame" /> class.
+            </summary>
+            <param name="frameTime">
+            Frame time.
+            </param>
+            <param name="data">
+            Data.
+            </param>
+        </member>
+        <member name="M:Touchdown.SensorAbstraction.RGBFrame.CreateBitmap">
+            <summary>
+            Creates a visual representation of the frame.
+            </summary>
+            <returns>
+            The bitmap.
+            </returns>
+        </member>
+        <member name="T:Touchdown.SensorAbstraction.SensorData">
+            <summary>
+            Provides Raw sensor data of the Kinect. Uses 1-dimensional bytearray due to easy compatibility with the
+            openkinect framework
+            </summary>
+        </member>
+        <member name="M:Touchdown.SensorAbstraction.SensorData.#ctor(System.Int32,System.Int32,System.Byte[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.SensorData" /> class.
+            </summary>
+            <param name="width">
+            Width.
+            </param>
+            <param name="height">
+            Height.
+            </param>
+            <param name="data">
+            Data.
+            </param>
+        </member>
+        <member name="P:Touchdown.SensorAbstraction.SensorData.Width">
+            <summary>
+            Gets the width.
+            </summary>
+            <value>
+            The width.
+            </value>
+        </member>
+        <member name="P:Touchdown.SensorAbstraction.SensorData.Height">
+            <summary>
+            Gets the height.
+            </summary>
+            <value>
+            The height.
+            </value>
+        </member>
+        <member name="P:Touchdown.SensorAbstraction.SensorData.RawData">
+            <summary>
+            Gets the raw data.
+            </summary>
+            <value>
+            The raw data.
+            </value>
+        </member>
+        <member name="T:Touchdown.SensorAbstraction.SimpleTouchFrame">
+            <summary>
+            Represents a simple touch frame. Contains only a list of recognized touch points without
+            any additional info about it.
+            </summary>
+        </member>
+        <member name="M:Touchdown.SensorAbstraction.SimpleTouchFrame.#ctor(System.DateTime,Touchdown.SensorAbstraction.SensorData)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.SimpleTouchFrame" /> class.
+            </summary>
+            <param name="frameTime">
+            Frame time.
+            </param>
+            <param name="data">
+            Data.
+            </param>
+        </member>
+        <member name="T:Touchdown.SensorAbstraction.RGBFrameReadyEventArgs">
+            <summary>
+            RGB frame ready event arguments.
+            </summary>
+        </member>
+        <member name="M:Touchdown.SensorAbstraction.RGBFrameReadyEventArgs.#ctor(Touchdown.SensorAbstraction.RGBFrame)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.RGBFrameReadyEventArgs" /> class.
+            </summary>
+            <param name="frame">
+            Frame.
+            </param>
+            <exception cref="T:System.ArgumentNullException">if frame is null</exception>
+        </member>
+        <member name="T:Touchdown.SensorAbstraction.DepthFrameReadyEventArgs">
+            <summary>
+            Raised when an DepthFrame from the Kinect sensor is ready.
+            </summary>
+        </member>
+        <member name="M:Touchdown.SensorAbstraction.DepthFrameReadyEventArgs.#ctor(Touchdown.SensorAbstraction.DepthFrame)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.RGBFrameReadyEventArgs" /> class.
+            </summary>
+            <param name="frame">
+            Frame.
+            </param>
+            <exception cref="T:System.ArgumentNullException">if frame is null</exception>
+        </member>
     </members>
 </doc>

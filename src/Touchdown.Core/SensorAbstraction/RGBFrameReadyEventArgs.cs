@@ -17,11 +17,8 @@ namespace Touchdown.SensorAbstraction{
 			/// Frame.
 			/// </param>
 			/// <exception cref="ArgumentNullException">if frame is null</exception>
-		public RGBFrameReadyEventArgs(RGBFrame frame){
-			if (frame == null){
-				throw new ArgumentNullException("frame");
-			}
-			base._frame = frame;
+		public RGBFrameReadyEventArgs(RGBFrame frame) : base(frame){
+
 		}
 		#endregion
 	}

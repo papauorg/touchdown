@@ -5,7 +5,8 @@ using System.Text;
 namespace Touchdown.SensorAbstraction {
 	
 	/// <summary>
-	/// Raw sensor data.
+	/// Provides Raw sensor data of the Kinect. Uses 1-dimensional bytearray due to easy compatibility with the 
+	/// openkinect framework
 	/// </summary>
 	public class SensorData {
 		private int _width;
@@ -13,6 +14,18 @@ namespace Touchdown.SensorAbstraction {
 		private byte[] _data;
 
 		#region Constructors / Destructors
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.SensorData"/> class.
+		/// </summary>
+		/// <param name='width'>
+		/// Width.
+		/// </param>
+		/// <param name='height'>
+		/// Height.
+		/// </param>
+		/// <param name='data'>
+		/// Data.
+		/// </param>
 		public SensorData (int width, int height, byte[] data) {
 			if (data == null){
 				throw new ArgumentNullException("data");
@@ -58,7 +71,9 @@ namespace Touchdown.SensorAbstraction {
 		/// </value>
 		public byte[] RawData {
 			get {
-				return _data.Clone();
+				byte[] returnArray = null;
+				_data.CopyTo(returnArray, 0);
+				return returnArray;
 			}
 		}
 	}

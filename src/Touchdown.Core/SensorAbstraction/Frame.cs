@@ -13,6 +13,16 @@ namespace Touchdown.SensorAbstraction {
 		protected SensorData _data;
 		
 		#region Constructors / Destructors
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.Frame"/> class.
+		/// </summary>
+		/// <param name='frameTime'>
+		/// Frame time.
+		/// </param>
+		/// <param name='data'>
+		/// Data.
+		/// </param>
 		public Frame(DateTime frameTime, SensorData data){
 			if (data == null){
 				throw new ArgumentNullException("data");
