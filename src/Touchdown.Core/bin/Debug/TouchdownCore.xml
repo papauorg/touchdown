@@ -139,6 +139,14 @@
             The bitmap.
             </returns>
         </member>
+        <member name="M:Touchdown.SensorAbstraction.DepthFrame.op_Subtraction(Touchdown.SensorAbstraction.DepthFrame,System.Int16[])">
+            <param name="orig">
+            Frame from the sensor.
+            </param>
+            <param name="toRemove">
+            background model that should be removed..
+            </param>
+        </member>
         <member name="T:Touchdown.SensorAbstraction.RGBFrame">
             <summary>
             Represents a RGB frame. Used for recognition by colour.
@@ -310,23 +318,50 @@
             Contains general settings that are used throughout the application.
             </summary>
         </member>
-        <member name="P:Touchdown.SensorAbstraction.TouchSettings.FirstFrameIsEmptyArea">
+        <member name="M:Touchdown.SensorAbstraction.TouchSettings.#ctor">
             <summary>
-            Gets or sets a value indicating whether this <see cref="T:Touchdown.SensorAbstraction.TouchSettings" /> first frame
-            should be considered as empty area.
+            Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.TouchSettings" /> class with default
+            values.
             </summary>
-            <value>
-                <c>true</c> if first frame should be considered as empty area; otherwise, <c>false</c>.
-            if set to <c>false</c> a depthframe representing the empty area must be set to <see cref="P:Touchdown.SensorAbstraction.TouchSettings.EmptyRecognitionArea" /></value>
         </member>
-        <member name="P:Touchdown.SensorAbstraction.TouchSettings.EmptyRecognitionArea">
+        <member name="P:Touchdown.SensorAbstraction.TouchSettings.FrameCountForAverageBackgroundModel">
             <summary>
-            Gets or sets the definition for the empty recognition area. Based on this the recognizer calculates the
-            background model.
+            Gets or sets the frame count for calculating the average distances for the background model.
+            This value is used by the <see cref="T:Touchdown.Core.SimpleTouchAreaObserver" />. Defines the number of depth
+            frames that are used to calculate the average distance to the background (i.e. the table)
             </summary>
             <value>
-            The empty recognition area.
+            The frame count for average background model.
             </value>
+        </member>
+        <member name="T:Touchdown.Core.DepthFrameList">
+            <summary>
+            Collection of depthframes
+            </summary>
+        </member>
+        <member name="M:Touchdown.Core.DepthFrameList.InsertItem(System.Int32,Touchdown.SensorAbstraction.DepthFrame)">
+            <Docs>
+            To be added.
+            </Docs>
+            <summary>
+            To be added.
+            </summary>
+            <since version=".NET 2.0">
+            </since>
+            <param name="index">
+            Index.
+            </param>
+            <param name="item">
+            Item.
+            </param>
+        </member>
+        <member name="M:Touchdown.Core.DepthFrameList.CalculateAverageDistance">
+            <summary>
+            Calculates the average distance of all items (DepthMap).
+            </summary>
+            <returns>
+            The average distance.
+            </returns>
         </member>
     </members>
 </doc>

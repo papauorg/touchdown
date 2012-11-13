@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Touchdown.SensorAbstraction;
+using System.Linq;
 
 namespace Touchdown.Core {
 	/// <summary>
@@ -11,6 +12,9 @@ namespace Touchdown.Core {
 		private IKinectSensorProvider _sensor;
 		private TouchSettings _settings;
 
+		private DepthFrameList _backgroundDistances;
+		private short[] _avgBackgroundDistance;
+		
 		/// <summary>
 		///  Occurs when touch frame is ready. 
 		/// </summary>
@@ -39,6 +43,9 @@ namespace Touchdown.Core {
 			this._sensor = sensor;
 			this._settings = settings;
 			
+			this._backgroundDistances = new DepthFrameList();
+			this._avgBackgroundDistance = null;
+			
 			// register events needed for recognition of touch frames.
 			this._sensor.DepthFrameReady 	+= this.DepthFrameReadyHandler;
 			this._sensor.RGBFrameReady		+= this.RGBFrameReadyHandler;
@@ -47,8 +54,21 @@ namespace Touchdown.Core {
 		
 		#region Private Methods
 		private void DepthFrameReadyHandler(object sender, DepthFrameReadyEventArgs e){
-			if (TouchFrameReady != null){
-				
+			// gathering depth frames for calculating a background model that is used to recognize changes
+			// on it.
+			if (this._backgroundDistances.Count < this._settings.FrameCountForAverageBackgroundModel){
+				this._backgroundDistances.Add(e.FrameData);
+			} else if (this._avgBackgroundDistance != null) {
+				this._avgBackgroundDistance = this._backgroundDistances.CalculateAverageDistance();
+			} else {
+				// recognition of touch points
+				if (TouchFrameReady != null){
+					// remove the background model from the current frame to have only 
+					// objects left that are not part of the background.
+					// Those objects should be used for recognition. (could be a hand for example)
+					short[] foreGroundDepth = e.FrameData - this._avgBackgroundDistance;
+					
+				}
 			}
 		}
 		

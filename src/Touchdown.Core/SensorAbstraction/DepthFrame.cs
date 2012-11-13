@@ -39,6 +39,27 @@ namespace Touchdown.SensorAbstraction {
 		}
 		#endregion
 
+		#region Operator
+		/// <param name='orig'>
+		/// Frame from the sensor.
+		/// </param>
+		/// <param name='toRemove'>
+		/// background model that should be removed..
+		/// </param>
+		public static short[] operator-(DepthFrame orig, short[] toRemove){
+			short[] result = new short[orig.DepthMap.Length];
+			orig.DepthMap.CopyTo(result, 0);
+			
+			// original - background = only elements to recognize.
+			// neg. values not allowed so: if neg then use 0;
+			for (int i = 0; i < result.Length; ++i){
+				result[i] = (short)Math.Max(result[i] - toRemove[i], 0);
+			}
+			
+			return result;
+		}
+		#endregion 
+		
 		/// <summary>
 		/// Gets the depth map.
 		/// </summary>

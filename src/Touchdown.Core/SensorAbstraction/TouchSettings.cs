@@ -7,25 +7,28 @@ namespace Touchdown.SensorAbstraction {
 	/// Contains general settings that are used throughout the application.
 	/// </summary>
 	public class TouchSettings {
+		
+		#region Constructors / Destructors
 		/// <summary>
-		/// Gets or sets a value indicating whether this <see cref="Touchdown.SensorAbstraction.TouchSettings"/> first frame
-		/// should be considered as empty area.
+		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.TouchSettings"/> class with default
+		/// values.
 		/// </summary>
-		/// <value>
-		/// <c>true</c> if first frame should be considered as empty area; otherwise, <c>false</c>.
-		/// if set to <c>false</c> a depthframe representing the empty area must be set to <see cref="TouchSettings.EmptyRecognitionArea" />
-		/// </value>
-		public bool FirstFrameIsEmptyArea{get;set;}
+		public TouchSettings(){
+			this.FrameCountForAverageBackgroundModel = 100;
+		}
+		
+		#endregion
 		
 		/// <summary>
-		/// Gets or sets the definition for the empty recognition area. Based on this the recognizer calculates the 
-		/// background model.
+		/// Gets or sets the frame count for calculating the average distances for the background model.
+		/// This value is used by the <see cref="Touchdown.Core.SimpleTouchAreaObserver" />. Defines the number of depth
+		/// frames that are used to calculate the average distance to the background (i.e. the table)
 		/// </summary>
 		/// <value>
-		/// The empty recognition area.
+		/// The frame count for average background model.
 		/// </value>
-		public DepthFrame EmptyRecognitionArea{get;set;}
-		 
+		public uint FrameCountForAverageBackgroundModel {get; set;}
+		
 //		public TouchAreaDefinition TouchArea {
 //			get {
 //					throw new NotImplementedException ();
