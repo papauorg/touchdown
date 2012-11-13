@@ -48,8 +48,7 @@ namespace Touchdown.Core {
 		#region Private Methods
 		private void DepthFrameReadyHandler(object sender, DepthFrameReadyEventArgs e){
 			if (TouchFrameReady != null){
-				// ToDo: recognize touch points
-				this.CalculateTouchPoints(e.FrameData, this._settings.AreaDefinition);
+				
 			}
 		}
 		

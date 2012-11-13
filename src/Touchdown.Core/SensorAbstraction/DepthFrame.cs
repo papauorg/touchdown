@@ -8,7 +8,7 @@ namespace Touchdown.SensorAbstraction {
 	/// </summary>
 	public class DepthFrame : Frame {
 		
-		private int[] _depthMap;
+		private short[] _depthData;
 
 		#region Constructors / Destructors
 		/// <summary>
@@ -20,9 +20,9 @@ namespace Touchdown.SensorAbstraction {
 		/// <param name='data'>
 		/// Data.
 		/// </param>
-		public DepthFrame(DateTime frameTime, SensorData data) : base(frameTime, data){
-			this._depthMap = null;
-			throw new NotImplementedException("Calculate depth map is missing");
+		/// <param name="depthData">Relative depth data (value from 0 to 2048 that represents the depth)</param>
+		public DepthFrame(DateTime frameTime, SensorData data, short[] depthData) : base(frameTime, data){
+			_depthData = depthData;
 		}
 		#endregion
 
@@ -45,11 +45,11 @@ namespace Touchdown.SensorAbstraction {
 		/// <value>
 		/// The depth map.
 		/// </value>
-		public int[] DepthMap
+		public short[] DepthMap
 		{
 			get
 			{
-				return _depthMap;
+				return _depthData;
 			}
 		}
 	}

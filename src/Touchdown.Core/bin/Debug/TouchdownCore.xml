@@ -111,7 +111,7 @@
             Represents a Depth frame. Contains depth data for recognizing by depth.
             </summary>
         </member>
-        <member name="M:Touchdown.SensorAbstraction.DepthFrame.#ctor(System.DateTime,Touchdown.SensorAbstraction.SensorData)">
+        <member name="M:Touchdown.SensorAbstraction.DepthFrame.#ctor(System.DateTime,Touchdown.SensorAbstraction.SensorData,System.Int16[])">
             <summary>
             Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.DepthFrame" /> class.
             </summary>
@@ -121,6 +121,7 @@
             <param name="data">
             Data.
             </param>
+            <param name="depthData">Relative depth data (value from 0 to 2048 that represents the depth)</param>
         </member>
         <member name="P:Touchdown.SensorAbstraction.DepthFrame.DepthMap">
             <summary>
@@ -308,6 +309,24 @@
             <summary>
             Contains general settings that are used throughout the application.
             </summary>
+        </member>
+        <member name="P:Touchdown.SensorAbstraction.TouchSettings.FirstFrameIsEmptyArea">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:Touchdown.SensorAbstraction.TouchSettings" /> first frame
+            should be considered as empty area.
+            </summary>
+            <value>
+                <c>true</c> if first frame should be considered as empty area; otherwise, <c>false</c>.
+            if set to <c>false</c> a depthframe representing the empty area must be set to <see cref="P:Touchdown.SensorAbstraction.TouchSettings.EmptyRecognitionArea" /></value>
+        </member>
+        <member name="P:Touchdown.SensorAbstraction.TouchSettings.EmptyRecognitionArea">
+            <summary>
+            Gets or sets the definition for the empty recognition area. Based on this the recognizer calculates the
+            background model.
+            </summary>
+            <value>
+            The empty recognition area.
+            </value>
         </member>
     </members>
 </doc>

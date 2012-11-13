@@ -5,6 +5,7 @@ using freenect;
 using Touchdown.SensorAbstraction;
 using System.Threading;
 using log4net;
+using System.Runtime.InteropServices;
 
 namespace Touchdown.Freenect {
 	/// <summary>
@@ -152,7 +153,10 @@ namespace Touchdown.Freenect {
 		/// </param>
 		private DepthFrame TransformToDepthFrame(freenect.DepthMap map, DateTime timeStamp) {
 			SensorData data = new SensorData(map.Width, map.Height, map.Data);
-			DepthFrame result = new DepthFrame(timeStamp, data);
+			short[] relativeDepth	= this.CalculateDepthBySensorData(map);
+			
+			// calculate the depth
+			DepthFrame result = new DepthFrame(timeStamp, data, relativeDepth);
 			
 			return result;
 		}
@@ -172,6 +176,31 @@ namespace Touchdown.Freenect {
 			
 			return result;
 		}
+		
+		/// <summary>
+		/// Converts the raw imagedata to a depth map that represents the depth by a value between 0 and 2048
+		/// </summary>
+		/// <returns>
+		/// The depth by sensor data.
+		/// </returns>
+		/// <param name='data'>
+		/// Data.
+		/// </param>
+		private short[] CalculateDepthBySensorData(DepthMap data){
+			int newIndex = 0;
+			short [] result = new short[data.Height * data.Width];
+			int dataBytes = 2;
+			
+			for (int i = 0; i < data.Height * data.Width * dataBytes; i+=dataBytes){
+				// read two bytes (int16) every time and increment the offset by two
+				short pixel = Marshal.ReadInt16(data.DataPointer, i);
+				result[newIndex] = pixel;
+				newIndex++;
+			}
+			
+			return result;
+		}
+		
 		#endregion
 		
 		#region Properties

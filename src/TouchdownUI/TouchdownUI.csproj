@@ -76,4 +76,10 @@
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Tochdown.Freenect\Tochdown.Freenect.csproj">
+      <Project>{5579CC71-587D-4267-AD30-1A14942895DA}</Project>
+      <Name>Tochdown.Freenect</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

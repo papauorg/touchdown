@@ -65,7 +65,7 @@ namespace Touchdown.SensorAbstraction {
 		/// <value>
 		/// The data.
 		/// </value>
-		protected SensorData Data{
+		public SensorData Data{
 			get { return this._data; }
 		}
 		#endregion
