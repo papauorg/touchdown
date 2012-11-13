@@ -33,7 +33,7 @@ namespace Touchdown.Freenect {
 			if(sensor == null){
 				throw new ArgumentNullException("sensor");
 			}
-			
+
 			// open the sensor if necessary
 			_sensor = sensor;
 			if (!_sensor.IsOpen){

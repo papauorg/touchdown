@@ -10,7 +10,7 @@ namespace Touchdown.SensorAbstraction {
 	/// </summary>
 	public class SensorData {
 		private int _width;
-		public int _height;
+		private int _height;
 		private byte[] _data;
 
 		#region Constructors / Destructors

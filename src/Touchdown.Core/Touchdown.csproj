@@ -50,6 +50,13 @@
     <Compile Include="SensorAbstraction\SimpleTouchFrame.cs" />
     <Compile Include="SensorAbstraction\RGBFrameReadyEventArgs.cs" />
     <Compile Include="SensorAbstraction\DepthFrameReadyEventArgs.cs" />
+    <Compile Include="Core\ITouchObserver.cs" />
+    <Compile Include="Core\SimpleTouchAreaObserver.cs" />
+    <Compile Include="Core\TouchFrameReadyEventArgs.cs" />
+    <Compile Include="SensorAbstraction\TouchSettings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Core\" />
+  </ItemGroup>
 </Project>

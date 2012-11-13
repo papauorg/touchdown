@@ -53,6 +53,11 @@
             Frame.
             </param>
         </member>
+        <member name="F:Touchdown.SensorAbstraction.FrameReadyEventArgs`1._frame">
+            <summary>
+            Frame information.
+            </summary>
+        </member>
         <member name="P:Touchdown.SensorAbstraction.FrameReadyEventArgs`1.FrameData">
             <summary>
             Gets the frame data.
@@ -83,6 +88,14 @@
             </summary>
             <value>
             The frame time.
+            </value>
+        </member>
+        <member name="P:Touchdown.SensorAbstraction.Frame.Data">
+            <summary>
+            Gets or sets the raw data.
+            </summary>
+            <value>
+            The data.
             </value>
         </member>
         <member name="M:Touchdown.SensorAbstraction.Frame.CreateBitmap">
@@ -210,6 +223,14 @@
             Data.
             </param>
         </member>
+        <member name="M:Touchdown.SensorAbstraction.SimpleTouchFrame.CreateBitmap">
+            <summary>
+            Creates a visual representation of the frame.
+            </summary>
+            <returns>
+            The bitmap.
+            </returns>
+        </member>
         <member name="T:Touchdown.SensorAbstraction.RGBFrameReadyEventArgs">
             <summary>
             RGB frame ready event arguments.
@@ -237,6 +258,56 @@
             Frame.
             </param>
             <exception cref="T:System.ArgumentNullException">if frame is null</exception>
+        </member>
+        <member name="T:Touchdown.Core.ITouchObserver`1">
+            <summary>
+            Defines basic methods and events that are needed to get touchframes of a defined area
+            </summary>
+        </member>
+        <member name="E:Touchdown.Core.ITouchObserver`1.TouchFrameReady">
+            <summary>
+            Occurs when touch frame ready.
+            </summary>
+        </member>
+        <member name="T:Touchdown.Core.SimpleTouchAreaObserver">
+            <summary>
+            Simple touch area observer. Observes the given toucharea and creates touchframes of it.
+            </summary>
+        </member>
+        <member name="M:Touchdown.Core.SimpleTouchAreaObserver.#ctor(Touchdown.SensorAbstraction.IKinectSensorProvider,Touchdown.SensorAbstraction.TouchSettings)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Touchdown.Core.SimpleTouchAreaObserver" /> class.
+            </summary>
+            <param name="sensor">
+            Sensor.
+            </param>
+            <param name="settings">
+            Settings.
+            </param>
+            <exception cref="T:System.ArgumentNullException">if <param name="sensor" />  or <param name="settings" /> is null</exception>
+        </member>
+        <member name="E:Touchdown.Core.SimpleTouchAreaObserver.TouchFrameReady">
+            <summary>
+            Occurs when touch frame is ready.
+            </summary>
+        </member>
+        <member name="T:Touchdown.Core.TouchFrameReadyEventArgs">
+            <summary>
+            Touch frame ready event arguments.
+            </summary>
+        </member>
+        <member name="M:Touchdown.Core.TouchFrameReadyEventArgs.#ctor(Touchdown.SensorAbstraction.SimpleTouchFrame)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Touchdown.Core.TouchFrameReadyEventArgs" /> class.
+            </summary>
+            <param name="frame">
+            Frame.
+            </param>
+        </member>
+        <member name="T:Touchdown.SensorAbstraction.TouchSettings">
+            <summary>
+            Contains general settings that are used throughout the application.
+            </summary>
         </member>
     </members>
 </doc>

@@ -9,6 +9,9 @@ namespace Touchdown.SensorAbstraction {
 	/// Inherited from System.EventArgs to be able to use EventHandlers
 	/// </summary>
 	public abstract class FrameReadyEventArgs<T> : EventArgs where T : Frame{
+		/// <summary>
+		/// Frame information.
+		/// </summary>
 		protected T _frame;
 
 		/// <summary>

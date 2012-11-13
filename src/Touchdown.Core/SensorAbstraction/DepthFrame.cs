@@ -21,6 +21,7 @@ namespace Touchdown.SensorAbstraction {
 		/// Data.
 		/// </param>
 		public DepthFrame(DateTime frameTime, SensorData data) : base(frameTime, data){
+			this._depthMap = null;
 			throw new NotImplementedException("Calculate depth map is missing");
 		}
 		#endregion

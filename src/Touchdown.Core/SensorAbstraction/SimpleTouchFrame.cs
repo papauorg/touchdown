@@ -25,6 +25,12 @@ namespace Touchdown.SensorAbstraction {
 		#endregion
 		
 		#region Public Methods
+		/// <summary>
+		///  Creates a visual representation of the frame. 
+		/// </summary>
+		/// <returns>
+		///  The bitmap. 
+		/// </returns>
 		public override System.Drawing.Bitmap CreateBitmap() {
 			return null;
 		}
