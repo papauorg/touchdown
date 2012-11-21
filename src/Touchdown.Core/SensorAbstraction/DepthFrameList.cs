@@ -34,13 +34,13 @@ namespace Touchdown.Core {
 		/// <returns>
 		/// The average distance.
 		/// </returns>
-		public short[] CalculateAverageDistance(){
+		public DepthFrame CalculateAverage(){
 			if (this.Count > 0){
 				long[] sumDistance = new long[this.Items[0].DepthMap.Length];
-				short[] avgDistance = new short[sumDistance.Length];	
+				short[] avgDepth = new short[sumDistance.Length];	
 				
 				var distances = this.Select(i=> i.DepthMap);
-				// sum of all distances
+				// sum of all depth values
 				foreach(var distance in distances){
 					for(int i = 0; i < distance.Length; ++i){
 						sumDistance[i] += distance[i];
@@ -49,10 +49,11 @@ namespace Touchdown.Core {
 				
 				// average
 				for(int i = 0; i < sumDistance.Length; ++i){
-					avgDistance[i] = (short)(sumDistance[i] / this.Count);
+					avgDepth[i] = (short)(sumDistance[i] / this.Count);
 				}
 				
-				return avgDistance;
+				DepthFrame result = new DepthFrame(DateTime.Now, null, avgDepth);
+				return result;
 			} else {
 				return null;
 			}

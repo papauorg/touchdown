@@ -13,7 +13,7 @@ namespace Touchdown.Core {
 		private TouchSettings _settings;
 
 		private DepthFrameList _backgroundDistances;
-		private short[] _avgBackgroundDistance;
+		private DepthFrame _avgBackground;
 		
 		/// <summary>
 		///  Occurs when touch frame is ready. 
@@ -44,7 +44,7 @@ namespace Touchdown.Core {
 			this._settings = settings;
 			
 			this._backgroundDistances = new DepthFrameList();
-			this._avgBackgroundDistance = null;
+			this._avgBackground = null;
 			
 			// register events needed for recognition of touch frames.
 			this._sensor.DepthFrameReady 	+= this.DepthFrameReadyHandler;
@@ -58,16 +58,24 @@ namespace Touchdown.Core {
 			// on it.
 			if (this._backgroundDistances.Count < this._settings.FrameCountForAverageBackgroundModel){
 				this._backgroundDistances.Add(e.FrameData);
-			} else if (this._avgBackgroundDistance != null) {
-				this._avgBackgroundDistance = this._backgroundDistances.CalculateAverageDistance();
+			} else if (this._avgBackground == null) {
+				this._avgBackground = this._backgroundDistances.CalculateAverage();
 			} else {
 				// recognition of touch points
 				if (TouchFrameReady != null){
-					// remove the background model from the current frame to have only 
-					// objects left that are not part of the background.
-					// Those objects should be used for recognition. (could be a hand for example)
-					short[] foreGroundDepth = e.FrameData - this._avgBackgroundDistance;
+					/* remove the background model from the current frame to have only 
+					   objects left that are not part of the background.
+					   Those objects should be used for recognition. (could be a hand for example) */
+					short[] foreGroundDepth = {1}; //e.FrameData - this._avgBackground;
 					
+					/*  apply the threshold of the settings to recognize all points that 
+					 *  are close enough to the background */
+					 short[] rawPoints = 
+					 this.ApplyThreshold(foreGroundDepth, 
+					 					 this._settings.MinDistanceFromBackround, 
+					 					 this._settings.MaxDistanceFromBackground);
+					 
+					 
 				}
 			}
 		}
@@ -76,6 +84,26 @@ namespace Touchdown.Core {
 			if (TouchFrameReady != null){
 				// Nothing to do here for simple touch area observer.
 			}
+		}
+		
+		/// <summary>
+		/// Removes all items of the array that are smaller than <param cref="minDistance" /> 
+		/// and greater than <param name="maxDistance" />
+		/// </summary>
+		/// <returns>
+		/// The threshold.
+		/// </returns>
+		/// <param name='backgroundExtracted'>
+		/// Background extracted.
+		/// </param>
+		/// <param name='minDistance'>
+		/// Minimum distance.
+		/// </param>
+		/// <param name='maxDistance'>
+		/// Max distance.
+		/// </param>
+		private short[] ApplyThreshold(short[] backgroundExtracted, uint minDistance, uint maxDistance){
+			throw new NotImplementedException();
 		}
 		#endregion
 	}

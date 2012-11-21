@@ -9,10 +9,12 @@ namespace Touchdown.SensorAbstraction {
 	public class DepthFrame : Frame {
 		
 		private short[] _depthData;
-
+		private int[] _distance;
+		
 		#region Constructors / Destructors
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.DepthFrame"/> class.
+		/// calculates the distance automatically!
 		/// </summary>
 		/// <param name='frameTime'>
 		/// Frame time.
@@ -22,7 +24,32 @@ namespace Touchdown.SensorAbstraction {
 		/// </param>
 		/// <param name="depthData">Relative depth data (value from 0 to 2048 that represents the depth)</param>
 		public DepthFrame(DateTime frameTime, SensorData data, short[] depthData) : base(frameTime, data){
-			_depthData = depthData;
+			if (depthData == null){
+				throw new ArgumentNullException("depthData");
+			}
+			
+			this._depthData = depthData;
+			this.CalculateDistance();
+		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.DepthFrame"/> class.
+		/// </summary>
+		/// <param name='frameTime'>
+		/// Frame time.
+		/// </param>
+		/// <param name='data'>
+		/// Data.
+		/// </param>
+		/// <param name='depthData'>
+		/// Depth data.
+		/// </param>
+		/// <param name='distanceinMM'>
+		/// Distancein M.
+		/// </param>
+		public DepthFrame(DateTime frameTime, SensorData data, short[] depthData, int[] distanceinMM) 
+					: this(frameTime, data, depthData){
+			this._distance = distanceinMM;
 		}
 		#endregion
 
@@ -60,17 +87,59 @@ namespace Touchdown.SensorAbstraction {
 		}
 		#endregion 
 		
+		#region Private Methods
+		/// <summary>
+		/// Calculates the distance in MM depending on the depth information.
+		/// </summary>
+		private void CalculateDistance(){
+			this._distance = new int[this._depthData.Length];
+			
+			for (int i = 0; i < this._depthData.Length; ++i){
+				this._distance[i] = DistanceInMMFromDepth(this._depthData[i]);
+			}
+		}
+		
+		/// <summary>
+		/// contains the formula to calculate the distance in mm by the given depth value between 0 and 2048
+		/// see: http://openkinect.org/wiki/Imaging_Information
+		/// </summary>
+		/// <returns>
+		/// The in MM from depth.
+		/// </returns>
+		/// <param name='depthValue'>
+		/// Depth value.
+		/// </param>
+		private int DistanceInMMFromDepth(short depthValue){
+			double result;
+			
+			result = 0.1236 * Math.Tan(depthValue / 2842.5 + 1.1863);
+			result *= 1000; // convert to mm
+			
+			return (int)result;
+		}
+		#endregion
+		
 		/// <summary>
 		/// Gets the depth map.
 		/// </summary>
 		/// <value>
 		/// The depth map.
 		/// </value>
-		public short[] DepthMap
-		{
-			get
-			{
+		public short[] DepthMap{
+			get{
 				return _depthData;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the distance in millimeters.
+		/// </summary>
+		/// <value>
+		/// The distance in millimeters.
+		/// </value>
+		public int[] DistanceInMM{
+			get{
+				return _distance;
 			}
 		}
 	}

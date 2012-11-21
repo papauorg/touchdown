@@ -14,7 +14,9 @@ namespace Touchdown.SensorAbstraction {
 		/// values.
 		/// </summary>
 		public TouchSettings(){
-			this.FrameCountForAverageBackgroundModel = 100;
+			this.FrameCountForAverageBackgroundModel 	= 100;
+			this.MaxDistanceFromBackground 	= 20;
+			this.MinDistanceFromBackround 	= 7;
 		}
 		
 		#endregion
@@ -29,22 +31,21 @@ namespace Touchdown.SensorAbstraction {
 		/// </value>
 		public uint FrameCountForAverageBackgroundModel {get; set;}
 		
-//		public TouchAreaDefinition TouchArea {
-//			get {
-//					throw new NotImplementedException ();
-//			}
-//			set {
-//					throw new NotImplementedException ();
-//			}
-//		}
-//
-//		public SensorMode SensorMode {
-//			get {
-//					throw new NotImplementedException ();
-//			}
-//			set {
-//					throw new NotImplementedException ();
-//			}
-//		}
+		/// <summary>
+		/// Gets or sets the max distance from background that is still recognized as "touch".
+		/// </summary>
+		/// <value>
+		/// The max distance from background.
+		/// </value>
+		public uint MaxDistanceFromBackground {get; set;}
+		
+		/// <summary>
+		/// Gets or sets the minimum distance that must a touchpoint have to be recognized.
+		/// Used to ignore noise and should be a little less than a finger height. 
+		/// </summary>
+		/// <value>
+		/// The minimum distance from backround threshold.
+		/// </value>
+		public uint MinDistanceFromBackround {get; set;}
 	}
 }
