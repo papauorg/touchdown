@@ -264,7 +264,7 @@
             any additional info about it.
             </summary>
         </member>
-        <member name="M:Touchdown.SensorAbstraction.SimpleTouchFrame.#ctor(System.DateTime,Touchdown.SensorAbstraction.SensorData)">
+        <member name="M:Touchdown.SensorAbstraction.SimpleTouchFrame.#ctor(System.DateTime,Touchdown.SensorAbstraction.SensorData,System.Collections.Generic.IEnumerable{Touchdown.SensorAbstraction.TouchPoint})">
             <summary>
             Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.SimpleTouchFrame" /> class.
             </summary>
@@ -273,6 +273,9 @@
             </param>
             <param name="data">
             Data.
+            </param>
+            <param name="touchpoints">
+            the touchpoints that are relevant for this frame.
             </param>
         </member>
         <member name="M:Touchdown.SensorAbstraction.SimpleTouchFrame.CreateBitmap">
@@ -456,7 +459,7 @@
             Provides a method to calculate the distance between two touch points.
             </summary>
         </member>
-        <member name="M:Touchdown.Core.IPointDistanceProvider.GetDistance(Touchdown.Core.TouchPoint,Touchdown.Core.TouchPoint)">
+        <member name="M:Touchdown.Core.IPointDistanceProvider.GetDistance(Touchdown.SensorAbstraction.TouchPoint,Touchdown.SensorAbstraction.TouchPoint)">
             <summary>
             Gets the distance between two touch points.
             </summary>
@@ -470,14 +473,14 @@
             Second.
             </param>
         </member>
-        <member name="T:Touchdown.Core.TouchPoint">
+        <member name="T:Touchdown.SensorAbstraction.TouchPoint">
             <summary>
             Defines a recognized touch point as coordinates of the TouchArea.
             </summary>
         </member>
-        <member name="M:Touchdown.Core.TouchPoint.#ctor(System.Int32,System.Int32)">
+        <member name="M:Touchdown.SensorAbstraction.TouchPoint.#ctor(System.Int32,System.Int32)">
             <summary>
-            Initializes a new instance of the <see cref="T:Touchdown.Core.TouchPoint" /> class.
+            Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.TouchPoint" /> class.
             </summary>
             <param name="xPosition">
             X position.
@@ -486,7 +489,7 @@
             Y position.
             </param>
         </member>
-        <member name="P:Touchdown.Core.TouchPoint.X">
+        <member name="P:Touchdown.SensorAbstraction.TouchPoint.X">
             <summary>
             Gets the x position.
             </summary>
@@ -494,7 +497,7 @@
             The x position.
             </value>
         </member>
-        <member name="P:Touchdown.Core.TouchPoint.Y">
+        <member name="P:Touchdown.SensorAbstraction.TouchPoint.Y">
             <summary>
             Gets the y position.
             </summary>
@@ -508,7 +511,7 @@
             http://en.wikipedia.org/wiki/Euclidean_distance
             </summary>
         </member>
-        <member name="M:Touchdown.Core.EucledianDistanceProvider.Touchdown#Core#IPointDistanceProvider#GetDistance(Touchdown.Core.TouchPoint,Touchdown.Core.TouchPoint)">
+        <member name="M:Touchdown.Core.EucledianDistanceProvider.Touchdown#Core#IPointDistanceProvider#GetDistance(Touchdown.SensorAbstraction.TouchPoint,Touchdown.SensorAbstraction.TouchPoint)">
             <inheritdoc />
         </member>
     </members>

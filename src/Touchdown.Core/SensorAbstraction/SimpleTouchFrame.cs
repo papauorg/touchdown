@@ -9,6 +9,8 @@ namespace Touchdown.SensorAbstraction {
 		/// </summary>
 		public class SimpleTouchFrame : Frame {
 	
+		private IEnumerable<TouchPoint> touchPoints;
+		
 		#region Constructors / Destructors
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.SimpleTouchFrame"/> class.
@@ -18,6 +20,9 @@ namespace Touchdown.SensorAbstraction {
 		/// </param>
 		/// <param name='data'>
 		/// Data.
+		/// </param>
+		/// <param name="touchpoints">
+		/// the touchpoints that are relevant for this frame.
 		/// </param>
 		public SimpleTouchFrame(DateTime frameTime, SensorData data, IEnumerable<TouchPoint> touchpoints) : base(frameTime, data) {
 			this.touchPoints = touchpoints;

@@ -80,7 +80,7 @@ namespace Touchdown.Core {
 			 		  *	There are very "blury" areas where the finger are located. Extract the touchpoints of it. */
 			 		  List<TouchPoint> touchPoints = this.ExtractTouchPoints(rawPoints);
 			 		  
-			 		  new SimpleTouchFrame(e.FrameData.FrameTime, e.FrameData.Data);
+			 		  //new SimpleTouchFrame(e.FrameData.FrameTime, e.FrameData.Data);
 			 		  
 				}
 			}

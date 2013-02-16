@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using Touchdown.Core;
+using Touchdown.SensorAbstraction;
 
 namespace TouchTests {
 		[TestFixture()]

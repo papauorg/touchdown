@@ -1,6 +1,6 @@
 using System;
 
-namespace Touchdown.Core {
+namespace Touchdown.SensorAbstraction {
 	/// <summary>
 	/// Defines a recognized touch point as coordinates of the TouchArea.
 	/// </summary>
@@ -8,7 +8,7 @@ namespace Touchdown.Core {
 		private int x, y;
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Touchdown.Core.TouchPoint"/> class.
+		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.TouchPoint"/> class.
 		/// </summary>
 		/// <param name='xPosition'>
 		/// X position.

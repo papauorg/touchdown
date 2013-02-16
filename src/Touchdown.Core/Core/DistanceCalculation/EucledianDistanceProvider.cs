@@ -1,4 +1,5 @@
 using System;
+using Touchdown.SensorAbstraction;
 
 namespace Touchdown.Core {
 	/// <summary>
