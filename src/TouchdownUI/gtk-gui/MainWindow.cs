@@ -3,26 +3,232 @@
 
 public partial class MainWindow
 {
-	private global::Gtk.Fixed fixed1;
+	private global::Gtk.UIManager UIManager;
+	private global::Gtk.Action DateiAction;
+	private global::Gtk.Action BeendenAction;
+	private global::Gtk.Action GestenAction;
+	private global::Gtk.Action dndMultipleAction;
+	private global::Gtk.Action mediaRecordAction1;
+	private global::Gtk.Action DemoAction;
+	private global::Gtk.Action ImageSlideshowAction;
+	private global::Gtk.Action RequestHelpAction;
+	private global::Gtk.Action DateiAction1;
+	private global::Gtk.Action cancelAction;
+	private global::Gtk.Action GestenAction1;
+	private global::Gtk.Action mediaRecordAction;
+	private global::Gtk.Action openAction;
+	private global::Gtk.Action DemoAction1;
+	private global::Gtk.Action dialogInfoAction;
+	private global::Gtk.Action dialogInfoAction1;
+	private global::Gtk.Action EngineAction;
+	private global::Gtk.ToggleAction mediaPlayAction;
+	private global::Gtk.Action mediaStopAction;
+	private global::Gtk.VBox vbMenu;
+	private global::Gtk.MenuBar menuMain;
+	private global::Gtk.Toolbar toolbar1;
+	private global::Gtk.VPaned vpaned4;
+	private global::Gtk.HBox hbox2;
+	private global::Gtk.Frame frameRGB;
+	private global::Gtk.Alignment GtkAlignment;
+	private global::Gtk.Image rgbImage;
+	private global::Gtk.Label GtkLabel6;
+	private global::Gtk.Frame frameDepth;
+	private global::Gtk.Alignment GtkAlignment1;
+	private global::Gtk.Image depthImage;
+	private global::Gtk.Label GtkLabel7;
+	private global::Gtk.Frame frameTouchpoints;
+	private global::Gtk.Alignment GtkAlignment2;
+	private global::Gtk.Image touchImage;
+	private global::Gtk.Label GtkLabel8;
+	private global::Gtk.Statusbar statusbar;
 	
 	protected virtual void Build ()
 	{
 		global::Stetic.Gui.Initialize (this);
 		// Widget MainWindow
+		this.UIManager = new global::Gtk.UIManager ();
+		global::Gtk.ActionGroup w1 = new global::Gtk.ActionGroup ("Default");
+		this.DateiAction = new global::Gtk.Action ("DateiAction", global::Mono.Unix.Catalog.GetString ("Datei"), null, null);
+		this.DateiAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Datei");
+		w1.Add (this.DateiAction, null);
+		this.BeendenAction = new global::Gtk.Action ("BeendenAction", global::Mono.Unix.Catalog.GetString ("Beenden"), null, null);
+		this.BeendenAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Beenden");
+		w1.Add (this.BeendenAction, null);
+		this.GestenAction = new global::Gtk.Action ("GestenAction", global::Mono.Unix.Catalog.GetString ("Gesten"), null, null);
+		this.GestenAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Gesten");
+		w1.Add (this.GestenAction, null);
+		this.dndMultipleAction = new global::Gtk.Action ("dndMultipleAction", global::Mono.Unix.Catalog.GetString ("Neue Geste aufnehmen"), null, "gtk-dnd-multiple");
+		this.dndMultipleAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Neue Geste aufnehmen");
+		w1.Add (this.dndMultipleAction, null);
+		this.mediaRecordAction1 = new global::Gtk.Action ("mediaRecordAction1", global::Mono.Unix.Catalog.GetString ("Gesten verwalten"), null, "gtk-media-record");
+		this.mediaRecordAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("Gesten verwalten");
+		w1.Add (this.mediaRecordAction1, null);
+		this.DemoAction = new global::Gtk.Action ("DemoAction", global::Mono.Unix.Catalog.GetString ("Demo"), null, null);
+		this.DemoAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Demo");
+		w1.Add (this.DemoAction, null);
+		this.ImageSlideshowAction = new global::Gtk.Action ("ImageSlideshowAction", global::Mono.Unix.Catalog.GetString ("Image Slideshow"), null, null);
+		this.ImageSlideshowAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Image Slideshow");
+		w1.Add (this.ImageSlideshowAction, null);
+		this.RequestHelpAction = new global::Gtk.Action ("RequestHelpAction", global::Mono.Unix.Catalog.GetString ("Request Help"), null, null);
+		this.RequestHelpAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Request Help");
+		w1.Add (this.RequestHelpAction, null);
+		this.DateiAction1 = new global::Gtk.Action ("DateiAction1", global::Mono.Unix.Catalog.GetString ("Datei"), null, null);
+		this.DateiAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("Datei");
+		w1.Add (this.DateiAction1, null);
+		this.cancelAction = new global::Gtk.Action ("cancelAction", global::Mono.Unix.Catalog.GetString ("_Beenden"), null, "gtk-cancel");
+		this.cancelAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Beenden");
+		w1.Add (this.cancelAction, null);
+		this.GestenAction1 = new global::Gtk.Action ("GestenAction1", global::Mono.Unix.Catalog.GetString ("Gesten"), null, null);
+		this.GestenAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("Gesten");
+		w1.Add (this.GestenAction1, null);
+		this.mediaRecordAction = new global::Gtk.Action ("mediaRecordAction", global::Mono.Unix.Catalog.GetString ("Neue Geste aufnehmen"), null, "gtk-media-record");
+		this.mediaRecordAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Neue Geste aufnehmen");
+		w1.Add (this.mediaRecordAction, null);
+		this.openAction = new global::Gtk.Action ("openAction", global::Mono.Unix.Catalog.GetString ("Gesten verwalten"), null, "gtk-open");
+		this.openAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Gesten verwalten");
+		w1.Add (this.openAction, null);
+		this.DemoAction1 = new global::Gtk.Action ("DemoAction1", global::Mono.Unix.Catalog.GetString ("Demo"), null, null);
+		this.DemoAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("Demo");
+		w1.Add (this.DemoAction1, null);
+		this.dialogInfoAction = new global::Gtk.Action ("dialogInfoAction", global::Mono.Unix.Catalog.GetString ("Hilfe Zeichen in Fenstern"), null, "gtk-dialog-info");
+		this.dialogInfoAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Hilfe Zeichen in Fenstern");
+		w1.Add (this.dialogInfoAction, null);
+		this.dialogInfoAction1 = new global::Gtk.Action ("dialogInfoAction1", global::Mono.Unix.Catalog.GetString ("Image Slideshow"), null, "gtk-dialog-info");
+		this.dialogInfoAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("Image Slideshow");
+		w1.Add (this.dialogInfoAction1, null);
+		this.EngineAction = new global::Gtk.Action ("EngineAction", global::Mono.Unix.Catalog.GetString ("Engine"), null, null);
+		this.EngineAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Engine");
+		w1.Add (this.EngineAction, null);
+		this.mediaPlayAction = new global::Gtk.ToggleAction ("mediaPlayAction", global::Mono.Unix.Catalog.GetString ("Starten"), null, "gtk-media-play");
+		this.mediaPlayAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Starten");
+		w1.Add (this.mediaPlayAction, null);
+		this.mediaStopAction = new global::Gtk.Action ("mediaStopAction", global::Mono.Unix.Catalog.GetString ("Stoppen"), null, "gtk-media-stop");
+		this.mediaStopAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Stoppen");
+		w1.Add (this.mediaStopAction, null);
+		this.UIManager.InsertActionGroup (w1, 0);
+		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
 		this.Title = global::Mono.Unix.Catalog.GetString ("MainWindow");
+		this.Icon = global::Stetic.IconLoader.LoadIcon (this, "gtk-properties", global::Gtk.IconSize.LargeToolbar);
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 		// Container child MainWindow.Gtk.Container+ContainerChild
-		this.fixed1 = new global::Gtk.Fixed ();
-		this.fixed1.Name = "fixed1";
-		this.fixed1.HasWindow = false;
-		this.Add (this.fixed1);
+		this.vbMenu = new global::Gtk.VBox ();
+		this.vbMenu.Name = "vbMenu";
+		this.vbMenu.Spacing = 6;
+		// Container child vbMenu.Gtk.Box+BoxChild
+		this.UIManager.AddUiFromString ("<ui><menubar name='menuMain'><menu name='DateiAction1' action='DateiAction1'><menuitem name='cancelAction' action='cancelAction'/></menu><menu name='EngineAction' action='EngineAction'><menuitem name='mediaPlayAction' action='mediaPlayAction'/></menu><menu name='GestenAction1' action='GestenAction1'><menuitem name='mediaRecordAction' action='mediaRecordAction'/><menuitem name='openAction' action='openAction'/></menu><menu name='DemoAction1' action='DemoAction1'><menuitem name='dialogInfoAction' action='dialogInfoAction'/><menuitem name='dialogInfoAction1' action='dialogInfoAction1'/></menu></menubar></ui>");
+		this.menuMain = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menuMain")));
+		this.menuMain.Name = "menuMain";
+		this.vbMenu.Add (this.menuMain);
+		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbMenu [this.menuMain]));
+		w2.Position = 0;
+		w2.Expand = false;
+		w2.Fill = false;
+		// Container child vbMenu.Gtk.Box+BoxChild
+		this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar1'><toolitem name='mediaPlayAction' action='mediaPlayAction'/><separator/><toolitem name='dndMultipleAction' action='dndMultipleAction'/><toolitem name='mediaRecordAction1' action='mediaRecordAction1'/></toolbar></ui>");
+		this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/toolbar1")));
+		this.toolbar1.Name = "toolbar1";
+		this.toolbar1.ShowArrow = false;
+		this.vbMenu.Add (this.toolbar1);
+		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbMenu [this.toolbar1]));
+		w3.Position = 1;
+		w3.Expand = false;
+		w3.Fill = false;
+		// Container child vbMenu.Gtk.Box+BoxChild
+		this.vpaned4 = new global::Gtk.VPaned ();
+		this.vpaned4.CanFocus = true;
+		this.vpaned4.Name = "vpaned4";
+		this.vpaned4.Position = 206;
+		// Container child vpaned4.Gtk.Paned+PanedChild
+		this.hbox2 = new global::Gtk.HBox ();
+		this.hbox2.Name = "hbox2";
+		this.hbox2.Spacing = 6;
+		// Container child hbox2.Gtk.Box+BoxChild
+		this.frameRGB = new global::Gtk.Frame ();
+		this.frameRGB.Name = "frameRGB";
+		this.frameRGB.ShadowType = ((global::Gtk.ShadowType)(0));
+		// Container child frameRGB.Gtk.Container+ContainerChild
+		this.GtkAlignment = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+		this.GtkAlignment.Name = "GtkAlignment";
+		this.GtkAlignment.LeftPadding = ((uint)(12));
+		// Container child GtkAlignment.Gtk.Container+ContainerChild
+		this.rgbImage = new global::Gtk.Image ();
+		this.rgbImage.Name = "rgbImage";
+		this.GtkAlignment.Add (this.rgbImage);
+		this.frameRGB.Add (this.GtkAlignment);
+		this.GtkLabel6 = new global::Gtk.Label ();
+		this.GtkLabel6.Name = "GtkLabel6";
+		this.GtkLabel6.LabelProp = global::Mono.Unix.Catalog.GetString ("RGB Image");
+		this.GtkLabel6.UseMarkup = true;
+		this.frameRGB.LabelWidget = this.GtkLabel6;
+		this.hbox2.Add (this.frameRGB);
+		global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.frameRGB]));
+		w6.Position = 0;
+		// Container child hbox2.Gtk.Box+BoxChild
+		this.frameDepth = new global::Gtk.Frame ();
+		this.frameDepth.Name = "frameDepth";
+		this.frameDepth.ShadowType = ((global::Gtk.ShadowType)(0));
+		// Container child frameDepth.Gtk.Container+ContainerChild
+		this.GtkAlignment1 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+		this.GtkAlignment1.Name = "GtkAlignment1";
+		this.GtkAlignment1.LeftPadding = ((uint)(12));
+		// Container child GtkAlignment1.Gtk.Container+ContainerChild
+		this.depthImage = new global::Gtk.Image ();
+		this.depthImage.Name = "depthImage";
+		this.GtkAlignment1.Add (this.depthImage);
+		this.frameDepth.Add (this.GtkAlignment1);
+		this.GtkLabel7 = new global::Gtk.Label ();
+		this.GtkLabel7.Name = "GtkLabel7";
+		this.GtkLabel7.LabelProp = global::Mono.Unix.Catalog.GetString ("Depth Image");
+		this.GtkLabel7.UseMarkup = true;
+		this.frameDepth.LabelWidget = this.GtkLabel7;
+		this.hbox2.Add (this.frameDepth);
+		global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.frameDepth]));
+		w9.Position = 1;
+		// Container child hbox2.Gtk.Box+BoxChild
+		this.frameTouchpoints = new global::Gtk.Frame ();
+		this.frameTouchpoints.Name = "frameTouchpoints";
+		this.frameTouchpoints.ShadowType = ((global::Gtk.ShadowType)(0));
+		// Container child frameTouchpoints.Gtk.Container+ContainerChild
+		this.GtkAlignment2 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+		this.GtkAlignment2.Name = "GtkAlignment2";
+		this.GtkAlignment2.LeftPadding = ((uint)(12));
+		// Container child GtkAlignment2.Gtk.Container+ContainerChild
+		this.touchImage = new global::Gtk.Image ();
+		this.touchImage.Name = "touchImage";
+		this.GtkAlignment2.Add (this.touchImage);
+		this.frameTouchpoints.Add (this.GtkAlignment2);
+		this.GtkLabel8 = new global::Gtk.Label ();
+		this.GtkLabel8.Name = "GtkLabel8";
+		this.GtkLabel8.LabelProp = global::Mono.Unix.Catalog.GetString ("Tochpoints");
+		this.GtkLabel8.UseMarkup = true;
+		this.frameTouchpoints.LabelWidget = this.GtkLabel8;
+		this.hbox2.Add (this.frameTouchpoints);
+		global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.frameTouchpoints]));
+		w12.Position = 2;
+		this.vpaned4.Add (this.hbox2);
+		global::Gtk.Paned.PanedChild w13 = ((global::Gtk.Paned.PanedChild)(this.vpaned4 [this.hbox2]));
+		w13.Resize = false;
+		this.vbMenu.Add (this.vpaned4);
+		global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbMenu [this.vpaned4]));
+		w14.Position = 2;
+		// Container child vbMenu.Gtk.Box+BoxChild
+		this.statusbar = new global::Gtk.Statusbar ();
+		this.statusbar.Name = "statusbar";
+		this.statusbar.Spacing = 6;
+		this.vbMenu.Add (this.statusbar);
+		global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbMenu [this.statusbar]));
+		w15.Position = 3;
+		w15.Expand = false;
+		w15.Fill = false;
+		this.Add (this.vbMenu);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 619;
-		this.DefaultHeight = 400;
+		this.DefaultWidth = 970;
+		this.DefaultHeight = 558;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
+		this.cancelAction.Activated += new global::System.EventHandler (this.EndProgramm);
 	}
 }

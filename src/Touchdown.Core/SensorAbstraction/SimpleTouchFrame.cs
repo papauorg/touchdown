@@ -19,8 +19,8 @@ namespace Touchdown.SensorAbstraction {
 		/// <param name='data'>
 		/// Data.
 		/// </param>
-		public SimpleTouchFrame(DateTime frameTime, SensorData data) : base(frameTime, data) {
-
+		public SimpleTouchFrame(DateTime frameTime, SensorData data, IEnumerable<TouchPoint> touchpoints) : base(frameTime, data) {
+			this.touchPoints = touchpoints;
 		}
 		#endregion
 		

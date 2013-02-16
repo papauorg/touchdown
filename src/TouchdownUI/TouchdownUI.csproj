@@ -59,6 +59,13 @@
     <Reference Include="Mono.Posix" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Drawing" />
+    <Reference Include="freenectdotnet">
+      <HintPath>..\..\lib\freenectdotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>gtk-dotnet-2.0</Package>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -67,13 +74,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
-    <Compile Include="MainWindow.cs" />
     <Compile Include="gtk-gui\MainWindow.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Forms\MainWindow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -81,5 +88,12 @@
       <Project>{5579CC71-587D-4267-AD30-1A14942895DA}</Project>
       <Name>Tochdown.Freenect</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Touchdown.Core\Touchdown.csproj">
+      <Project>{A961A00B-B2BB-4129-9E51-BEB2BC2DD7B3}</Project>
+      <Name>Touchdown</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Forms\" />
   </ItemGroup>
 </Project>

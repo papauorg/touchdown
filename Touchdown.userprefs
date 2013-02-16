@@ -1,17 +1,19 @@
-﻿<Properties>
+﻿<Properties GitUserInfo="UsingMD">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/Touchdown.Core/Core/SimpleTouchAreaObserver.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/TouchdownUI/Forms/MainWindow.cs">
     <Files>
-      <File FileName="src/Tochdown.Freenect/OpenKinectSensor.cs" Line="54" Column="3" />
-      <File FileName="src/Touchdown.Core/Core/SimpleTouchAreaObserver.cs" Line="78" Column="7" />
-      <File FileName="src/Touchdown.Core/SensorAbstraction/DepthFrame.cs" Line="119" Column="4" />
-      <File FileName="src/Touchdown.Core/SensorAbstraction/DepthFrameList.cs" Line="52" Column="26" />
+      <File FileName="src/TouchdownUI/Forms/MainWindow.cs" Line="33" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Option id="ShowAllFiles" value="True" />
-          <Node name="TouchdownUI" selected="True" />
+          <Node name="TouchdownUI" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="Forms" expanded="True">
+              <Node name="MainWindow.cs" selected="True" />
+            </Node>
+          </Node>
         </State>
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">

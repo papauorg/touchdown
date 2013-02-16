@@ -59,4 +59,16 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Distance\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Distance\DistanceTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Touchdown.Core\Touchdown.csproj">
+      <Project>{A961A00B-B2BB-4129-9E51-BEB2BC2DD7B3}</Project>
+      <Name>Touchdown</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

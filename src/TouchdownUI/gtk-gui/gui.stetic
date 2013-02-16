@@ -8,15 +8,310 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/TouchdownUI.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="619 400">
+  <widget class="Gtk.Window" id="MainWindow" design-size="970 558">
+    <action-group name="Default">
+      <action id="DateiAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Datei</property>
+        <property name="ShortLabel" translatable="yes">Datei</property>
+      </action>
+      <action id="BeendenAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Beenden</property>
+        <property name="ShortLabel" translatable="yes">Beenden</property>
+      </action>
+      <action id="GestenAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Gesten</property>
+        <property name="ShortLabel" translatable="yes">Gesten</property>
+      </action>
+      <action id="dndMultipleAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Neue Geste aufnehmen</property>
+        <property name="ShortLabel" translatable="yes">Neue Geste aufnehmen</property>
+        <property name="StockId">gtk-dnd-multiple</property>
+      </action>
+      <action id="mediaRecordAction1">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Gesten verwalten</property>
+        <property name="ShortLabel" translatable="yes">Gesten verwalten</property>
+        <property name="StockId">gtk-media-record</property>
+      </action>
+      <action id="DemoAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Demo</property>
+        <property name="ShortLabel" translatable="yes">Demo</property>
+      </action>
+      <action id="ImageSlideshowAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Image Slideshow</property>
+        <property name="ShortLabel" translatable="yes">Image Slideshow</property>
+      </action>
+      <action id="RequestHelpAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Request Help</property>
+        <property name="ShortLabel" translatable="yes">Request Help</property>
+      </action>
+      <action id="DateiAction1">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Datei</property>
+        <property name="ShortLabel" translatable="yes">Datei</property>
+      </action>
+      <action id="cancelAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Beenden</property>
+        <property name="ShortLabel" translatable="yes">Beenden</property>
+        <property name="StockId">gtk-cancel</property>
+        <signal name="Activated" handler="EndProgramm" after="yes" />
+      </action>
+      <action id="GestenAction1">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Gesten</property>
+        <property name="ShortLabel" translatable="yes">Gesten</property>
+      </action>
+      <action id="mediaRecordAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Neue Geste aufnehmen</property>
+        <property name="ShortLabel" translatable="yes">Neue Geste aufnehmen</property>
+        <property name="StockId">gtk-media-record</property>
+      </action>
+      <action id="openAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Gesten verwalten</property>
+        <property name="ShortLabel" translatable="yes">Gesten verwalten</property>
+        <property name="StockId">gtk-open</property>
+      </action>
+      <action id="DemoAction1">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Demo</property>
+        <property name="ShortLabel" translatable="yes">Demo</property>
+      </action>
+      <action id="dialogInfoAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Hilfe Zeichen in Fenstern</property>
+        <property name="ShortLabel" translatable="yes">Hilfe Zeichen in Fenstern</property>
+        <property name="StockId">gtk-dialog-info</property>
+      </action>
+      <action id="dialogInfoAction1">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Image Slideshow</property>
+        <property name="ShortLabel" translatable="yes">Image Slideshow</property>
+        <property name="StockId">gtk-dialog-info</property>
+      </action>
+      <action id="EngineAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Engine</property>
+        <property name="ShortLabel" translatable="yes">Engine</property>
+      </action>
+      <action id="mediaPlayAction">
+        <property name="Type">Toggle</property>
+        <property name="Label" translatable="yes">Starten</property>
+        <property name="ShortLabel" translatable="yes">Starten</property>
+        <property name="StockId">gtk-media-play</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+      </action>
+      <action id="mediaStopAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Stoppen</property>
+        <property name="ShortLabel" translatable="yes">Stoppen</property>
+        <property name="StockId">gtk-media-stop</property>
+      </action>
+    </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
+    <property name="Icon">stock:gtk-properties LargeToolbar</property>
     <property name="WindowPosition">CenterOnParent</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
-      <widget class="Gtk.Fixed" id="fixed1">
-        <property name="MemberName" />
-        <property name="HasWindow">False</property>
+      <widget class="Gtk.VBox" id="vbMenu">
+        <property name="MemberName">vbMenu</property>
+        <property name="Spacing">6</property>
+        <child>
+          <widget class="Gtk.MenuBar" id="menuMain">
+            <property name="MemberName">menuMain</property>
+            <node name="menuMain" type="Menubar">
+              <node type="Menu" action="DateiAction1">
+                <node type="Menuitem" action="cancelAction" />
+              </node>
+              <node type="Menu" action="EngineAction">
+                <node type="Menuitem" action="mediaPlayAction" />
+              </node>
+              <node type="Menu" action="GestenAction1">
+                <node type="Menuitem" action="mediaRecordAction" />
+                <node type="Menuitem" action="openAction" />
+              </node>
+              <node type="Menu" action="DemoAction1">
+                <node type="Menuitem" action="dialogInfoAction" />
+                <node type="Menuitem" action="dialogInfoAction1" />
+              </node>
+            </node>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">False</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Toolbar" id="toolbar1">
+            <property name="MemberName" />
+            <property name="ShowArrow">False</property>
+            <node name="__gtksharp_144_Stetic_Editor_ActionToolbar" type="Toolbar">
+              <node type="Toolitem" action="mediaPlayAction" />
+              <node type="Separator" />
+              <node type="Toolitem" action="dndMultipleAction" />
+              <node type="Toolitem" action="mediaRecordAction1" />
+            </node>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.VPaned" id="vpaned4">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Position">206</property>
+            <child>
+              <widget class="Gtk.HBox" id="hbox2">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <child>
+                  <widget class="Gtk.Frame" id="frameRGB">
+                    <property name="MemberName" />
+                    <property name="ShadowType">None</property>
+                    <child>
+                      <widget class="Gtk.Alignment" id="GtkAlignment">
+                        <property name="MemberName" />
+                        <property name="Xalign">0</property>
+                        <property name="Yalign">0</property>
+                        <property name="LeftPadding">12</property>
+                        <child>
+                          <widget class="Gtk.Image" id="rgbImage">
+                            <property name="MemberName">rgbImage</property>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="GtkLabel6">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">RGB Image</property>
+                        <property name="UseMarkup">True</property>
+                      </widget>
+                      <packing>
+                        <property name="type">label_item</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Frame" id="frameDepth">
+                    <property name="MemberName" />
+                    <property name="ShadowType">None</property>
+                    <child>
+                      <widget class="Gtk.Alignment" id="GtkAlignment1">
+                        <property name="MemberName" />
+                        <property name="Xalign">0</property>
+                        <property name="Yalign">0</property>
+                        <property name="LeftPadding">12</property>
+                        <child>
+                          <widget class="Gtk.Image" id="depthImage">
+                            <property name="MemberName">depthImage</property>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="GtkLabel7">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Depth Image</property>
+                        <property name="UseMarkup">True</property>
+                      </widget>
+                      <packing>
+                        <property name="type">label_item</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Frame" id="frameTouchpoints">
+                    <property name="MemberName" />
+                    <property name="ShadowType">None</property>
+                    <child>
+                      <widget class="Gtk.Alignment" id="GtkAlignment2">
+                        <property name="MemberName" />
+                        <property name="Xalign">0</property>
+                        <property name="Yalign">0</property>
+                        <property name="LeftPadding">12</property>
+                        <child>
+                          <widget class="Gtk.Image" id="touchImage">
+                            <property name="MemberName" />
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="GtkLabel8">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Tochpoints</property>
+                        <property name="UseMarkup">True</property>
+                      </widget>
+                      <packing>
+                        <property name="type">label_item</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">2</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Resize">False</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder />
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">True</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Statusbar" id="statusbar">
+            <property name="MemberName">statusbar</property>
+            <property name="Spacing">6</property>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">3</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
       </widget>
     </child>
   </widget>

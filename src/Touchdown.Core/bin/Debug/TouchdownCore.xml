@@ -182,7 +182,7 @@
             Depth value.
             </param>
         </member>
-        <member name="M:Touchdown.SensorAbstraction.DepthFrame.op_Subtraction(Touchdown.SensorAbstraction.DepthFrame,System.Int16[])">
+        <member name="M:Touchdown.SensorAbstraction.DepthFrame.op_Subtraction(Touchdown.SensorAbstraction.DepthFrame,Touchdown.SensorAbstraction.DepthFrame)">
             <param name="orig">
             Frame from the sensor.
             </param>
@@ -343,9 +343,20 @@
             Occurs when touch frame is ready.
             </summary>
         </member>
+        <member name="M:Touchdown.Core.SimpleTouchAreaObserver.ExtractTouchPoints(System.Int16[])">
+            <summary>
+            Extracts the touch points from the raw, blurry points extracted from the backgroundmodel and the frames.
+            </summary>
+            <returns>
+            The touch points.
+            </returns>
+            <param name="rawPoints">
+            Raw points.
+            </param>
+        </member>
         <member name="M:Touchdown.Core.SimpleTouchAreaObserver.ApplyThreshold(System.Int16[],System.UInt32,System.UInt32)">
             <summary>
-            Removes all items of the array that are smaller than <param cref="minDistance" />
+            sets all items of the array to -1 that are smaller than <param cref="minDistance" />
             and greater than <param name="maxDistance" /></summary>
             <returns>
             The threshold.
@@ -439,6 +450,66 @@
             <returns>
             The average distance.
             </returns>
+        </member>
+        <member name="T:Touchdown.Core.IPointDistanceProvider">
+            <summary>
+            Provides a method to calculate the distance between two touch points.
+            </summary>
+        </member>
+        <member name="M:Touchdown.Core.IPointDistanceProvider.GetDistance(Touchdown.Core.TouchPoint,Touchdown.Core.TouchPoint)">
+            <summary>
+            Gets the distance between two touch points.
+            </summary>
+            <returns>
+            The distance.
+            </returns>
+            <param name="first">
+            First.
+            </param>
+            <param name="second">
+            Second.
+            </param>
+        </member>
+        <member name="T:Touchdown.Core.TouchPoint">
+            <summary>
+            Defines a recognized touch point as coordinates of the TouchArea.
+            </summary>
+        </member>
+        <member name="M:Touchdown.Core.TouchPoint.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Touchdown.Core.TouchPoint" /> class.
+            </summary>
+            <param name="xPosition">
+            X position.
+            </param>
+            <param name="yPosition">
+            Y position.
+            </param>
+        </member>
+        <member name="P:Touchdown.Core.TouchPoint.X">
+            <summary>
+            Gets the x position.
+            </summary>
+            <value>
+            The x position.
+            </value>
+        </member>
+        <member name="P:Touchdown.Core.TouchPoint.Y">
+            <summary>
+            Gets the y position.
+            </summary>
+            <value>
+            The y.
+            </value>
+        </member>
+        <member name="T:Touchdown.Core.EucledianDistanceProvider">
+            <summary>
+            Provides logic to calculate the eucledian distance between two touch points. Is equal to the Pythagorean theorem.
+            http://en.wikipedia.org/wiki/Euclidean_distance
+            </summary>
+        </member>
+        <member name="M:Touchdown.Core.EucledianDistanceProvider.Touchdown#Core#IPointDistanceProvider#GetDistance(Touchdown.Core.TouchPoint,Touchdown.Core.TouchPoint)">
+            <inheritdoc />
         </member>
     </members>
 </doc>

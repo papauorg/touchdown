@@ -56,9 +56,13 @@
     <Compile Include="Core\TouchFrameReadyEventArgs.cs" />
     <Compile Include="SensorAbstraction\TouchSettings.cs" />
     <Compile Include="SensorAbstraction\DepthFrameList.cs" />
+    <Compile Include="Core\DistanceCalculation\IPointDistanceProvider.cs" />
+    <Compile Include="SensorAbstraction\TouchPoint.cs" />
+    <Compile Include="Core\DistanceCalculation\EucledianDistanceProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Core\" />
+    <Folder Include="Core\DistanceCalculation\" />
   </ItemGroup>
 </Project>
