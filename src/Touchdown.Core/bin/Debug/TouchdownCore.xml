@@ -514,5 +514,9 @@
         <member name="M:Touchdown.Core.EucledianDistanceProvider.Touchdown#Core#IPointDistanceProvider#GetDistance(Touchdown.SensorAbstraction.TouchPoint,Touchdown.SensorAbstraction.TouchPoint)">
             <inheritdoc />
         </member>
+        <member name="T:Touchdown.Core.Contour">
+            <summary>
+            Contour. List of points that represent a contour around a <see cref="T:Touchdown.SensorAbstraction.TouchPoint" /></summary>
+        </member>
     </members>
 </doc>

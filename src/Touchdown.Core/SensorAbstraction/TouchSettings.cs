@@ -17,6 +17,8 @@ namespace Touchdown.SensorAbstraction {
 			this.FrameCountForAverageBackgroundModel 	= 100;
 			this.MaxDistanceFromBackground 	= 20;
 			this.MinDistanceFromBackround 	= 7;
+			this.DepthFrameResolution = new System.Drawing.Rectangle(0,0, 640, 480);
+			this.ContourThreshold = 0;
 		}
 		
 		#endregion
@@ -47,5 +49,23 @@ namespace Touchdown.SensorAbstraction {
 		/// The minimum distance from backround threshold.
 		/// </value>
 		public uint MinDistanceFromBackround {get; set;}
+	
+		/// <summary>
+		/// Gets or sets the depth frame resolution.
+		/// </summary>
+		/// <value>
+		/// The depth frame resolution.
+		/// </value>
+		public System.Drawing.Rectangle DepthFrameResolution{get; set;}
+		
+		/// <summary>
+		/// Gets or sets the contour threshold. Defines the depth value of a pixel that 
+		/// must be overwhelmed to be recognized as neighbour.
+		/// </summary>
+		/// <value>
+		/// The contour threshold.
+		/// </value>
+		public uint ContourThreshold{get; set;}
+		
 	}
 }

@@ -1,20 +1,36 @@
 ﻿<Properties GitUserInfo="UsingMD">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/TouchdownUI/Forms/MainWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/Touchdown.Core/Core/SimpleTouchAreaObserver.cs">
     <Files>
-      <File FileName="src/TouchdownUI/Forms/MainWindow.cs" Line="33" Column="1" />
+      <File FileName="src/Touchdown.Core/Core/SimpleTouchAreaObserver.cs" Line="152" Column="4" />
+      <File FileName="src/Touchdown.Core/Core/Contour.cs" Line="5" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Option id="ShowAllFiles" value="True" />
-          <Node name="TouchdownUI" expanded="True">
-            <Node name="References" expanded="True" />
-            <Node name="Forms" expanded="True">
-              <Node name="MainWindow.cs" selected="True" />
+          <Node name="Tests" expanded="True">
+            <Node name="TouchdownTests" expanded="True">
+              <Node name="Distance" expanded="True" />
             </Node>
           </Node>
+          <Node name="Touchdown" expanded="True">
+            <Node name="Core" expanded="True">
+              <Node name="DistanceCalculation" expanded="True" />
+              <Node name="SimpleTouchAreaObserver.cs" selected="True" />
+            </Node>
+            <Node name="SensorAbstraction" expanded="True" />
+          </Node>
+          <Node name="TouchdownUI" expanded="True">
+            <Node name="Forms" expanded="True" />
+          </Node>
         </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
         <State expanded="True" selected="True" />

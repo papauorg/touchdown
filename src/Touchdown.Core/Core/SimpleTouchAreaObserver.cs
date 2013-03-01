@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Touchdown.SensorAbstraction;
 using System.Linq;
+using System.Drawing;
 
 namespace Touchdown.Core {
 	/// <summary>
@@ -74,17 +75,21 @@ namespace Touchdown.Core {
 					 this.ApplyThreshold(foreGroundDepth, 
 					 					 this._settings.MinDistanceFromBackround, 
 					 					 this._settings.MaxDistanceFromBackground);
+					 			
+					 // create matrix for easier access
+					 short[][] depthMatrix = this.convertToMatrix(rawPoints);
 					 					 
 					 /* the extracted background contains now only the parts of the image where something is different
 			 * 		  *	than the background. In this case usually fingers. 
 			 		  *	There are very "blury" areas where the finger are located. Extract the touchpoints of it. */
-			 		  List<TouchPoint> touchPoints = this.ExtractTouchPoints(rawPoints);
+			 		  List<TouchPoint> touchPoints = this.ExtractTouchPoints(depthMatrix);
 			 		  
 			 		  //new SimpleTouchFrame(e.FrameData.FrameTime, e.FrameData.Data);
 			 		  
 				}
 			}
 		}
+		
 		
 		private void RGBFrameReadyHandler(object sender, RGBFrameReadyEventArgs e){
 			if (TouchFrameReady != null){
@@ -101,8 +106,39 @@ namespace Touchdown.Core {
 		/// <param name='rawPoints'>
 		/// Raw points.
 		/// </param>
-		List<TouchPoint> ExtractTouchPoints(short[] rawPoints) {
-			throw new NotImplementedException ();
+		private List<TouchPoint> ExtractTouchPoints(short[][] depthMatrix) {
+			List<TouchPoint> resultingPoints = new List<TouchPoint>();
+			
+			List<Contour> contours = this.FindContours(depthMatrix);
+			
+			return resultingPoints;
+		}
+		
+		/// <summary>
+		/// Converts the short array of the depth information to a two dimensional matrix.
+		/// </summary>
+		/// <returns>
+		/// The to matrix.
+		/// </returns>
+		/// <param name='rawPoints'>
+		/// Raw points.
+		/// </param>
+		private short[][] ConvertToMatrix(short[] rawPoints){
+			int width = this._settings.DepthResolution.Width;
+			int height = this._settings.DepthResolution.Height;
+			
+			// first dimension is the column (X)
+			// second holds the row (Y)
+			short[][] matrix = new short[width][height];
+			
+			for (int row = 0; row < height; ++row){
+				for (int col = 0; col < width; ++col){
+					int rawIndex = row * width + col;
+					
+					if (col > 0 && col < width-1 && row > 0 )
+					matrix[col][row] = rawPoints[rawIndex];
+				}
+			}
 		}
 		
 		/// <summary>
