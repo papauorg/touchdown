@@ -264,7 +264,7 @@
             any additional info about it.
             </summary>
         </member>
-        <member name="M:Touchdown.SensorAbstraction.SimpleTouchFrame.#ctor(System.DateTime,Touchdown.SensorAbstraction.SensorData,System.Collections.Generic.IEnumerable{Touchdown.SensorAbstraction.TouchPoint})">
+        <member name="M:Touchdown.SensorAbstraction.SimpleTouchFrame.#ctor(System.DateTime,Touchdown.SensorAbstraction.SensorData,System.Collections.Generic.IList{Touchdown.SensorAbstraction.TouchPoint})">
             <summary>
             Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.SimpleTouchFrame" /> class.
             </summary>
@@ -277,6 +277,14 @@
             <param name="touchpoints">
             the touchpoints that are relevant for this frame.
             </param>
+        </member>
+        <member name="P:Touchdown.SensorAbstraction.SimpleTouchFrame.TouchPoints">
+            <summary>
+            Gets the touch points.
+            </summary>
+            <value>
+            The touch points.
+            </value>
         </member>
         <member name="M:Touchdown.SensorAbstraction.SimpleTouchFrame.CreateBitmap">
             <summary>
@@ -346,12 +354,23 @@
             Occurs when touch frame is ready.
             </summary>
         </member>
-        <member name="M:Touchdown.Core.SimpleTouchAreaObserver.ExtractTouchPoints(System.Int16[])">
+        <member name="M:Touchdown.Core.SimpleTouchAreaObserver.ExtractTouchPoints(System.Boolean[,]@)">
             <summary>
             Extracts the touch points from the raw, blurry points extracted from the backgroundmodel and the frames.
             </summary>
             <returns>
             The touch points.
+            </returns>
+            <param name="isTouched">
+            depthmatrix
+            </param>
+        </member>
+        <member name="M:Touchdown.Core.SimpleTouchAreaObserver.ConvertToMatrix(System.Int16[])">
+            <summary>
+            Converts the short array of the depth information to a two dimensional matrix.
+            </summary>
+            <returns>
+            The to matrix.
             </returns>
             <param name="rawPoints">
             Raw points.
@@ -423,6 +442,39 @@
             </summary>
             <value>
             The minimum distance from backround threshold.
+            </value>
+        </member>
+        <member name="P:Touchdown.SensorAbstraction.TouchSettings.DepthFrameResolution">
+            <summary>
+            Gets or sets the depth frame resolution.
+            </summary>
+            <value>
+            The depth frame resolution.
+            </value>
+        </member>
+        <member name="P:Touchdown.SensorAbstraction.TouchSettings.ContourThreshold">
+            <summary>
+            Gets or sets the contour threshold. Defines the depth value of a pixel that
+            must be overwhelmed to be recognized as neighbour.
+            </summary>
+            <value>
+            The contour threshold.
+            </value>
+        </member>
+        <member name="P:Touchdown.SensorAbstraction.TouchSettings.MaxContourLength">
+            <summary>
+            Gets or sets the max contour lenth.
+            </summary>
+            <value>
+            The max contour lenth.
+            </value>
+        </member>
+        <member name="P:Touchdown.SensorAbstraction.TouchSettings.MinContourLength">
+            <summary>
+            Gets or sets the minimum length of the contour.
+            </summary>
+            <value>
+            The minimum length of the contour.
             </value>
         </member>
         <member name="T:Touchdown.Core.DepthFrameList">
@@ -517,6 +569,153 @@
         <member name="T:Touchdown.Core.Contour">
             <summary>
             Contour. List of points that represent a contour around a <see cref="T:Touchdown.SensorAbstraction.TouchPoint" /></summary>
+        </member>
+        <member name="T:Touchdown.Core.Contour.ContourDirection">
+            <summary>Internally used to search for the contour</summary>
+        </member>
+        <member name="F:Touchdown.Core.Contour.ContourDirection.South">
+            <summary>
+            Search for next point in y+1
+            </summary>
+        </member>
+        <member name="F:Touchdown.Core.Contour.ContourDirection.East">
+            <summary>
+            Search for next point in x+1
+            </summary>
+        </member>
+        <member name="F:Touchdown.Core.Contour.ContourDirection.North">
+            <summary>
+            Search for next point in y-1
+            </summary>
+        </member>
+        <member name="F:Touchdown.Core.Contour.ContourDirection.West">
+            <summary>
+            Search for next point in x-1
+            </summary>
+        </member>
+        <member name="M:Touchdown.Core.Contour.GetMiddle">
+            <summary>
+            Returns the touch point that is located in the middle of the countour.
+            </summary>
+            <returns>
+            The middle.
+            </returns>
+        </member>
+        <member name="M:Touchdown.Core.Contour.FindContours(System.Boolean[,]@,Touchdown.SensorAbstraction.TouchSettings)">
+            <summary>
+            Finds the contours of possible touchpoints.
+            </summary>
+            <returns>
+            The contours.
+            </returns>
+            <param name="isTouched">
+            matrix with the information if a pixel is considered as touched.
+            </param>
+            <param name="settings">settings</param>
+        </member>
+        <member name="M:Touchdown.Core.Contour.FindContour(Touchdown.Core.ContourPoint,System.Boolean[,]@,System.Boolean[,]@,Touchdown.SensorAbstraction.TouchSettings)">
+            <summary>
+            Tries to find the contour using the turtle algorithm
+            </summary>
+            <returns>
+            The contour.
+            </returns>
+            <param name="startPoint">
+            Start point.
+            </param>
+            <param name="contourArr">
+            Contour arr.
+            </param>
+            <param name="isTouched">
+            Is touched.
+            </param>
+            <param name="settings">
+            Settings.
+            </param>
+        </member>
+        <member name="T:Touchdown.Core.ContourPoint">
+            <summary>
+            defines one point in a contour.
+            </summary>
+        </member>
+        <member name="M:Touchdown.Core.ContourPoint.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Touchdown.Core.ContourPoint" /> class.
+            </summary>
+            <param name="x">
+            X position.
+            </param>
+            <param name="y">
+            Y position.
+            </param>
+        </member>
+        <member name="M:Touchdown.Core.ContourPoint.#ctor(Touchdown.Core.ContourPoint)">
+            <summary>
+            copies the given instance of the <see cref="T:Touchdown.Core.ContourPoint" /> class.
+            </summary>
+            <param name="point">
+            Point.
+            </param>
+        </member>
+        <member name="P:Touchdown.Core.ContourPoint.X">
+            <summary>
+            Gets or sets the x.
+            </summary>
+            <value>
+            The x.
+            </value>
+        </member>
+        <member name="P:Touchdown.Core.ContourPoint.Y">
+            <summary>
+            Gets or sets the y.
+            </summary>
+            <value>
+            The y.
+            </value>
+        </member>
+        <member name="M:Touchdown.Core.ContourPoint.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:Touchdown.Core.ContourPoint" />.
+            </summary>
+            <param name="obj">
+            The <see cref="T:System.Object" /> to compare with the current <see cref="T:Touchdown.Core.ContourPoint" />.
+            </param>
+            <returns>
+                <c>true</c> if the specified <see cref="T:System.Object" /> is equal to the current
+            <see cref="T:Touchdown.Core.ContourPoint" />; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Touchdown.Core.ContourPoint.GetHashCode">
+            <summary>
+            Serves as a hash function for a <see cref="T:Touchdown.Core.ContourPoint" /> object.
+            </summary>
+            <returns>
+            A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a hash table.
+            </returns>
+        </member>
+        <member name="M:Touchdown.Core.ContourPoint.Move(Touchdown.Core.Contour.ContourDirection)">
+            <summary>
+            Move the point to specified direction.
+            </summary>
+            <param name="direction">
+            Direction.
+            </param>
+        </member>
+        <member name="M:Touchdown.Core.ContourPoint.op_Equality(Touchdown.Core.ContourPoint,Touchdown.Core.ContourPoint)">
+            <param name="orig">
+            If set to <c>true</c> original.
+            </param>
+            <param name="compare">
+            If set to <c>true</c> compare.
+            </param>
+        </member>
+        <member name="M:Touchdown.Core.ContourPoint.op_Inequality(Touchdown.Core.ContourPoint,Touchdown.Core.ContourPoint)">
+            <param name="orig">
+            If set to <c>true</c> original.
+            </param>
+            <param name="compare">
+            If set to <c>true</c> compare.
+            </param>
         </member>
     </members>
 </doc>

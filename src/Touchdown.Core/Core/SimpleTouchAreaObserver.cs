@@ -76,16 +76,23 @@ namespace Touchdown.Core {
 					 					 this._settings.MinDistanceFromBackround, 
 					 					 this._settings.MaxDistanceFromBackground);
 					 			
-					 // create matrix for easier access
-					 short[][] depthMatrix = this.convertToMatrix(rawPoints);
+					 // create matrix that contains information if the pixel is
+					 // considered a touched pixel. Use a matrix instead of an array 
+					 // for easier access.
+					 bool[,] isTouched = this.ConvertToMatrix(rawPoints);
 					 					 
 					 /* the extracted background contains now only the parts of the image where something is different
 			 * 		  *	than the background. In this case usually fingers. 
 			 		  *	There are very "blury" areas where the finger are located. Extract the touchpoints of it. */
-			 		  List<TouchPoint> touchPoints = this.ExtractTouchPoints(depthMatrix);
-			 		  
-			 		  //new SimpleTouchFrame(e.FrameData.FrameTime, e.FrameData.Data);
-			 		  
+			 		 List<TouchPoint> touchPoints = this.ExtractTouchPoints(ref isTouched);
+
+			 		 SimpleTouchFrame touchFrame 
+			 		 					= new SimpleTouchFrame(e.FrameData.FrameTime, e.FrameData.Data, touchPoints);
+			 		 
+			 		 FrameReadyEventArgs<SimpleTouchFrame> eventArgs 
+			 		  					= new TouchFrameReadyEventArgs(touchFrame);
+			 		  					
+			 		 TouchFrameReady(this, eventArgs);
 				}
 			}
 		}
@@ -103,14 +110,17 @@ namespace Touchdown.Core {
 		/// <returns>
 		/// The touch points.
 		/// </returns>
-		/// <param name='rawPoints'>
-		/// Raw points.
+		/// <param name='isTouched'>
+		/// depthmatrix 
 		/// </param>
-		private List<TouchPoint> ExtractTouchPoints(short[][] depthMatrix) {
+		private List<TouchPoint> ExtractTouchPoints(ref bool[,] isTouched) {
 			List<TouchPoint> resultingPoints = new List<TouchPoint>();
 			
-			List<Contour> contours = this.FindContours(depthMatrix);
+			List<Contour> contours = Contour.FindContours(ref isTouched, this._settings);
 			
+			if (contours != null && contours.Count > 0){
+				contours.ForEach((x)=> resultingPoints.Add(x.GetMiddle()));
+			}
 			return resultingPoints;
 		}
 		
@@ -123,22 +133,24 @@ namespace Touchdown.Core {
 		/// <param name='rawPoints'>
 		/// Raw points.
 		/// </param>
-		private short[][] ConvertToMatrix(short[] rawPoints){
-			int width = this._settings.DepthResolution.Width;
-			int height = this._settings.DepthResolution.Height;
+		private bool[,] ConvertToMatrix(short[] rawPoints){
+			int width = this._settings.DepthFrameResolution.Width;
+			int height = this._settings.DepthFrameResolution.Height;
 			
 			// first dimension is the column (X)
 			// second holds the row (Y)
-			short[][] matrix = new short[width][height];
+			bool[,] matrix = new bool[width, height];
 			
 			for (int row = 0; row < height; ++row){
 				for (int col = 0; col < width; ++col){
 					int rawIndex = row * width + col;
 					
 					if (col > 0 && col < width-1 && row > 0 )
-					matrix[col][row] = rawPoints[rawIndex];
+					matrix[col,row] = (rawPoints[rawIndex] > this._settings.ContourThreshold);
 				}
 			}
+			
+			return matrix;
 		}
 		
 		/// <summary>

@@ -60,6 +60,7 @@
     <Compile Include="SensorAbstraction\TouchPoint.cs" />
     <Compile Include="Core\DistanceCalculation\EucledianDistanceProvider.cs" />
     <Compile Include="Core\Contour.cs" />
+    <Compile Include="Core\ContourPoint.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

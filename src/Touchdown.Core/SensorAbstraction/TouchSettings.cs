@@ -19,6 +19,8 @@ namespace Touchdown.SensorAbstraction {
 			this.MinDistanceFromBackround 	= 7;
 			this.DepthFrameResolution = new System.Drawing.Rectangle(0,0, 640, 480);
 			this.ContourThreshold = 0;
+			this.MaxContourLength = 300;
+			this.MinContourLength = 50;
 		}
 		
 		#endregion
@@ -67,5 +69,20 @@ namespace Touchdown.SensorAbstraction {
 		/// </value>
 		public uint ContourThreshold{get; set;}
 		
+		/// <summary>
+		/// Gets or sets the max contour lenth.
+		/// </summary>
+		/// <value>
+		/// The max contour lenth.
+		/// </value>
+		public int MaxContourLength{get; set;}
+		
+		/// <summary>
+		/// Gets or sets the minimum length of the contour.
+		/// </summary>
+		/// <value>
+		/// The minimum length of the contour.
+		/// </value>
+		public int MinContourLength{get; set;}
 	}
 }

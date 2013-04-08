@@ -2,17 +2,35 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Touchdown.SensorAbstraction;
+using System.Linq;
+
 
 namespace Touchdown.Core {
 	/// <summary>
 	/// Contour. List of points that represent a contour around a <see cref="TouchPoint"/>
 	/// </summary>
-	public class Contour : List<Point>{
+	public class Contour : List<ContourPoint>{
 		
-		private enum ContourDirection {
-			North = 0,
+		/// <summary>Internally used to search for the contour</summary>
+		public enum ContourDirection {
+			/// <summary>
+			/// Search for next point in y+1
+			/// </summary>
+			South = 0,
+			
+			/// <summary>
+			/// Search for next point in x+1
+			/// </summary>
 			East  = 1, 
-			South = 2,
+			
+			/// <summary>
+			/// Search for next point in y-1
+			/// </summary>
+			North = 2,
+			
+			/// <summary>
+			/// Search for next point in x-1
+			/// </summary>
 			West  = 3
 		}
 	
@@ -21,54 +39,111 @@ namespace Touchdown.Core {
 		
 		#region public methods
 		/// <summary>
+		/// Returns the touch point that is located in the middle of the countour.
+		/// </summary>
+		/// <returns>
+		/// The middle.
+		/// </returns>
+		public TouchPoint GetMiddle(){
+			TouchPoint result;
+			
+			// topmost point
+			int minY = this.Min(x=> x.Y);
+			
+			// lowest point
+			int maxY = this.Max(x=> x.Y);
+			
+			// leftmost point
+			int minX = this.Min(x=> x.X);
+			
+			// rightmost point
+			int maxX = this.Max(x=> x.X);
+			
+			// calculate middle
+			int deltaY = maxY - minY;
+			int deltaX = maxX - minX;
+			
+			
+			result = new TouchPoint(minX + deltaX / 2, minY + deltaY / 2 );
+			
+			return result;
+		}
+		
+		/// <summary>
 		/// Finds the contours of possible touchpoints.
 		/// </summary>
 		/// <returns>
 		/// The contours.
 		/// </returns>
-		/// <param name='rawPoints'>
-		/// Raw points.
+		/// <param name="isTouched">
+		/// matrix with the information if a pixel is considered as touched.
 		/// </param>
-		public static List<Contour> FindContours(short[][] depthMatrix, TouchSettings settings){
+		/// <param name="settings">settings</param>
+		public static List<Contour> FindContours(ref bool[,] isTouched, TouchSettings settings){
 			List<Contour> result = new List<Contour>();
 			
 			
-			int width = this._settings.DepthFrameResolution.Width;
-			int height = this._settings.DepthFrameResolution.Height;
+			int width = settings.DepthFrameResolution.Width;
+			int height = settings.DepthFrameResolution.Height;
 			
 			// holds the information if the contour points were already used 
-			// by the turtle algorithm (later on
-			bool[][] alreadyUsed; 
-			alreadyUsed = new bool[width][height];
+			// by the turtle algorithm (later on)
+			bool[,] contourArray; 
+			contourArray = new bool[width,height];
 			
+			// holds the ordered list of contourpoints also for turtle algorithm
+			List<ContourPoint> sortedContourList = new List<ContourPoint>();
+			
+			// remember all inside points
+			List<Point> insidePoints = new List<Point>();
+			
+			// loop through the depthmap but leave out the borders so the check can be made more easy.
 			for(int x = 1; x < width -1; ++x){
 				for(int y = 1; y < height -1; ++y){
 					// include all points that have a value
-					if(depthMatrix[x][y] > 0){
+					if(isTouched[x,y]){
 						int neighborCount = 0;
 						
 						// left
-						if (depthMatrix[x-1][y] > this._settings.ContourThreshold) ++neighborCount;
+						if (isTouched[x-1,y]) ++neighborCount;
 						
 						// right 
-						if (depthMatrix[x+1][y] > this._settings.ContourThreshold) ++neighborCount;
+						if (isTouched[x+1,y]) ++neighborCount;
 						
 						// above
-						if (depthMatrix[x][y-1] > this._settings.ContourThreshold) ++neighborCount;
+						if (isTouched[x,y-1]) ++neighborCount;
 						
 						// under
-						if (depthMatrix[x][y+1] > this._settings.ContourThreshold) ++neighborCount;
+						if (isTouched[x,y+1]) ++neighborCount;
+						
+						// all four pixels neighbours: point that is sorrounded
+						if (neighborCount == 4){
+							insidePoints.Add(new Point(x,y));
+						} else {
+							contourArray[x,y] = true;
+							sortedContourList.Add(new ContourPoint(x, y));
+						}
 					}
 				}
 			}
 			
+			// loop through the contourpoints and try to find contours
+			foreach(ContourPoint possibleContourPoint in sortedContourList){
+				// check if the current point is already used by another contour:
+				if(contourArray[possibleContourPoint.X, possibleContourPoint.Y]){
+					Contour current = Contour.FindContour(possibleContourPoint, ref contourArray, ref isTouched, settings);
+					if (current != null){
+						result.Add(current);
+					}
+				}
+			}
 			return result;
 		}
 		#endregion
 		
 		#region private method
 		/// <summary>
-		/// Finds the contour from the given startpoint.
+		/// Tries to find the contour using the turtle algorithm
 		/// </summary>
 		/// <returns>
 		/// The contour.
@@ -76,34 +151,83 @@ namespace Touchdown.Core {
 		/// <param name='startPoint'>
 		/// Start point.
 		/// </param>
-		/// <param name='depthMatrix'>
-		/// Depth matrix.
+		/// <param name='contourArr'>
+		/// Contour arr.
 		/// </param>
-		/// <param name='alreadyUsed'>
-		/// Already used.
+		/// <param name='isTouched'>
+		/// Is touched.
 		/// </param>
 		/// <param name='settings'>
 		/// Settings.
 		/// </param>
-		private static Contour FindContour(	Point startPoint, 
-											short[][] depthMatrix, 
-											bool[][] alreadyUsed, 
+		private static Contour FindContour(	ContourPoint startPoint, 
+											ref bool[,] contourArr,  
+											ref bool[,] isTouched,
 											TouchSettings settings){
-			Contour result = null;
 			
-			int height = settings.DepthFrameResolution.Height;
-			int width  = settings.DepthFrameResolution.Width;
+			ContourPoint current 	= new ContourPoint(startPoint.X, startPoint.Y);
+			ContourPoint next 		= new ContourPoint(int.MinValue, int.MinValue); // first run 
+			ContourPoint last 		= new ContourPoint(int.MinValue, int.MinValue); // first run 
 			
-			// differ between points that are sourrounded by other valid pixels = innerPoints
-			// and points that are not entirely sorrounded by other valid pixels = contourPoints
-			bool[][] innerPoints = new bool[width][height];
+			// result
+			Contour result = new Contour();
 			
-			// beginning at the start point first search in east direction for other points (clockwise)
-			ContourDirection = ContourDirection.East;
 			
-			// s
+			// find contour point that isn't the last one
+			do{
+				// find next from current
+				for (int i = 0; i < 8; ++i){
+					next = new ContourPoint(current);
+					
+					switch (i){
+						case 0: 
+							next.Move(ContourDirection.North);
+							next.Move(ContourDirection.West);
+							break;
+						case 1:
+							next.Move(ContourDirection.North);
+							break;
+						case 2:
+							next.Move(ContourDirection.North);
+							next.Move(ContourDirection.East);
+							break;
+						case 3:
+							next.Move(ContourDirection.East);
+							break;
+						case 4:
+							next.Move(ContourDirection.East);
+							next.Move(ContourDirection.South);
+							break;
+						case 5:
+							next.Move(ContourDirection.South);
+							break;
+						case 6:
+							next.Move(ContourDirection.South);
+							next.Move(ContourDirection.West);
+							break;
+						case 7:
+							next.Move(ContourDirection.West);
+							break;
+					}
+					
+					if (contourArr[next.X, next.Y] && next != last){
+						contourArr[next.X, next.Y] = false;
+						last = new ContourPoint(current);
+						current = next;
+						result.Add(current);
+						break;
+					} else if (i == 7) {
+						// when all positions around current have been searched (i=7) and
+						// next wasnt a valid position. then it's not a valid contour --> return null;
+						return null;
+					}
+				}
+			} while (current != startPoint);
 			
-			int count = 0;
+			// apply constraints for the length of the contour, to avoid noise interpreted as touch point
+			if(result.Count < settings.MinContourLength || result.Count > settings.MaxContourLength) {
+				result = null;
+			}
 			
 			return result;
 		}

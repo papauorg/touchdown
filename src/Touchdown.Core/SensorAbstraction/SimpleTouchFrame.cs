@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections.ObjectModel;
 
 namespace Touchdown.SensorAbstraction {
 		/// <summary>
@@ -9,7 +10,7 @@ namespace Touchdown.SensorAbstraction {
 		/// </summary>
 		public class SimpleTouchFrame : Frame {
 	
-		private IEnumerable<TouchPoint> touchPoints;
+		private IList<TouchPoint> touchPoints;
 		
 		#region Constructors / Destructors
 		/// <summary>
@@ -24,7 +25,9 @@ namespace Touchdown.SensorAbstraction {
 		/// <param name="touchpoints">
 		/// the touchpoints that are relevant for this frame.
 		/// </param>
-		public SimpleTouchFrame(DateTime frameTime, SensorData data, IEnumerable<TouchPoint> touchpoints) : base(frameTime, data) {
+		public SimpleTouchFrame(DateTime frameTime, 
+								SensorData data, 
+								IList<TouchPoint> touchpoints) : base(frameTime, data) {
 			this.touchPoints = touchpoints;
 		}
 		#endregion
@@ -42,7 +45,17 @@ namespace Touchdown.SensorAbstraction {
 		#endregion
 		
 		#region Properties
-
+		/// <summary>
+		/// Gets the touch points.
+		/// </summary>
+		/// <value>
+		/// The touch points.
+		/// </value>
+		public ReadOnlyCollection<TouchPoint> TouchPoints {
+			get{
+				return new ReadOnlyCollection<TouchPoint>(this.touchPoints);
+			}
+		}
 		#endregion
 		}
 }
