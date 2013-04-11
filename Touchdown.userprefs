@@ -1,12 +1,12 @@
 ﻿<Properties GitUserInfo="UsingMD">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/Touchdown.Core/Core/Contour.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/Touchdown.Core/Core/SimpleTouchAreaObserver.cs">
     <Files>
-      <File FileName="src/Touchdown.Core/Core/SimpleTouchAreaObserver.cs" Line="87" Column="60" />
-      <File FileName="src/Touchdown.Core/Core/Contour.cs" Line="144" Column="14" />
-      <File FileName="src/Touchdown.Core/SensorAbstraction/SimpleTouchFrame.cs" Line="31" Column="3" />
-      <File FileName="test/TouchdownTests/Distance/ContourTest.cs" Line="53" Column="30" />
-      <File FileName="src/Touchdown.Core/Core/ContourPoint.cs" Line="22" Column="1" />
+      <File FileName="src/Touchdown.Core/Core/SimpleTouchAreaObserver.cs" Line="37" Column="44" />
+      <File FileName="src/Touchdown.Core/Core/Contour.cs" Line="48" Column="22" />
+      <File FileName="src/Touchdown.Core/Core/ContourPoint.cs" Line="88" Column="42" />
+      <File FileName="src/Touchdown.Core/SensorAbstraction/SimpleTouchFrame.cs" Line="31" Column="9" />
+      <File FileName="src/Touchdown.Core/SensorAbstraction/TouchSettings.cs" Line="87" Column="3" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,8 +18,9 @@
             </Node>
           </Node>
           <Node name="Touchdown" expanded="True">
+            <Node name="References" expanded="True" />
             <Node name="Core" expanded="True">
-              <Node name="Contour.cs" selected="True" />
+              <Node name="SimpleTouchAreaObserver.cs" selected="True" />
             </Node>
             <Node name="SensorAbstraction" expanded="True" />
           </Node>
@@ -34,11 +35,15 @@
           <Value>result</Value>
           <Value>current.X</Value>
           <Value>current.Y</Value>
+          <Value>result[1].GetMiddle();</Value>
+          <Value>touchpoint</Value>
         </State>
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
         <State expanded="True">
-          <Node name="Tests" selected="True" />
+          <Node name="Tests" expanded="True">
+            <Node name="TouchdownTests" expanded="True" selected="True" />
+          </Node>
         </State>
       </Pad>
     </Pads>
@@ -46,7 +51,6 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/home/tuxford/Develop/NET/Touchdown/src/Touchdown.Core/Core/ContourPoint.cs" line="81" />
-      <Breakpoint file="/home/tuxford/Develop/NET/Touchdown/test/TouchdownTests/Distance/ContourTest.cs" line="64" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

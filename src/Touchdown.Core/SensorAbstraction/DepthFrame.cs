@@ -73,7 +73,7 @@ namespace Touchdown.SensorAbstraction {
 		/// <param name='toRemove'>
 		/// background model that should be removed..
 		/// </param>
-		public static short[] operator-(DepthFrame orig, DepthFrame toRemove){
+		public static DepthFrame operator-(DepthFrame orig, DepthFrame toRemove){
 			short[] result = new short[orig.DepthMap.Length];
 			short[] toRemoveArr = new short[toRemove.DepthMap.Length];
 			
@@ -86,7 +86,7 @@ namespace Touchdown.SensorAbstraction {
 				result[i] = (short)Math.Max(result[i] - toRemoveArr[i], 0);
 			}
 			
-			return result;
+			return new DepthFrame(DateTime.Now, null, result);
 		}
 		#endregion 
 		

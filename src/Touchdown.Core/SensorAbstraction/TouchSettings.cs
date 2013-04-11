@@ -84,5 +84,6 @@ namespace Touchdown.SensorAbstraction {
 		/// The minimum length of the contour.
 		/// </value>
 		public int MinContourLength{get; set;}
+		
 	}
 }

@@ -31,12 +31,7 @@ namespace Touchdown.SensorAbstraction {
 		///  The bitmap. 
 		/// </returns>
 		public override System.Drawing.Bitmap CreateBitmap() {
-			Bitmap image;
-			using (MemoryStream byteStream = new MemoryStream(base.Data.RawData)){
-				image = new Bitmap(Image.FromStream(byteStream));
-			}
-			
-			return image;
+			return null;
 		}
 		#endregion
 	}

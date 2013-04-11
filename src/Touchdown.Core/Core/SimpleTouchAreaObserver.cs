@@ -15,7 +15,9 @@ namespace Touchdown.Core {
 
 		private DepthFrameList _backgroundDistances;
 		private DepthFrame _avgBackground;
-		
+		private Rectangle _observeArea;
+
+			
 		/// <summary>
 		///  Occurs when touch frame is ready. 
 		/// </summary>
@@ -26,19 +28,29 @@ namespace Touchdown.Core {
 		/// Initializes a new instance of the <see cref="Touchdown.Core.SimpleTouchAreaObserver"/> class.
 		/// </summary>
 		/// <param name='sensor'>
-		/// Sensor.
+		/// Sensor used by the areaobserver.
 		/// </param>
 		/// <param name='settings'>
-		/// Settings.
+		/// Settings used for the areaobserver.
 		/// </param>
+		/// <param name="observedArea">constraint for touchpoints. only points within this area are recognized.
+		/// if not given, the whole area is used.</param>
 		/// <exception cref="ArgumentNullException">if <param name="sensor" />  or <param name="settings"/> is null</exception>
-		public SimpleTouchAreaObserver(IKinectSensorProvider sensor, TouchSettings settings) {
+		public SimpleTouchAreaObserver(	IKinectSensorProvider sensor, 
+										TouchSettings settings,
+										Rectangle observedArea) {
 			if (sensor == null){
 				throw new ArgumentNullException("sensor");
 			}
 			
 			if (settings == null){
 				throw new ArgumentNullException("settings");
+			}
+			
+			if (observedArea == null) {
+				this._observeArea = settings.DepthFrameResolution;
+			} else {
+				this._observeArea = observedArea;
 			}
 			
 			this._sensor = sensor;
@@ -67,12 +79,12 @@ namespace Touchdown.Core {
 					/* remove the background model from the current frame to have only 
 					   objects left that are not part of the background.
 					   Those objects should be used for recognition. (could be a hand for example) */
-					short[] foreGroundDepth = e.FrameData - this._avgBackground;
+					DepthFrame foreGround = e.FrameData - this._avgBackground;
 					
 					/*  apply the threshold of the settings to recognize all points that 
 					 *  are close enough to the background */
 					 short[] rawPoints = 
-					 this.ApplyThreshold(foreGroundDepth, 
+					 this.ApplyThreshold(foreGround.DistanceInMM, 
 					 					 this._settings.MinDistanceFromBackround, 
 					 					 this._settings.MaxDistanceFromBackground);
 					 			
@@ -87,9 +99,12 @@ namespace Touchdown.Core {
 			 		 List<TouchPoint> touchPoints = this.ExtractTouchPoints(ref isTouched);
 
 			 		 SimpleTouchFrame touchFrame 
-			 		 					= new SimpleTouchFrame(e.FrameData.FrameTime, e.FrameData.Data, touchPoints);
+			 		 					= new SimpleTouchFrame(e.FrameData.FrameTime, 
+			 		 										   e.FrameData.Data, 
+			 		 										   touchPoints/*, 
+			 		 										   this._observeArea*/);
 			 		 
-			 		 FrameReadyEventArgs<SimpleTouchFrame> eventArgs 
+			 		 TouchFrameReadyEventArgs eventArgs 
 			 		  					= new TouchFrameReadyEventArgs(touchFrame);
 			 		  					
 			 		 TouchFrameReady(this, eventArgs);
@@ -169,14 +184,14 @@ namespace Touchdown.Core {
 		/// <param name='maxDistance'>
 		/// Max distance.
 		/// </param>
-		private short[] ApplyThreshold(short[] backgroundExtracted, 
+		private short[] ApplyThreshold(int[] backgroundExtracted, 
 									   uint minDistance, uint maxDistance){
 			short[] result = new short[backgroundExtracted.Length];
 			
 			for (int i = 0; i < backgroundExtracted.Length; ++i){
-				short bgVal = backgroundExtracted[i];
+				int bgVal = backgroundExtracted[i];
 				if (bgVal >= minDistance && bgVal <= maxDistance){
-					result[i] = bgVal;
+					result[i] = (short)bgVal;
 				} else {
 					result[i] = -1;
 				}

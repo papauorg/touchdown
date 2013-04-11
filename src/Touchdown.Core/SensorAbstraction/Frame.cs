@@ -24,9 +24,6 @@ namespace Touchdown.SensorAbstraction {
 		/// Data.
 		/// </param>
 		public Frame(DateTime frameTime, SensorData data){
-			if (data == null){
-				throw new ArgumentNullException("data");
-			}
 			
 			this._frameTime = frameTime;
 			this._data		= data;

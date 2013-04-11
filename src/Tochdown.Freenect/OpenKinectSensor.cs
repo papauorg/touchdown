@@ -46,6 +46,8 @@ namespace Touchdown.Freenect {
 			_sensor.VideoCamera.DataReceived += this.HandleRGBDataReceived;
 			_sensor.DepthCamera.DataReceived += this.HandleDepthDataReceived;
 			
+			_sensor.LED.Color = LEDColor.Green;
+			
 			// initial state of the instance is not running
 			_isRunning = false;
 		}
@@ -64,7 +66,7 @@ namespace Touchdown.Freenect {
 				_sensor.DepthCamera.Start();
 				
 				// Set LED to Yellow
-				_sensor.LED.Color = LEDColor.Yellow;
+				_sensor.LED.Color = LEDColor.Green;
 				
 				_isRunning = true;
 				
@@ -76,6 +78,8 @@ namespace Touchdown.Freenect {
 						freenect.Kinect.ProcessEvents();
 					}
 				}));
+				
+				runner.Start();
 				
 				_log.DebugFormat("Started sensor loop. Thread: [{0}]", runner.ManagedThreadId);
 				
@@ -152,7 +156,7 @@ namespace Touchdown.Freenect {
 		/// Map.
 		/// </param>
 		private DepthFrame TransformToDepthFrame(freenect.DepthMap map, DateTime timeStamp) {
-			SensorData data = new SensorData(map.Width, map.Height, map.Data);
+			SensorData data = new SensorData(map.Width, map.Height, 2, map.Data);
 			short[] relativeDepth	= this.CalculateDepthBySensorData(map);
 			
 			// calculate the depth
@@ -171,7 +175,7 @@ namespace Touchdown.Freenect {
 		/// Map.
 		/// </param>
 		private RGBFrame TransformToRGBFrame(freenect.ImageMap map, DateTime timeStamp) {
-			SensorData data = new SensorData(map.Width, map.Height, map.Data);
+			SensorData data = new SensorData(map.Width, map.Height, 3, map.Data);
 			RGBFrame result = new RGBFrame(timeStamp, data);
 			
 			return result;

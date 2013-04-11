@@ -220,7 +220,7 @@
             openkinect framework
             </summary>
         </member>
-        <member name="M:Touchdown.SensorAbstraction.SensorData.#ctor(System.Int32,System.Int32,System.Byte[])">
+        <member name="M:Touchdown.SensorAbstraction.SensorData.#ctor(System.Int32,System.Int32,System.Int32,System.Byte[])">
             <summary>
             Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.SensorData" /> class.
             </summary>
@@ -337,16 +337,18 @@
             Simple touch area observer. Observes the given toucharea and creates touchframes of it.
             </summary>
         </member>
-        <member name="M:Touchdown.Core.SimpleTouchAreaObserver.#ctor(Touchdown.SensorAbstraction.IKinectSensorProvider,Touchdown.SensorAbstraction.TouchSettings)">
+        <member name="M:Touchdown.Core.SimpleTouchAreaObserver.#ctor(Touchdown.SensorAbstraction.IKinectSensorProvider,Touchdown.SensorAbstraction.TouchSettings,System.Drawing.Rectangle)">
             <summary>
             Initializes a new instance of the <see cref="T:Touchdown.Core.SimpleTouchAreaObserver" /> class.
             </summary>
             <param name="sensor">
-            Sensor.
+            Sensor used by the areaobserver.
             </param>
             <param name="settings">
-            Settings.
+            Settings used for the areaobserver.
             </param>
+            <param name="observedArea">constraint for touchpoints. only points within this area are recognized.
+            if not given, the whole area is used.</param>
             <exception cref="T:System.ArgumentNullException">if <param name="sensor" />  or <param name="settings" /> is null</exception>
         </member>
         <member name="E:Touchdown.Core.SimpleTouchAreaObserver.TouchFrameReady">
@@ -376,7 +378,7 @@
             Raw points.
             </param>
         </member>
-        <member name="M:Touchdown.Core.SimpleTouchAreaObserver.ApplyThreshold(System.Int16[],System.UInt32,System.UInt32)">
+        <member name="M:Touchdown.Core.SimpleTouchAreaObserver.ApplyThreshold(System.Int32[],System.UInt32,System.UInt32)">
             <summary>
             sets all items of the array to -1 that are smaller than <param cref="minDistance" />
             and greater than <param name="maxDistance" /></summary>

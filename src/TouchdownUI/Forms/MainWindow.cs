@@ -12,6 +12,8 @@ public partial class MainWindow: Gtk.Window
 	private TouchSettings _settings;
 	private OpenKinectSensor _sensor;
 	
+	private int rotator = 0;
+	
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
@@ -19,7 +21,22 @@ public partial class MainWindow: Gtk.Window
 		
 		// default settings
 		this._settings = new TouchSettings();
+		InitializeKinect();
+		
+		// observed area
+		Rectangle area = new Rectangle(0,0,640,480);
+		_observer = new SimpleTouchAreaObserver(_sensor, _settings, area);
+		_observer.TouchFrameReady += HandleTouchFrameReady;
 	}
+
+	void HandleTouchFrameReady (object sender, FrameReadyEventArgs<SimpleTouchFrame> e){
+		rotator = (rotator + 3) % 4;
+		Console.Write("Touchpoints: ");
+		Console.Write(rotator);
+		Console.Write (" ");
+		Console.WriteLine(e.FrameData.TouchPoints.Count);
+	}
+
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a){
 		Gtk.Application.Quit ();
@@ -37,9 +54,11 @@ public partial class MainWindow: Gtk.Window
 		// if device is present
 		if (freenect.Kinect.DeviceCount > 0){
 			this._sensor   = new OpenKinectSensor(new freenect.Kinect(0));
-			this._sensor.DepthFrameReady += (s, e) => HandleFrameReady<DepthFrame>(e, depthImage);
-			this._sensor.RGBFrameReady += (s, e) => HandleFrameReady<RGBFrame>(e, rgbImage);
+			// this._sensor.DepthFrameReady += (s, e) => HandleFrameReady<DepthFrame>(e, depthImage);
+			// this._sensor.RGBFrameReady += (s, e) => HandleFrameReady<RGBFrame>(e, rgbImage);
 		}
+		
+		this._sensor.Start();
 	}
 
 	/// <summary>
@@ -58,6 +77,8 @@ public partial class MainWindow: Gtk.Window
 		using (var imgStream = new System.IO.MemoryStream()){
 			e.FrameData.CreateBitmap().Save(imgStream, System.Drawing.Imaging.ImageFormat.Bmp);
 			img = new Gtk.Image(imgStream);
+		 	img.Pixbuf = new Gdk.Pixbuf (imgStream);  
 		}
 	}
+
 }

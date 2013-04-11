@@ -26,11 +26,11 @@ namespace Touchdown.SensorAbstraction {
 		/// <param name='data'>
 		/// Data.
 		/// </param>
-		public SensorData (int width, int height, byte[] data) {
+		public SensorData (int width, int height, int datalength, byte[] data) {
 			if (data == null){
 				throw new ArgumentNullException("data");
 			}
-			if (data.Length != width*height){
+			if (data.Length != width*height*datalength){
 				throw new ArgumentOutOfRangeException("The width * height does not match the byte data length");
 			}
 			_width = width;
@@ -71,7 +71,7 @@ namespace Touchdown.SensorAbstraction {
 		/// </value>
 		public byte[] RawData {
 			get {
-				byte[] returnArray = null;
+				byte[] returnArray = new byte[_data.Length];
 				_data.CopyTo(returnArray, 0);
 				return returnArray;
 			}
