@@ -38,5 +38,13 @@ namespace Touchdown.SensorAbstraction {
 		/// <see cref="RGBFrameReady"/> events will stop being fired.
 		/// </summary>
 		void Stop();
+
+		/// <summary>
+		/// Gets a value indicating whether this instance is running.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if this instance is running; otherwise, <c>false</c>.
+		/// </value>
+		bool IsRunning{get;}
 	}
 }

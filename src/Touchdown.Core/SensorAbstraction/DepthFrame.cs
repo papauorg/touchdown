@@ -7,8 +7,6 @@ namespace Touchdown.SensorAbstraction {
 	/// Represents a Depth frame. Contains depth data for recognizing by depth.
 	/// </summary>
 	public class DepthFrame : Frame {
-		
-		private short[] _depthData;
 		private int[] _distance;
 		
 		#region Constructors / Destructors
@@ -22,13 +20,7 @@ namespace Touchdown.SensorAbstraction {
 		/// <param name='data'>
 		/// Data.
 		/// </param>
-		/// <param name="depthData">Relative depth data (value from 0 to 2048 that represents the depth)</param>
-		public DepthFrame(DateTime frameTime, SensorData data, short[] depthData) : base(frameTime, data){
-			if (depthData == null){
-				throw new ArgumentNullException("depthData");
-			}
-			
-			this._depthData = depthData;
+		public DepthFrame(DateTime frameTime, SensorData data) : base(frameTime, data){
 			this.CalculateDistance();
 		}
 		
@@ -47,7 +39,7 @@ namespace Touchdown.SensorAbstraction {
 		/// <param name='distanceinMM'>
 		/// Distancein M.
 		/// </param>
-		public DepthFrame(DateTime frameTime, SensorData data, short[] depthData, int[] distanceinMM) 
+		public DepthFrame(DateTime frameTime, SensorData data, int[] distanceinMM) 
 					: this(frameTime, data, depthData){
 			this._distance = distanceinMM;
 		}

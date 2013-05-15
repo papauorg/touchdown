@@ -6,6 +6,7 @@ using Touchdown.SensorAbstraction;
 using System.Threading;
 using log4net;
 using System.Runtime.InteropServices;
+using System.Linq;
 
 namespace Touchdown.Freenect {
 	/// <summary>
@@ -132,7 +133,7 @@ namespace Touchdown.Freenect {
 		/// Sender.
 		/// </param>
 		/// <param name='e'>
-		/// E.
+		/// event arguments.
 		/// </param>
 		private void HandleDepthDataReceived(object sender, BaseCamera.DataReceivedEventArgs e){
 			// if there are any subscribers to the event, convert to touchdown dataformat
@@ -156,11 +157,11 @@ namespace Touchdown.Freenect {
 		/// Map.
 		/// </param>
 		private DepthFrame TransformToDepthFrame(freenect.DepthMap map, DateTime timeStamp) {
-			SensorData data = new SensorData(map.Width, map.Height, 2, map.Data);
 			short[] relativeDepth	= this.CalculateDepthBySensorData(map);
 			
+			SensorData data = new SensorData(map.Width, map.Height, relativeDepth, map);
 			// calculate the depth
-			DepthFrame result = new DepthFrame(timeStamp, data, relativeDepth);
+			DepthFrame result = new DepthFrame(timeStamp, data);
 			
 			return result;
 		}
@@ -175,14 +176,14 @@ namespace Touchdown.Freenect {
 		/// Map.
 		/// </param>
 		private RGBFrame TransformToRGBFrame(freenect.ImageMap map, DateTime timeStamp) {
-			SensorData data = new SensorData(map.Width, map.Height, 3, map.Data);
+			SensorData data = new SensorData(map.Width, map.Height, map.Data.Cast<short>().ToArray(), map);
 			RGBFrame result = new RGBFrame(timeStamp, data);
 			
 			return result;
 		}
 		
 		/// <summary>
-		/// Converts the raw imagedata to a depth map that represents the depth by a value between 0 and 2048
+		/// Converts the raw imagedata to a depth map that represents the depth by a value between 0 and 2047
 		/// </summary>
 		/// <returns>
 		/// The depth by sensor data.
@@ -208,12 +209,7 @@ namespace Touchdown.Freenect {
 		#endregion
 		
 		#region Properties
-		/// <summary>
-		/// Gets a value indicating whether this instance is running.
-		/// </summary>
-		/// <value>
-		/// <c>true</c> if this instance is running; otherwise, <c>false</c>.
-		/// </value>
+		/// <inheritdoc />
 		public bool IsRunning{
 			get{
 				return _isRunning;

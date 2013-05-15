@@ -5,13 +5,12 @@ using System.Text;
 namespace Touchdown.SensorAbstraction {
 	
 	/// <summary>
-	/// Provides Raw sensor data of the Kinect. Uses 1-dimensional bytearray due to easy compatibility with the 
-	/// openkinect framework
+	/// Provides Raw sensor data of the Kinect.
 	/// </summary>
 	public class SensorData {
 		private int _width;
 		private int _height;
-		private byte[] _data;
+		private short[] _data;
 
 		#region Constructors / Destructors
 		/// <summary>
@@ -24,21 +23,26 @@ namespace Touchdown.SensorAbstraction {
 		/// Height.
 		/// </param>
 		/// <param name='data'>
-		/// Data.
+		/// distance data 0-2047.
 		/// </param>
-		public SensorData (int width, int height, int datalength, byte[] data) {
+		public SensorData (int width, int height, short[] data, object origSensorData) {
 			if (data == null){
 				throw new ArgumentNullException("data");
 			}
-			if (data.Length != width*height*datalength){
-				throw new ArgumentOutOfRangeException("The width * height does not match the byte data length");
-			}
-			_width = width;
-			_height = height;
-			_data = data;
+			this.OriginalData = origSensorData;
+			this._width = width;
+			this._height = height;
+			this._data = data;
 		}
+
+
 		#endregion
 		
+		/// <summary>
+		/// holds the original sensor data by the native sensor.
+		/// </summary>
+		public object OriginalData{get; private set;}
+
 		/// <summary>
 		/// Gets the width.
 		/// </summary>
@@ -69,11 +73,9 @@ namespace Touchdown.SensorAbstraction {
 		/// <value>
 		/// The raw data.
 		/// </value>
-		public byte[] RawData {
+		public short[] RawData {
 			get {
-				byte[] returnArray = new byte[_data.Length];
-				_data.CopyTo(returnArray, 0);
-				return returnArray;
+				return _data;
 			}
 		}
 	}
