@@ -157,7 +157,7 @@ namespace Touchdown.MicrosoftSDK {
 			}
 			img.CopyPixelDataTo(this.temporaryRGBData);
 
-			SensorData data = new SensorData(img.Width, img.Height, this.temporaryRGBData, img);
+			SensorData data = new SensorData(img.Width, img.Height, null, img);
 			RGBFrame result = new RGBFrame(new DateTime(img.Timestamp), data);
 			
 			return result;

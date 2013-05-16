@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Touchdown.SensorAbstraction {
 	/// <summary>
@@ -8,22 +9,8 @@ namespace Touchdown.SensorAbstraction {
 	/// </summary>
 	public class DepthFrame : Frame {
 		private int[] _distance;
-		
+
 		#region Constructors / Destructors
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.DepthFrame"/> class.
-		/// calculates the distance automatically!
-		/// </summary>
-		/// <param name='frameTime'>
-		/// Frame time.
-		/// </param>
-		/// <param name='data'>
-		/// Data.
-		/// </param>
-		public DepthFrame(DateTime frameTime, SensorData data) : base(frameTime, data){
-			this.CalculateDistance();
-		}
-		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.DepthFrame"/> class.
 		/// </summary>
@@ -39,8 +26,7 @@ namespace Touchdown.SensorAbstraction {
 		/// <param name='distanceinMM'>
 		/// Distancein M.
 		/// </param>
-		public DepthFrame(DateTime frameTime, SensorData data, int[] distanceinMM) 
-					: this(frameTime, data, depthData){
+		public DepthFrame(DateTime frameTime, int[] distanceinMM) : base(frameTime){
 			this._distance = distanceinMM;
 		}
 		#endregion
@@ -66,33 +52,19 @@ namespace Touchdown.SensorAbstraction {
 		/// background model that should be removed..
 		/// </param>
 		public static DepthFrame operator-(DepthFrame orig, DepthFrame toRemove){
-			short[] result = new short[orig.DepthMap.Length];
-			short[] toRemoveArr = new short[toRemove.DepthMap.Length];
-			
-			orig.DepthMap.CopyTo(result, 0);
-			toRemove.DepthMap.CopyTo(toRemoveArr, 0);
+			int[] result = new int[orig.DistanceInMM.Length];
 			
 			// original - background = only elements to recognize.
 			// neg. values not allowed so: if neg then use 0;
-			for (int i = 0; i < result.Length; ++i){
-				result[i] = (short)Math.Max(result[i] - toRemoveArr[i], 0);
+			for (int i = 0; i < orig.DistanceInMM.Length; ++i){
+				result[i] = (int)Math.Max(orig.DistanceInMM[i] - toRemove.DistanceInMM[i], 0);
 			}
 			
-			return new DepthFrame(DateTime.Now, null, result);
+			return new DepthFrame(DateTime.Now, result);
 		}
 		#endregion 
 		
 		#region Private Methods
-		/// <summary>
-		/// Calculates the distance in MM depending on the depth information.
-		/// </summary>
-		private void CalculateDistance(){
-			this._distance = new int[this._depthData.Length];
-			
-			for (int i = 0; i < this._depthData.Length; ++i){
-				this._distance[i] = DistanceInMMFromDepth(this._depthData[i]);
-			}
-		}
 		
 		/// <summary>
 		/// contains the formula to calculate the distance in mm by the given depth value between 0 and 2048
@@ -113,18 +85,6 @@ namespace Touchdown.SensorAbstraction {
 			return (int)result;
 		}
 		#endregion
-		
-		/// <summary>
-		/// Gets the depth map.
-		/// </summary>
-		/// <value>
-		/// The depth map.
-		/// </value>
-		public short[] DepthMap{
-			get{
-				return _depthData;
-			}
-		}
 		
 		/// <summary>
 		/// Gets the distance in millimeters.
