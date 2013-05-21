@@ -17,10 +17,7 @@ namespace Touchdown.SensorAbstraction {
 		/// <param name='frameTime'>
 		/// Frame time.
 		/// </param>
-		/// <param name='data'>
-		/// Data.
-		/// </param>
-		public RGBFrame(DateTime frameTime, SensorData data) : base(frameTime, data){}
+		public RGBFrame(DateTime frameTime, byte[] data) : base(frameTime){}
 		#endregion
 		
 		#region Public Methods

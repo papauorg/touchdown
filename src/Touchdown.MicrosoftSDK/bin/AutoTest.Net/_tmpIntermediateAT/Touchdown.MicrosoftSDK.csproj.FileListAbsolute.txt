@@ -1,1 +1,9 @@
 C:\Daten\Develop\touchdown\src\Touchdown.MicrosoftSDK\bin\AutoTest.Net\_tmpIntermediateAT\Touchdown.MicrosoftSDK.csprojResolveAssemblyReference.cache
+C:\Daten\Develop\touchdown\src\Touchdown.MicrosoftSDK\bin\AutoTest.Net\_tmpIntermediateAT\Touchdown.MicrosoftSDK.dll
+C:\Daten\Develop\touchdown\src\Touchdown.MicrosoftSDK\bin\AutoTest.Net\_tmpIntermediateAT\Touchdown.MicrosoftSDK.pdb
+C:\Daten\Develop\touchdown\src\Touchdown.MicrosoftSDK\bin\AutoTest.Net\Touchdown.MicrosoftSDK.dll
+C:\Daten\Develop\touchdown\src\Touchdown.MicrosoftSDK\bin\AutoTest.Net\Touchdown.MicrosoftSDK.pdb
+C:\Daten\Develop\touchdown\src\Touchdown.MicrosoftSDK\bin\AutoTest.Net\log4net.dll
+C:\Daten\Develop\touchdown\src\Touchdown.MicrosoftSDK\bin\AutoTest.Net\TouchdownCore.dll
+C:\Daten\Develop\touchdown\src\Touchdown.MicrosoftSDK\bin\AutoTest.Net\TouchdownCore.pdb
+C:\Daten\Develop\touchdown\src\Touchdown.MicrosoftSDK\bin\AutoTest.Net\log4net.xml

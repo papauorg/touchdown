@@ -99,8 +99,7 @@ namespace Touchdown.Core {
 			 		 List<TouchPoint> touchPoints = this.ExtractTouchPoints(ref isTouched);
 
 			 		 SimpleTouchFrame touchFrame 
-			 		 					= new SimpleTouchFrame(e.FrameData.FrameTime, 
-			 		 										   e.FrameData.Data, 
+			 		 					= new SimpleTouchFrame(e.FrameData.FrameTime,
 			 		 										   touchPoints/*, 
 			 		 										   this._observeArea*/);
 			 		 

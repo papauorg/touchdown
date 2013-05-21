@@ -16,7 +16,6 @@ namespace Touchdown.MicrosoftSDK {
 
 		#region Members
 		private Microsoft.Kinect.KinectSensor _sensor;
-		private bool _isRunning;
 		private short[] temporaryDepthData;
 		private byte[] temporaryRGBData;
 
@@ -134,10 +133,8 @@ namespace Touchdown.MicrosoftSDK {
 			}
 			img.CopyPixelDataTo(this.temporaryDepthData);
 
-			SensorData sensorData = new SensorData(img.Width, img.Height, this.temporaryDepthData, img);
-			
 			// calculate the depth
-			DepthFrame result = new DepthFrame(new DateTime(img.Timestamp), sensorData);
+			DepthFrame result = new DepthFrame(new DateTime(img.Timestamp), this.temporaryDepthData.Cast<int>().ToArray());
 			
 			return result;
 		}
@@ -157,8 +154,7 @@ namespace Touchdown.MicrosoftSDK {
 			}
 			img.CopyPixelDataTo(this.temporaryRGBData);
 
-			SensorData data = new SensorData(img.Width, img.Height, null, img);
-			RGBFrame result = new RGBFrame(new DateTime(img.Timestamp), data);
+			RGBFrame result = new RGBFrame(new DateTime(img.Timestamp), temporaryRGBData);
 			
 			return result;
 		}
