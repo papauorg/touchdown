@@ -42,6 +42,8 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Core\BackgroundModelCreator.cs" />
+    <Compile Include="Core\Extensions.cs" />
     <Compile Include="SensorAbstraction\IKinectSensorProvider.cs" />
     <Compile Include="SensorAbstraction\FrameReadyEventArgs.cs" />
     <Compile Include="SensorAbstraction\Frame.cs" />

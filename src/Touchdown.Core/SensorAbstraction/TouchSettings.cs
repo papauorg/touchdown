@@ -14,7 +14,6 @@ namespace Touchdown.SensorAbstraction {
 		/// values.
 		/// </summary>
 		public TouchSettings(){
-			this.FrameCountForAverageBackgroundModel 	= 100;
 			this.MaxDistanceFromBackground 	= 20;
 			this.MinDistanceFromBackround 	= 7;
 			this.DepthFrameResolution = new System.Drawing.Rectangle(0,0, 640, 480);
@@ -24,16 +23,6 @@ namespace Touchdown.SensorAbstraction {
 		}
 		
 		#endregion
-		
-		/// <summary>
-		/// Gets or sets the frame count for calculating the average distances for the background model.
-		/// This value is used by the <see cref="Touchdown.Core.SimpleTouchAreaObserver" />. Defines the number of depth
-		/// frames that are used to calculate the average distance to the background (i.e. the table)
-		/// </summary>
-		/// <value>
-		/// The frame count for average background model.
-		/// </value>
-		public uint FrameCountForAverageBackgroundModel {get; set;}
 		
 		/// <summary>
 		/// Gets or sets the max distance from background that is still recognized as "touch".

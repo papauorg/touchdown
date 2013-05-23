@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Touchdown.Win.UI.UserControls.InitWizzard {
 	public partial class FinishInitWizzardControl : Touchdown.Win.UI.UserControls.InitWizzard.InitKinectWizzardControl {
-		public FinishInitWizzardControl() {
+		public FinishInitWizzardControl(Button next) : base(next){
 			InitializeComponent();
 		}
 	}

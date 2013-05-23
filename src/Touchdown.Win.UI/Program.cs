@@ -11,6 +11,9 @@ namespace Touchdown.Win.UI {
 		/// </summary>
 		[STAThread]
 		static void Main() {
+			Application.EnableVisualStyles();
+			Application.SetCompatibleTextRenderingDefault(false);
+
 			bool startApp;
 
 			using (var wizzard = new frmWizard()) {
@@ -18,11 +21,10 @@ namespace Touchdown.Win.UI {
 			}
 
 			if (startApp) {
-				Application.EnableVisualStyles();
-				Application.SetCompatibleTextRenderingDefault(false);
 				Application.Run(new frmDemo());
 			} else { 
 				MessageBox.Show("Initialization failed. Exit!", "Initialization failed.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				Environment.Exit(0);
 			}
 		}
 	}

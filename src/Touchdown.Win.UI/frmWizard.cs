@@ -11,13 +11,17 @@ using Touchdown.Win.UI.UserControls.InitWizzard;
 
 namespace Touchdown.Win.UI {
 	public partial class frmWizard : Form {
-		int currentStep;
-		List<UserControls.InitWizzard.InitKinectWizzardControl> wizzardPages;
+		private int currentStep;
+		private List<UserControls.InitWizzard.InitKinectWizzardControl> wizzardPages;
+		private Dictionary<String, Object> wizzardInfo;
 
 		public frmWizard() {
 			InitializeComponent();
 			currentStep = 0;
+			wizzardInfo = new Dictionary<string,object>();
+
 			this.Load += frmWizard_Load;
+			this.btnNext.Click += NextStep;
 		}
 
 		void frmWizard_Load(object sender, EventArgs e) {
@@ -27,24 +31,30 @@ namespace Touchdown.Win.UI {
 
 		private void InitPages(){
 			wizzardPages = new List<UserControls.InitWizzard.InitKinectWizzardControl>();
-			wizzardPages.Add(new KinectSensorSelectionControl());
-			wizzardPages.Add(new BackgroundModelGenerationControl());
-			wizzardPages.Add(new TouchAreaSelectionControl());
-			wizzardPages.Add(new FinishInitWizzardControl());
+			wizzardPages.Add(new WelcomeWizzardControl(this.btnNext));
+			wizzardPages.Add(new KinectSensorSelectionControl(this.btnNext));
+			wizzardPages.Add(new BackgroundModelGenerationControl(this.btnNext));
+			wizzardPages.Add(new TouchAreaSelectionControl(this.btnNext));
+			wizzardPages.Add(new FinishInitWizzardControl(this.btnNext));
 		}
 		
 		private void ApplyCurrentStep(){
 			if (currentStep < wizzardPages.Count) {
-				pnlWizardContainer.Controls.Clear();
-				pnlWizardContainer.Controls.Add(wizzardPages[currentStep]);
+				pnlWizzardControl.Controls.Clear();
+				wizzardPages[currentStep].SetWizzardInfo(this.wizzardInfo);
+				pnlWizzardControl.Controls.Add(wizzardPages[currentStep]);
 			} else { 
 				this.DialogResult = System.Windows.Forms.DialogResult.OK;
 				this.Close();
 			}
 		}
 
+		private void NextStep(object sender, System.EventArgs e) {
+			wizzardPages[currentStep].AddOrUpdateWizzardInfo(wizzardInfo);
 
-		public Touchdown.SensorAbstraction.IKinectSensorProvider Sensor{get; private set;}
+			this.currentStep++;
+			ApplyCurrentStep();
+		}
 
 	}
 }

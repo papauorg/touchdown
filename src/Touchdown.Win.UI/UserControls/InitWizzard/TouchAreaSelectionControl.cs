@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Touchdown.Win.UI.UserControls.InitWizzard {
 	public partial class TouchAreaSelectionControl : Touchdown.Win.UI.UserControls.InitWizzard.InitKinectWizzardControl {
-		public TouchAreaSelectionControl() {
+		public TouchAreaSelectionControl(Button next) : base(next) {
 			InitializeComponent();
 		}
 	}

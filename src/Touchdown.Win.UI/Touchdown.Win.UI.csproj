@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="frmDemo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +92,12 @@
     <Compile Include="UserControls\InitWizzard\TouchAreaSelectionControl.Designer.cs">
       <DependentUpon>TouchAreaSelectionControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\InitWizzard\WelcomeWizzardControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\InitWizzard\WelcomeWizzardControl.Designer.cs">
+      <DependentUpon>WelcomeWizzardControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="frmDemo.resx">
       <DependentUpon>frmDemo.cs</DependentUpon>
     </EmbeddedResource>
@@ -103,9 +112,19 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UserControls\InitWizzard\BackgroundModelGenerationControl.resx">
+      <DependentUpon>BackgroundModelGenerationControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\InitWizzard\InitKinectWizzardControl.resx">
       <DependentUpon>InitKinectWizzardControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\InitWizzard\KinectSensorSelectionControl.resx">
+      <DependentUpon>KinectSensorSelectionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\InitWizzard\WelcomeWizzardControl.resx">
+      <DependentUpon>WelcomeWizzardControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -130,7 +149,12 @@
       <Name>Touchdown.MicrosoftSDK</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Touchdown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TouchdownClipart.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

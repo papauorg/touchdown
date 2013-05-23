@@ -12,7 +12,7 @@ namespace Touchdown.MicrosoftSDK {
 	/// <summary>
 	/// Converts frames from the Microsoft Kinect SDK to frames that the TouchRecognizer is able to use.
 	/// </summary>
-	class SDKSensor : Touchdown.SensorAbstraction.IKinectSensorProvider {
+	public class SDKSensor : Touchdown.SensorAbstraction.IKinectSensorProvider {
 
 		#region Members
 		private Microsoft.Kinect.KinectSensor _sensor;

@@ -13,7 +13,6 @@ namespace Touchdown.Core {
 		private IKinectSensorProvider _sensor;
 		private TouchSettings _settings;
 
-		private DepthFrameList _backgroundDistances;
 		private DepthFrame _avgBackground;
 		private Rectangle _observeArea;
 
@@ -33,12 +32,16 @@ namespace Touchdown.Core {
 		/// <param name='settings'>
 		/// Settings used for the areaobserver.
 		/// </param>
+		/// <param name="backgroundModel">
+		///	defines the background model needed for recognition
+		/// </param>
 		/// <param name="observedArea">constraint for touchpoints. only points within this area are recognized.
 		/// if not given, the whole area is used.</param>
 		/// <exception cref="ArgumentNullException">if <param name="sensor" />  or <param name="settings"/> is null</exception>
 		public SimpleTouchAreaObserver(	IKinectSensorProvider sensor, 
 										TouchSettings settings,
-										Rectangle observedArea) {
+										DepthFrame backgroundModel) {
+
 			if (sensor == null){
 				throw new ArgumentNullException("sensor");
 			}
@@ -47,17 +50,12 @@ namespace Touchdown.Core {
 				throw new ArgumentNullException("settings");
 			}
 			
-			if (observedArea == null) {
-				this._observeArea = settings.DepthFrameResolution;
-			} else {
-				this._observeArea = observedArea;
-			}
-			
+			this._observeArea = settings.DepthFrameResolution;
+
 			this._sensor = sensor;
 			this._settings = settings;
 			
-			this._backgroundDistances = new DepthFrameList();
-			this._avgBackground = null;
+			this._avgBackground = backgroundModel;
 			
 			// register events needed for recognition of touch frames.
 			this._sensor.DepthFrameReady 	+= this.DepthFrameReadyHandler;
@@ -67,47 +65,39 @@ namespace Touchdown.Core {
 		
 		#region Private Methods
 		private void DepthFrameReadyHandler(object sender, DepthFrameReadyEventArgs e){
-			// gathering depth frames for calculating a background model that is used to recognize changes
-			// on it.
-			if (this._backgroundDistances.Count < this._settings.FrameCountForAverageBackgroundModel){
-				this._backgroundDistances.Add(e.FrameData);
-			} else if (this._avgBackground == null) {
-				this._avgBackground = this._backgroundDistances.CalculateAverage();
-			} else {
-				// recognition of touch points
-				if (TouchFrameReady != null){
-					/* remove the background model from the current frame to have only 
-					   objects left that are not part of the background.
-					   Those objects should be used for recognition. (could be a hand for example) */
-					DepthFrame foreGround = e.FrameData - this._avgBackground;
+			// recognition of touch points
+			if (TouchFrameReady != null){
+				/* remove the background model from the current frame to have only 
+					objects left that are not part of the background.
+					Those objects should be used for recognition. (could be a hand for example) */
+				DepthFrame foreGround = e.FrameData - this._avgBackground;
 					
-					/*  apply the threshold of the settings to recognize all points that 
-					 *  are close enough to the background */
-					 short[] rawPoints = 
-					 this.ApplyThreshold(foreGround.DistanceInMM, 
-					 					 this._settings.MinDistanceFromBackround, 
-					 					 this._settings.MaxDistanceFromBackground);
+				/*  apply the threshold of the settings to recognize all points that 
+					*  are close enough to the background */
+					short[] rawPoints = 
+					this.ApplyThreshold(foreGround.DistanceInMM, 
+					 					this._settings.MinDistanceFromBackround, 
+					 					this._settings.MaxDistanceFromBackground);
 					 			
-					 // create matrix that contains information if the pixel is
-					 // considered a touched pixel. Use a matrix instead of an array 
-					 // for easier access.
-					 bool[,] isTouched = this.ConvertToMatrix(rawPoints);
+					// create matrix that contains information if the pixel is
+					// considered a touched pixel. Use a matrix instead of an array 
+					// for easier access.
+					bool[,] isTouched = this.ConvertToMatrix(rawPoints);
 					 					 
-					 /* the extracted background contains now only the parts of the image where something is different
-			 * 		  *	than the background. In this case usually fingers. 
-			 		  *	There are very "blury" areas where the finger are located. Extract the touchpoints of it. */
-			 		 List<TouchPoint> touchPoints = this.ExtractTouchPoints(ref isTouched);
+					/* the extracted background contains now only the parts of the image where something is different
+			* 		  *	than the background. In this case usually fingers. 
+			 		*	There are very "blury" areas where the finger are located. Extract the touchpoints of it. */
+			 		List<TouchPoint> touchPoints = this.ExtractTouchPoints(ref isTouched);
 
-			 		 SimpleTouchFrame touchFrame 
-			 		 					= new SimpleTouchFrame(e.FrameData.FrameTime,
-			 		 										   touchPoints/*, 
-			 		 										   this._observeArea*/);
+			 		SimpleTouchFrame touchFrame 
+			 		 				= new SimpleTouchFrame(e.FrameData.FrameTime,
+			 		 										touchPoints/*, 
+			 		 										this._observeArea*/);
 			 		 
-			 		 TouchFrameReadyEventArgs eventArgs 
-			 		  					= new TouchFrameReadyEventArgs(touchFrame);
+			 		TouchFrameReadyEventArgs eventArgs 
+			 		  				= new TouchFrameReadyEventArgs(touchFrame);
 			 		  					
-			 		 TouchFrameReady(this, eventArgs);
-				}
+			 		TouchFrameReady(this, eventArgs);
 			}
 		}
 		

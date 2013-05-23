@@ -33,6 +33,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\lib\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -55,9 +58,13 @@
   </ProjectExtensions>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="Distance\BackgroundModelCreatorTest.cs" />
+    <Compile Include="Distance\DepthFrameTest.cs" />
     <Compile Include="Distance\DistanceTest.cs" />
     <Compile Include="Distance\DummyTest.cs" />
     <Compile Include="Distance\ContourTest.cs" />
+    <Compile Include="Misc\MiscTests.cs" />
+    <Compile Include="Touch\SimpleTouchAreaObserver.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Touchdown.Core\Touchdown.csproj">
