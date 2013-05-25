@@ -17,7 +17,9 @@ namespace Touchdown.SensorAbstraction {
 		/// <param name='frameTime'>
 		/// Frame time.
 		/// </param>
-		public RGBFrame(DateTime frameTime, byte[] data) : base(frameTime){}
+		public RGBFrame(DateTime frameTime, byte[] data) : base(frameTime){
+			this.ColorBytes = data;
+		}
 		#endregion
 		
 		#region Public Methods
@@ -31,5 +33,10 @@ namespace Touchdown.SensorAbstraction {
 			return null;
 		}
 		#endregion
+
+		/// <summary>
+		/// returns the raw bytes of the color image.
+		/// </summary>
+		public byte[] ColorBytes{get; private set;}
 	}
 }

@@ -37,8 +37,8 @@ namespace TouchTests.Touch {
 			TouchSettings mockSettings = new TouchSettings();
 			mockSettings.DepthFrameResolution = new System.Drawing.Rectangle(0,0,9,6);
 			mockSettings.ContourThreshold = 1;
-			mockSettings.MaxContourLength = 15;
-			mockSettings.MinContourLength = 10;
+			mockSettings.MaxContourLength = 12;
+			mockSettings.MinContourLength = 7;
 			mockSettings.MinDistanceFromBackround = 1;
 			mockSettings.MaxDistanceFromBackground = 3;
 

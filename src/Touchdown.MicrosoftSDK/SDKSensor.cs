@@ -48,7 +48,8 @@ namespace Touchdown.MicrosoftSDK {
 			}
 
 			this._sensor = sensor;
-			
+			this._sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+			this._sensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
 			this._sensor.ColorFrameReady += HandleRGBDataReceived;
 			this._sensor.DepthFrameReady += HandleDepthDataReceived;
 		}
@@ -59,15 +60,14 @@ namespace Touchdown.MicrosoftSDK {
 		/// starts the sensor loop
 		/// </summary>
 		void SensorAbstraction.IKinectSensorProvider.Start() {
-			throw new NotImplementedException();
-			
+			_sensor.Start();
 		}
 
 		/// <summary>
 		/// stops the sensor loop
 		/// </summary>
 		void SensorAbstraction.IKinectSensorProvider.Stop() {
-			throw new NotImplementedException();
+			_sensor.Stop();
 		}
 		#endregion
 
@@ -107,12 +107,14 @@ namespace Touchdown.MicrosoftSDK {
 		/// </param>
 		private void HandleDepthDataReceived(object sender, DepthImageFrameReadyEventArgs e){
 			if (this.DepthFrameReady != null) {
-				using (var frame = e.OpenDepthImageFrame()) { 
-					DepthFrame result = this.TransformToDepthFrame(frame);
+				using (var frame = e.OpenDepthImageFrame()) {
+					if (frame != null) {
+						DepthFrame result = this.TransformToDepthFrame(frame);
 				
-					if (result != null) { 
-						var args = new DepthFrameReadyEventArgs(result);
-						this.DepthFrameReady(this, args);
+						if (result != null) { 
+							var args = new DepthFrameReadyEventArgs(result);
+							this.DepthFrameReady(this, args);
+						}
 					}
 				}
 			}
@@ -134,7 +136,7 @@ namespace Touchdown.MicrosoftSDK {
 			img.CopyPixelDataTo(this.temporaryDepthData);
 
 			// calculate the depth
-			DepthFrame result = new DepthFrame(new DateTime(img.Timestamp), this.temporaryDepthData.Cast<int>().ToArray());
+			DepthFrame result = new DepthFrame(new DateTime(img.Timestamp), Array.ConvertAll<short, int>(this.temporaryDepthData, b => (int)b));
 			
 			return result;
 		}

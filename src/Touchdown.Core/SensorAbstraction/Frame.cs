@@ -23,7 +23,6 @@ namespace Touchdown.SensorAbstraction {
 		/// Data.
 		/// </param>
 		public Frame(DateTime frameTime){
-			
 			this._frameTime = frameTime;
 		}
 		#endregion

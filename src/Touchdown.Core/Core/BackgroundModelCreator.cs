@@ -9,15 +9,15 @@ namespace Touchdown.Core {
 	/// Creates a background model by all given <see cref="DepthFrame"/>s that can be used by the
 	/// <see cref="SimpleTouchAreaObserver"/>.
 	/// </summary>
-	public class BackgroundModelCreator {
-		private DepthFrameList _Frames;
+	public abstract class BackgroundModelCreator<TFrame> where TFrame : Frame{
+		protected List<TFrame> _Frames;
 
 		/// <summary>
 		/// New instance of a creator. Can create a simple background model from depthframes used
 		/// by the <see cref="SimpleTouchAreaObserver" />
 		/// </summary>
 		public BackgroundModelCreator(){ 
-			_Frames = new DepthFrameList();
+			_Frames = new List<TFrame>();
 		}
 
 		#region Public Methods
@@ -32,7 +32,7 @@ namespace Touchdown.Core {
 		/// Add another depthframe that should be part of the background model.
 		/// </summary>
 		/// <param name="frame">frame to add</param>
-		public void Add(DepthFrame frame){
+		public void Add(TFrame frame){
 			_Frames.Add(frame);
 		}
 		
@@ -41,11 +41,9 @@ namespace Touchdown.Core {
 		/// </summary>
 		/// <exception cref="InvalidOperationException">If no frames are gathered yet.</exception>
 		/// <returns>Depthframe that represents the background.</returns>
-		public DepthFrame GetBackgroundModel(){
-			return _Frames.CalculateAverage();
-		}
+		public abstract TFrame GetBackgroundModel();
 		#endregion
-	
+
 		public int FrameCount{get{return _Frames.Count;}} 
 	}
 }

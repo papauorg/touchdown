@@ -12,6 +12,8 @@ namespace Touchdown.Win.UI.UserControls.InitWizzard {
 	public partial class InitKinectWizzardControl : UserControl {
 		internal const string INFOKEY_SENSOR = "sensorID";
 		internal const string INFOKEY_BACKGROUND_MODEL = "backgroundModel";
+		internal const string INFOKEY_COLOR_BACKGROUND_MODEL = "colorBackgroundModel";
+
 		private Button _nextButton;
 
 		public InitKinectWizzardControl(){

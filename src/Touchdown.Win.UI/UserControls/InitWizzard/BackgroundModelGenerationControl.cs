@@ -12,20 +12,24 @@ namespace Touchdown.Win.UI.UserControls.InitWizzard {
 	public partial class BackgroundModelGenerationControl : Touchdown.Win.UI.UserControls.InitWizzard.InitKinectWizzardControl {
 		
 		private DepthFrame backgroundModel;
-		private BackgroundModelCreator creator;
+		private RGBFrame colorBackgroundModel;
+		private BackgroundModelCreator<DepthFrame> depthCreator;
+		private BackgroundModelCreator<RGBFrame> rgbCreator;
 		private IKinectSensorProvider sensor;
 
 		public BackgroundModelGenerationControl(Button next) : base(next) {
 			InitializeComponent();
-			creator = new BackgroundModelCreator();
+			depthCreator = new BackgroundModelCreatorDepth();
+			rgbCreator = new BackgroundModelCreatorRGB();
 
-			this.NextButtonEnabled = false;
 			this.lblDescription.Text = "Generate a basic background model to be able to extract touch points.";
 			this.lblHeadline.Text = "Background Model Creation";
 		}
 
 		public override void SetWizzardInfo(Dictionary<string, object> info) {
 			base.SetWizzardInfo(info);
+
+			this.NextButtonEnabled = false;
 
 			progBackground.Minimum = 0;
 			progBackground.Maximum = (int)numFrameCount.Value;
@@ -35,32 +39,50 @@ namespace Touchdown.Win.UI.UserControls.InitWizzard {
 		public override void AddOrUpdateWizzardInfo(Dictionary<string, object> info) {
 			base.AddOrUpdateWizzardInfo(info);
 			info.AddOrUpdate(INFOKEY_BACKGROUND_MODEL, this.backgroundModel);
+			info.AddOrUpdate(INFOKEY_COLOR_BACKGROUND_MODEL, this.colorBackgroundModel);
 		}
 
 		private void BackgroundAdd(object sender, DepthFrameReadyEventArgs e) {
-			if (creator.FrameCount < numFrameCount.Value) {
-				creator.Add(e.FrameData);
+			if (depthCreator.FrameCount < numFrameCount.Value) {
+				depthCreator.Add(e.FrameData);
 				progBackground.Increment(1);
 			} else { 
 				sensor.DepthFrameReady -= BackgroundAdd;
+				backgroundModel = depthCreator.GetBackgroundModel();
+			}
+			
+			checkAllBackgroundsFinished();	
+		}
+
+		private void ColorBackgroundAdd(object sender, RGBFrameReadyEventArgs e){
+			if (rgbCreator.FrameCount < numFrameCount.Value) {
+				rgbCreator.Add(e.FrameData);
+			} else { 
+				sensor.RGBFrameReady -= ColorBackgroundAdd;
+				colorBackgroundModel = rgbCreator.GetBackgroundModel();
+			}
+			checkAllBackgroundsFinished();
+		}
+
+		private void checkAllBackgroundsFinished(){
+			if (depthCreator.FrameCount >= numFrameCount.Value && rgbCreator.FrameCount >= numFrameCount.Value) {
 				sensor.Stop();
-				backgroundModel = creator.GetBackgroundModel();
 				this.NextButtonEnabled = true;
 				this.btnGenerate.Enabled = true;
 			}
 		}
 
 		private void btnGenerate_Click(object sender, EventArgs e) {
-			this.Parent.Enabled = false;
-			
 			progBackground.Value   = 0;
 			
-			creator.Clear();
+			depthCreator.Clear();
 			
 			this.NextButtonEnabled = false;
 			this.btnGenerate.Enabled = false;
 
 			sensor.DepthFrameReady += BackgroundAdd;
+			sensor.RGBFrameReady += ColorBackgroundAdd;
+
 			sensor.Start();
 
 		}

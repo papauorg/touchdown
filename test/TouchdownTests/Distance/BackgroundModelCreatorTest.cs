@@ -15,7 +15,7 @@ namespace TouchTests.Distance {
 		
 		[Test]
 		public void GenerateSimpleModelTest(){
-			var creator = new BackgroundModelCreator();
+			var creator = new BackgroundModelCreatorDepth();
 			
 			int[] FrameDataTwo = {2,2,2,2};
 			creator.Add(new DepthFrame(DateTime.Now, FrameDataTwo));
