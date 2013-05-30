@@ -61,14 +61,15 @@ namespace Touchdown.Core {
 		
 		#region Private Methods
 		private void DepthFrameReadyHandler(object sender, DepthFrameReadyEventArgs e){
+
 			// recognition of touch points
 			if (TouchFrameReady != null){
 				/* remove the background model from the current frame to have only 
 					objects left that are not part of the background.
 					Those objects should be used for recognition. (could be a hand for example) */
-				DepthFrame foreGround = e.FrameData - this._avgBackground;
+				using(DepthFrame foreGround = e.FrameData - this._avgBackground){
 					
-				/*  apply the threshold of the settings to recognize all points that 
+					/*  apply the threshold of the settings to recognize all points that 
 					*  are close enough to the background */
 					short[] rawPoints = 
 					this.ApplyThreshold(foreGround.DistanceInMM, 
@@ -85,16 +86,18 @@ namespace Touchdown.Core {
 			 		*	There are very "blury" areas where the finger are located. Extract the touchpoints of it. */
 			 		List<TouchPoint> touchPoints = this.ExtractTouchPoints(ref isTouched);
 
-			 		SimpleTouchFrame touchFrame 
-			 		 				= new SimpleTouchFrame(e.FrameData.FrameTime,
-			 		 										touchPoints,
+					using (SimpleTouchFrame touchFrame
+									= new SimpleTouchFrame(e.FrameData.FrameTime,
+															touchPoints,
 															e.FrameData.Width,
-															e.FrameData.Height);
+															e.FrameData.Height)) { 
 			 		 
-			 		TouchFrameReadyEventArgs eventArgs 
-			 		  				= new TouchFrameReadyEventArgs(touchFrame);
+			 			TouchFrameReadyEventArgs eventArgs 
+			 		  					= new TouchFrameReadyEventArgs(touchFrame);
 			 		  					
-			 		TouchFrameReady(this, eventArgs);
+			 			TouchFrameReady(this, eventArgs);
+					}
+				}
 			}
 		}
 		

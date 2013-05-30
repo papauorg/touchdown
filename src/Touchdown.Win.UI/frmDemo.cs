@@ -17,7 +17,10 @@ namespace Touchdown.Win.UI {
 		
 		private AreaFilter touchProvider;
 		private IKinectSensorProvider sensor;
+		private int frameCount;
 		//private PatternRecognizer recognizer;
+
+		private Timer updateLabelTimer = new Timer();
 
 		public frmDemo(Dictionary<string, object> info) {
 			InitializeComponent();
@@ -26,17 +29,23 @@ namespace Touchdown.Win.UI {
 			
 			var backgroundModel = info[InitWizzard.INFOKEY_BACKGROUND_MODEL] as DepthFrame;
 			var area =  (Rectangle)info[InitWizzard.INFOKEY_TOUCHAREA];
+
 			var observer = new SimpleTouchAreaObserver(sensor, new TouchSettings(), backgroundModel);
 			this.touchProvider = new AreaFilter(observer, area, true);
 			this.touchProvider.TouchFrameReady += UpdateTouchFrameVisualization;
-			
-			UpdateLabels();
+
+
+			updateLabelTimer = new Timer();
+			updateLabelTimer.Interval = 1000;
+			updateLabelTimer.Tick += (s,e) => UpdateLabels();
+			updateLabelTimer.Start();
 		}
 
 		private void UpdateTouchFrameVisualization(object sender, TouchFrameReadyEventArgs e) {
-			if (this.Visible){
+			if (this.Visible && this.frameCount % 5 == 0) {
 				pbTouchPoints.Image = e.FrameData.CreateBitmap();
 			}
+			frameCount++;
 		}
 
 		private void UpdateLabels(){
@@ -59,6 +68,17 @@ namespace Touchdown.Win.UI {
 		}
 		private void SetLabelRegisteredPatterns(int count){
 			lblPatternsRegistered.Text = "Registered Patterns: {0}";
+		}
+
+		private void btnStart_Click(object sender, EventArgs e) {
+			if (this.sensor.IsRunning) {
+				this.sensor.Stop();
+				btnStart.Text = "Start";
+			} else { 
+				this.sensor.Start();
+				btnStart.Text = "Stop";
+			}
+
 		}
 	}
 }

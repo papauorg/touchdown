@@ -159,11 +159,11 @@ namespace Touchdown.Freenect {
 		private DepthFrame TransformToDepthFrame(freenect.DepthMap map, DateTime timeStamp) {
 			short[] relativeDepth	= this.CalculateDepthBySensorData(map);
 			
-			SensorData data = new SensorData(map.Width, map.Height, relativeDepth, map);
 			// calculate the depth
-			DepthFrame result = new DepthFrame(timeStamp, data);
+			//DepthFrame result = new DepthFrame(timeStamp, data);
 			
-			return result;
+			//return result;
+			return null;
 		}
 
 		/// <summary>
@@ -176,10 +176,10 @@ namespace Touchdown.Freenect {
 		/// Map.
 		/// </param>
 		private RGBFrame TransformToRGBFrame(freenect.ImageMap map, DateTime timeStamp) {
-			SensorData data = new SensorData(map.Width, map.Height, map.Data.Cast<short>().ToArray(), map);
-			RGBFrame result = new RGBFrame(timeStamp, data);
-			
-			return result;
+			//SensorData data = new SensorData(map.Width, map.Height, map.Data.Cast<short>().ToArray(), map);
+			//RGBFrame result = new RGBFrame(timeStamp, data);
+			return null;
+			//return result;
 		}
 		
 		/// <summary>

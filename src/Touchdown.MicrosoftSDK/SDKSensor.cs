@@ -20,8 +20,12 @@ namespace Touchdown.MicrosoftSDK {
 		private int[] convertedDepthData;
 		private byte[] temporaryRGBData;
 		private static ILog _log = LogManager.GetLogger(typeof(SDKSensor));
-		private Microsoft.Kinect.ColorImageFrame lastColorFrame;
-		private Microsoft.Kinect.DepthImageFrame lastDepthFrame;
+
+		// framecount
+		private int rgbFrameCount;
+		private DateTime lastRgbFrameCount;
+		private int depthFrameCount;
+		private DateTime lastDepthFrameCount;
 		#endregion
 
 		#region Objectevents
@@ -66,6 +70,10 @@ namespace Touchdown.MicrosoftSDK {
 		/// </summary>
 		void SensorAbstraction.IKinectSensorProvider.Start() {
 			_sensor.Start();
+			this.lastRgbFrameCount = DateTime.Now;
+			this.lastDepthFrameCount = DateTime.Now;
+			this.rgbFrameCount = 0;
+			this.depthFrameCount = 0;
 		}
 
 		/// <summary>
@@ -91,16 +99,23 @@ namespace Touchdown.MicrosoftSDK {
 			if (this.RGBFrameReady != null) { 
 				using (var frame = e.OpenColorImageFrame()) { 
 					if (frame != null){
-						RGBFrame result = this.TransformToRGBFrame(frame);
-						this.lastColorFrame = frame;
+						using (RGBFrame result = this.TransformToRGBFrame(frame)) { 
 
-						if (result != null) { 
-							var args = new RGBFrameReadyEventArgs(result);
-							this.RGBFrameReady(this, args);
+							if (result != null) { 
+								var args = new RGBFrameReadyEventArgs(result);
+								this.RGBFrameReady(this, args);
+							}	
 						}
 					}
 				}
 			}
+			
+			this.rgbFrameCount++;
+			if (DateTime.Now.Subtract(this.lastRgbFrameCount).TotalSeconds >= 1) { 
+				this.ColorFPS = this.rgbFrameCount;
+				this.lastRgbFrameCount = DateTime.Now;
+			}
+
 		}
 
 		/// <summary>
@@ -116,16 +131,20 @@ namespace Touchdown.MicrosoftSDK {
 			if (this.DepthFrameReady != null) {
 				using (var frame = e.OpenDepthImageFrame()) {
 					if (frame != null) {
-						DepthFrame result = this.TransformToDepthFrame(frame);
-						
-						this.lastDepthFrame = frame;
-
-						if (result != null) { 
-							var args = new DepthFrameReadyEventArgs(result);
-							this.DepthFrameReady(this, args);
+						using (DepthFrame result = this.TransformToDepthFrame(frame)) {
+							if (result != null) { 
+								var args = new DepthFrameReadyEventArgs(result);
+								this.DepthFrameReady(this, args);
+							}
 						}
 					}
 				}
+			}
+			
+			this.rgbFrameCount++;
+			if (DateTime.Now.Subtract(this.lastRgbFrameCount).TotalSeconds >= 1) { 
+				this.ColorFPS = this.rgbFrameCount;
+				this.lastRgbFrameCount = DateTime.Now;
 			}
 		}
 

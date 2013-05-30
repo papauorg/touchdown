@@ -100,5 +100,8 @@ namespace Touchdown.SensorAbstraction {
 			}
 		}
 
+		public void Dispose() {
+			this._distance = null;
+		}
 	}
 }

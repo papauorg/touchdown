@@ -68,6 +68,10 @@ namespace Touchdown.SensorAbstraction {
 			}
 			return buffer;
 		}
+		public override void Dispose() {
+			base.Dispose();
+			touchPoints = null;
+		}
 		#endregion
 		
 		#region Properties

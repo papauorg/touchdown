@@ -46,9 +46,6 @@ namespace Touchdown.Win.UI.UserControls.InitWizzard {
 			if (depthCreator.FrameCount < numFrameCount.Value) {
 				depthCreator.Add(e.FrameData);
 				progBackground.Increment(1);
-			} else { 
-				sensor.DepthFrameReady -= BackgroundAdd;
-				backgroundModel = depthCreator.GetBackgroundModel();
 			}
 			
 			checkAllBackgroundsFinished();	
@@ -57,9 +54,6 @@ namespace Touchdown.Win.UI.UserControls.InitWizzard {
 		private void ColorBackgroundAdd(object sender, RGBFrameReadyEventArgs e){
 			if (rgbCreator.FrameCount < numFrameCount.Value) {
 				rgbCreator.Add(e.FrameData);
-			} else { 
-				sensor.RGBFrameReady -= ColorBackgroundAdd;
-				colorBackgroundModel = rgbCreator.GetBackgroundModel();
 			}
 			checkAllBackgroundsFinished();
 		}
@@ -67,6 +61,12 @@ namespace Touchdown.Win.UI.UserControls.InitWizzard {
 		private void checkAllBackgroundsFinished(){
 			if (depthCreator.FrameCount >= numFrameCount.Value && rgbCreator.FrameCount >= numFrameCount.Value) {
 				sensor.Stop();
+				sensor.RGBFrameReady -= ColorBackgroundAdd;
+				sensor.DepthFrameReady -= BackgroundAdd;
+				
+				colorBackgroundModel = rgbCreator.GetBackgroundModel();
+				backgroundModel = depthCreator.GetBackgroundModel();
+				
 				this.NextButtonEnabled = true;
 				this.btnGenerate.Enabled = true;
 			}

@@ -10,35 +10,51 @@ namespace Touchdown.Core {
 	/// creates a depth background model depending on the frames that were given.
 	/// </summary>
 	public class BackgroundModelCreatorDepth : BackgroundModelCreator<DepthFrame>{
+		private long[] depthSum;
 
 		/// <inheritdoc />
 		public override DepthFrame GetBackgroundModel() {
 			return this.CalcDepthAverage();
 		}
+		
+		/// <inheritdoc />
+		public override void Add(DepthFrame frame) {
+			base.Add(frame);
+
+			if (depthSum == null) {
+				depthSum = new long[frame.DistanceInMM.Length];
+			}
+
+			for (int i = 0; i < frame.DistanceInMM.Length; ++i) { 
+				depthSum[i] += frame.DistanceInMM[i];
+			}
+		}
+
+		/// <inheritdoc />
+		public override void Clear() {
+			base.Clear();
+			depthSum = null;
+		}
 
 		private DepthFrame CalcDepthAverage(){
-			if (_Frames.Count > 0){
-				long[] sumDistance = new long[_Frames[0].DistanceInMM.Length];
-				int[] avgDistance = new int[sumDistance.Length];	
-				
-				var distances = _Frames.Select(i=> i.DistanceInMM);
-				// sum of all depth values
-				foreach(var distance in distances){
-					for(int i = 0; i < distance.Length; ++i){
-						sumDistance[i] += distance[i];
-					}
-				}
+			if (this.FrameCount> 0){
+				int[] avgDistance = new int[depthSum.Length];	
 				
 				// average
-				for(int i = 0; i < sumDistance.Length; ++i){
-					avgDistance[i] = (int)(sumDistance[i] / _Frames.Count);
+				for(int i = 0; i < depthSum.Length; ++i){
+					avgDistance[i] = (int)(depthSum[i] / this.FrameCount);
 				}
 				
-				DepthFrame result = new DepthFrame(DateTime.Now, avgDistance, _Frames[0].Width, _Frames[0].Height);
+				DepthFrame result = new DepthFrame(DateTime.Now, avgDistance, this.framewidth, this.frameheight);
 				return result;
 			} else {
 				return null;
 			}
+		}
+
+		/// <inheritdoc/>
+		protected override void DoDispose() {
+			depthSum = null;
 		}
 	}
 }

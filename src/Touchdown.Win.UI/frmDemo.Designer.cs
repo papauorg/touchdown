@@ -25,8 +25,10 @@
 		private void InitializeComponent() {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDemo));
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.lblSensorStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.lblDepthFPS = new System.Windows.Forms.ToolStripStatusLabel();
 			this.lblColorFPS = new System.Windows.Forms.ToolStripStatusLabel();
+			this.lblPatternsRegistered = new System.Windows.Forms.ToolStripStatusLabel();
 			this.grpTouchpoints = new System.Windows.Forms.GroupBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.pbTouchPoints = new System.Windows.Forms.PictureBox();
@@ -41,8 +43,7 @@
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.pbRecognized = new System.Windows.Forms.PictureBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.lblSensorStatus = new System.Windows.Forms.ToolStripStatusLabel();
-			this.lblPatternsRegistered = new System.Windows.Forms.ToolStripStatusLabel();
+			this.btnStart = new System.Windows.Forms.Button();
 			this.statusStrip1.SuspendLayout();
 			this.grpTouchpoints.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -53,6 +54,7 @@
 			this.lastRecognized.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbRecognized)).BeginInit();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// statusStrip1
@@ -68,6 +70,12 @@
 			this.statusStrip1.TabIndex = 0;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
+			// lblSensorStatus
+			// 
+			this.lblSensorStatus.Name = "lblSensorStatus";
+			this.lblSensorStatus.Size = new System.Drawing.Size(80, 17);
+			this.lblSensorStatus.Text = "Sensor Status:";
+			// 
 			// lblDepthFPS
 			// 
 			this.lblDepthFPS.Name = "lblDepthFPS";
@@ -79,6 +87,12 @@
 			this.lblColorFPS.Name = "lblColorFPS";
 			this.lblColorFPS.Size = new System.Drawing.Size(61, 17);
 			this.lblColorFPS.Text = "Color FPS:";
+			// 
+			// lblPatternsRegistered
+			// 
+			this.lblPatternsRegistered.Name = "lblPatternsRegistered";
+			this.lblPatternsRegistered.Size = new System.Drawing.Size(111, 17);
+			this.lblPatternsRegistered.Text = "Patterns Registered:";
 			// 
 			// grpTouchpoints
 			// 
@@ -210,6 +224,7 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.btnStart);
 			this.groupBox1.Location = new System.Drawing.Point(15, 228);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(231, 174);
@@ -217,17 +232,15 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Settings";
 			// 
-			// lblSensorStatus
+			// btnStart
 			// 
-			this.lblSensorStatus.Name = "lblSensorStatus";
-			this.lblSensorStatus.Size = new System.Drawing.Size(80, 17);
-			this.lblSensorStatus.Text = "Sensor Status:";
-			// 
-			// lblPatternsRegistered
-			// 
-			this.lblPatternsRegistered.Name = "lblPatternsRegistered";
-			this.lblPatternsRegistered.Size = new System.Drawing.Size(111, 17);
-			this.lblPatternsRegistered.Text = "Patterns Registered:";
+			this.btnStart.Location = new System.Drawing.Point(6, 19);
+			this.btnStart.Name = "btnStart";
+			this.btnStart.Size = new System.Drawing.Size(64, 23);
+			this.btnStart.TabIndex = 5;
+			this.btnStart.Text = "Start";
+			this.btnStart.UseVisualStyleBackColor = true;
+			this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
 			// 
 			// frmDemo
 			// 
@@ -255,6 +268,7 @@
 			this.lastRecognized.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pbRecognized)).EndInit();
+			this.groupBox1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -281,6 +295,7 @@
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.ToolStripStatusLabel lblSensorStatus;
 		private System.Windows.Forms.ToolStripStatusLabel lblPatternsRegistered;
+		private System.Windows.Forms.Button btnStart;
 
 	}
 }

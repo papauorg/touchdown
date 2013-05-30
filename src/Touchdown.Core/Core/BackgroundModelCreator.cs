@@ -9,31 +9,33 @@ namespace Touchdown.Core {
 	/// Creates a background model by all given <see cref="DepthFrame"/>s that can be used by the
 	/// <see cref="SimpleTouchAreaObserver"/>.
 	/// </summary>
-	public abstract class BackgroundModelCreator<TFrame> where TFrame : Frame{
-		protected List<TFrame> _Frames;
+	public abstract class BackgroundModelCreator<TFrame> : IDisposable where TFrame : Frame{
+		protected int framewidth, frameheight;
 
 		/// <summary>
 		/// New instance of a creator. Can create a simple background model from depthframes used
 		/// by the <see cref="SimpleTouchAreaObserver" />
 		/// </summary>
 		public BackgroundModelCreator(){ 
-			_Frames = new List<TFrame>();
+			this.FrameCount = 0;
 		}
 
 		#region Public Methods
 		/// <summary>
 		/// Clears all currently gathered frames to create a completely new background model.
 		/// </summary>
-		public void Clear(){
-			_Frames.Clear();
+		public virtual void Clear(){
+			this.FrameCount = 0;
 		}
 
 		/// <summary>
 		/// Add another depthframe that should be part of the background model.
 		/// </summary>
 		/// <param name="frame">frame to add</param>
-		public void Add(TFrame frame){
-			_Frames.Add(frame);
+		public virtual void Add(TFrame frame){
+			this.FrameCount++;
+			this.framewidth = frame.Width;
+			this.frameheight= frame.Height;
 		}
 		
 		/// <summary>
@@ -42,8 +44,14 @@ namespace Touchdown.Core {
 		/// <exception cref="InvalidOperationException">If no frames are gathered yet.</exception>
 		/// <returns>Depthframe that represents the background.</returns>
 		public abstract TFrame GetBackgroundModel();
+
+		protected abstract void DoDispose();
+
+		void IDisposable.Dispose(){
+			this.DoDispose();
+		}
 		#endregion
 
-		public int FrameCount{get{return _Frames.Count;}} 
+		public int FrameCount{get; private set;} 
 	}
 }

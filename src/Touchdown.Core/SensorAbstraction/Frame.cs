@@ -8,7 +8,7 @@ namespace Touchdown.SensorAbstraction {
 	/// <summary>
 	/// Represents a frame. Contains basic information about it.
 	/// </summary>
-	public abstract class Frame {
+	public abstract class Frame : IDisposable{
 		private DateTime _frameTime;
 
 		#region Constructors / Destructors
@@ -65,5 +65,9 @@ namespace Touchdown.SensorAbstraction {
 		/// </summary>
 		public int Height{get; private set;}
 		#endregion
+
+		public virtual void Dispose() {
+			
+		}
 	}
 }
