@@ -34,7 +34,7 @@ namespace Touchdown.Core {
 					avgDistance[i] = (int)(sumDistance[i] / _Frames.Count);
 				}
 				
-				DepthFrame result = new DepthFrame(DateTime.Now, avgDistance);
+				DepthFrame result = new DepthFrame(DateTime.Now, avgDistance, _Frames[0].Width, _Frames[0].Height);
 				return result;
 			} else {
 				return null;

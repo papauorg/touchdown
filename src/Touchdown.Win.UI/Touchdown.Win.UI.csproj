@@ -31,6 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Touchdown.Win.UI.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Touchdown.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Kinect, Version=1.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -117,11 +123,17 @@
     <EmbeddedResource Include="UserControls\InitWizzard\BackgroundModelGenerationControl.resx">
       <DependentUpon>BackgroundModelGenerationControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\InitWizzard\FinishInitWizzardControl.resx">
+      <DependentUpon>FinishInitWizzardControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\InitWizzard\InitKinectWizzardControl.resx">
       <DependentUpon>InitKinectWizzardControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\InitWizzard\KinectSensorSelectionControl.resx">
       <DependentUpon>KinectSensorSelectionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\InitWizzard\TouchAreaSelectionControl.resx">
+      <DependentUpon>TouchAreaSelectionControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\InitWizzard\WelcomeWizzardControl.resx">
       <DependentUpon>WelcomeWizzardControl.cs</DependentUpon>
@@ -154,6 +166,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TouchdownClipart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Touchdown.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

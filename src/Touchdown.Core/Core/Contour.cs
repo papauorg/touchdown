@@ -83,8 +83,8 @@ namespace Touchdown.Core {
 			List<Contour> result = new List<Contour>();
 			
 			
-			int width = settings.DepthFrameResolution.Width;
-			int height = settings.DepthFrameResolution.Height;
+			int width = isTouched.GetLength(0);
+			int height = isTouched.GetLength(1);
 			
 			// holds the information if the contour points were already used 
 			// by the turtle algorithm (later on)

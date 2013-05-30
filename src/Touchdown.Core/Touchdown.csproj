@@ -42,6 +42,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Core\AreaFilter.cs" />
     <Compile Include="Core\BackgroundModelCreator.cs" />
     <Compile Include="Core\BackgroundModelCreatorDepth.cs" />
     <Compile Include="Core\BackgroundModelCreatorRGB.cs" />

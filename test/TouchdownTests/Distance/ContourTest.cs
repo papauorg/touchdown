@@ -34,9 +34,7 @@ namespace TouchTests {
 					TouchSettings settings = new TouchSettings();
 					settings.MaxContourLength = 25;
 					settings.MinContourLength = 4;
-					settings.DepthFrameResolution = new System.Drawing.Rectangle(0,0, 26, 14);
 			
-					
 					int[,] touchedAreas = { {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 											{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0},
 											{0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0},

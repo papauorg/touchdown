@@ -10,7 +10,7 @@ namespace Touchdown.SensorAbstraction {
 	/// </summary>
 	public abstract class Frame {
 		private DateTime _frameTime;
-		
+
 		#region Constructors / Destructors
 		
 		/// <summary>
@@ -22,8 +22,10 @@ namespace Touchdown.SensorAbstraction {
 		/// <param name='data'>
 		/// Data.
 		/// </param>
-		public Frame(DateTime frameTime){
+		public Frame(DateTime frameTime, int width, int height){
 			this._frameTime = frameTime;
+			this.Width = width;
+			this.Height = height;
 		}
 		#endregion
 		
@@ -52,6 +54,16 @@ namespace Touchdown.SensorAbstraction {
 				return _frameTime;
 			}
 		}
+		
+		/// <summary>
+		/// width of the frame.
+		/// </summary>
+		public int Width{get; private set;}
+
+		/// <summary>
+		/// height of the frame.
+		/// </summary>
+		public int Height{get; private set;}
 		#endregion
 	}
 }

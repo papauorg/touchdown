@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.IO;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 namespace Touchdown.SensorAbstraction {
 	/// <summary>
@@ -17,7 +19,11 @@ namespace Touchdown.SensorAbstraction {
 		/// <param name='frameTime'>
 		/// Frame time.
 		/// </param>
-		public RGBFrame(DateTime frameTime, byte[] data) : base(frameTime){
+		/// <param name="data">raw data of the image</param>
+		/// <param name="height">height of the frame</param>
+		/// <param name="width">width of the frame</param>
+		public RGBFrame(DateTime frameTime, byte[] data, int width, int height) 
+			: base(frameTime, width, height){
 			this.ColorBytes = data;
 		}
 		#endregion
@@ -30,7 +36,18 @@ namespace Touchdown.SensorAbstraction {
 		///  The bitmap. 
 		/// </returns>
 		public override System.Drawing.Bitmap CreateBitmap() {
-			return null;
+			var bitmap = new Bitmap(this.Width, this.Height, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+
+			var data = bitmap.LockBits(
+				new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+				ImageLockMode.ReadWrite,
+				bitmap.PixelFormat);
+
+			Marshal.Copy(this.ColorBytes, 0, data.Scan0, this.ColorBytes.Length);
+
+			bitmap.UnlockBits(data);
+
+			return bitmap;
 		}
 		#endregion
 

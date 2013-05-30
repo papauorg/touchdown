@@ -215,6 +215,12 @@ namespace Touchdown.Freenect {
 				return _isRunning;
 			}
 		}
+
+		/// <inheritdoc />
+		public int ColorFPS{get; private set;}
+		
+		/// <inheritdoc />
+		public int DepthFPS{get; private set;}
 		#endregion
 	}
 }

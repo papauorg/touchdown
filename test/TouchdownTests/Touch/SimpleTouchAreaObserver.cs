@@ -24,7 +24,7 @@ namespace TouchTests.Touch {
 							   1, 1, 1, 1, 1, 1, 1, 1, 1,
 							   1, 1, 1, 1, 1, 1, 1, 1, 1};
 
-			DepthFrame backgroundModel = new DepthFrame(DateTime.Now, modelData);
+			DepthFrame backgroundModel = new DepthFrame(DateTime.Now, modelData, 9, 6);
 
 			int[] touchData = {1, 1, 1, 1, 1, 1, 1, 1, 1,
 							   1, 1, 3, 3, 1, 1, 1, 1, 1,
@@ -33,9 +33,8 @@ namespace TouchTests.Touch {
 							   1, 1, 3, 3, 1, 1, 1, 1, 1,
 							   1, 1, 1, 1, 1, 1, 1, 1, 1};
 
-			DepthFrame touchFrame = new DepthFrame(DateTime.Now, touchData);
+			DepthFrame touchFrame = new DepthFrame(DateTime.Now, touchData, 9, 6);
 			TouchSettings mockSettings = new TouchSettings();
-			mockSettings.DepthFrameResolution = new System.Drawing.Rectangle(0,0,9,6);
 			mockSettings.ContourThreshold = 1;
 			mockSettings.MaxContourLength = 12;
 			mockSettings.MinContourLength = 7;

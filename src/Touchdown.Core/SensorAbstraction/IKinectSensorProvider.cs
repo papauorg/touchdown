@@ -46,5 +46,15 @@ namespace Touchdown.SensorAbstraction {
 		/// <c>true</c> if this instance is running; otherwise, <c>false</c>.
 		/// </value>
 		bool IsRunning{get;}
+
+		/// <summary>
+		/// returns the current frame rate for <see cref="RGBFrames"/>.
+		/// </summary>
+		int ColorFPS{get;}
+
+		/// <summary>
+		/// returns the current frame rate for <see cref="DepthFrames"/>
+		/// </summary>
+		int DepthFPS{get;}
 	}
 }

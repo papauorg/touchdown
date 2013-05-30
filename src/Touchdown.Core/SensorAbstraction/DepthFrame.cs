@@ -26,7 +26,9 @@ namespace Touchdown.SensorAbstraction {
 		/// <param name='distanceinMM'>
 		/// Distancein M.
 		/// </param>
-		public DepthFrame(DateTime frameTime, int[] distanceinMM) : base(frameTime){
+		/// <param name="height">height of the depth frame</param>
+		/// <param name="width">width of the depth frame</param>
+		public DepthFrame(DateTime frameTime, int[] distanceinMM, int width, int height) : base(frameTime, width, height){
 			this._distance = distanceinMM;
 		}
 		#endregion
@@ -60,7 +62,7 @@ namespace Touchdown.SensorAbstraction {
 				result[i] = (int)Math.Max(orig.DistanceInMM[i] - toRemove.DistanceInMM[i], 0);
 			}
 			
-			return new DepthFrame(DateTime.Now, result);
+			return new DepthFrame(DateTime.Now, result, orig.Width, orig.Height);
 		}
 		#endregion 
 		
@@ -97,5 +99,6 @@ namespace Touchdown.SensorAbstraction {
 				return _distance;
 			}
 		}
+
 	}
 }

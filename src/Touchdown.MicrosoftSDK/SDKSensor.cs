@@ -17,9 +17,11 @@ namespace Touchdown.MicrosoftSDK {
 		#region Members
 		private Microsoft.Kinect.KinectSensor _sensor;
 		private short[] temporaryDepthData;
+		private int[] convertedDepthData;
 		private byte[] temporaryRGBData;
-
 		private static ILog _log = LogManager.GetLogger(typeof(SDKSensor));
+		private Microsoft.Kinect.ColorImageFrame lastColorFrame;
+		private Microsoft.Kinect.DepthImageFrame lastDepthFrame;
 		#endregion
 
 		#region Objectevents
@@ -52,6 +54,9 @@ namespace Touchdown.MicrosoftSDK {
 			this._sensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
 			this._sensor.ColorFrameReady += HandleRGBDataReceived;
 			this._sensor.DepthFrameReady += HandleDepthDataReceived;
+
+			this.ColorFPS = 0;
+			this.DepthFPS = 0;
 		}
 		#endregion
 
@@ -69,6 +74,7 @@ namespace Touchdown.MicrosoftSDK {
 		void SensorAbstraction.IKinectSensorProvider.Stop() {
 			_sensor.Stop();
 		}
+
 		#endregion
 
 		#region Private Methods
@@ -86,6 +92,7 @@ namespace Touchdown.MicrosoftSDK {
 				using (var frame = e.OpenColorImageFrame()) { 
 					if (frame != null){
 						RGBFrame result = this.TransformToRGBFrame(frame);
+						this.lastColorFrame = frame;
 
 						if (result != null) { 
 							var args = new RGBFrameReadyEventArgs(result);
@@ -110,7 +117,9 @@ namespace Touchdown.MicrosoftSDK {
 				using (var frame = e.OpenDepthImageFrame()) {
 					if (frame != null) {
 						DepthFrame result = this.TransformToDepthFrame(frame);
-				
+						
+						this.lastDepthFrame = frame;
+
 						if (result != null) { 
 							var args = new DepthFrameReadyEventArgs(result);
 							this.DepthFrameReady(this, args);
@@ -132,11 +141,20 @@ namespace Touchdown.MicrosoftSDK {
 		private DepthFrame TransformToDepthFrame(DepthImageFrame img) {
 			if (this.temporaryDepthData == null) { 
 				this.temporaryDepthData = new short[img.PixelDataLength];
+				this.convertedDepthData = new int[img.PixelDataLength];
 			}
 			img.CopyPixelDataTo(this.temporaryDepthData);
 
+			// convert to distance in mm
+			for (int i = 0; i < this.temporaryDepthData.Length; ++i) { 
+				this.convertedDepthData[i] = this.temporaryDepthData[i] >> DepthImageFrame.PlayerIndexBitmaskWidth;
+			}
+
 			// calculate the depth
-			DepthFrame result = new DepthFrame(new DateTime(img.Timestamp), Array.ConvertAll<short, int>(this.temporaryDepthData, b => (int)b));
+			DepthFrame result = new DepthFrame(new DateTime(img.Timestamp), 
+											   convertedDepthData, 
+											   img.Width, 
+											   img.Height);
 			
 			return result;
 		}
@@ -156,7 +174,10 @@ namespace Touchdown.MicrosoftSDK {
 			}
 			img.CopyPixelDataTo(this.temporaryRGBData);
 
-			RGBFrame result = new RGBFrame(new DateTime(img.Timestamp), temporaryRGBData);
+			RGBFrame result = new RGBFrame(new DateTime(img.Timestamp), 
+											temporaryRGBData, 
+											img.Width, 
+											img.Height);
 			
 			return result;
 		}
@@ -165,6 +186,13 @@ namespace Touchdown.MicrosoftSDK {
 		#region Properties
 		/// <inheritdoc />
 		public bool IsRunning{get{return _sensor.IsRunning;}}
+
+		/// <inheritdoc />
+		public int ColorFPS{get; private set;}
+		
+		/// <inheritdoc />
+		public int DepthFPS{get; private set;}
+
 		#endregion
 	}
 }

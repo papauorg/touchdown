@@ -14,9 +14,7 @@ namespace Touchdown.Core {
 		private TouchSettings _settings;
 
 		private DepthFrame _avgBackground;
-		private Rectangle _observeArea;
 
-			
 		/// <summary>
 		///  Occurs when touch frame is ready. 
 		/// </summary>
@@ -49,8 +47,6 @@ namespace Touchdown.Core {
 			if (settings == null){
 				throw new ArgumentNullException("settings");
 			}
-			
-			this._observeArea = settings.DepthFrameResolution;
 
 			this._sensor = sensor;
 			this._settings = settings;
@@ -82,7 +78,7 @@ namespace Touchdown.Core {
 					// create matrix that contains information if the pixel is
 					// considered a touched pixel. Use a matrix instead of an array 
 					// for easier access.
-					bool[,] isTouched = this.ConvertToMatrix(rawPoints);
+					bool[,] isTouched = this.ConvertToMatrix(rawPoints, e.FrameData.Width, e.FrameData.Height);
 					 					 
 					/* the extracted background contains now only the parts of the image where something is different
 			* 		  *	than the background. In this case usually fingers. 
@@ -91,8 +87,9 @@ namespace Touchdown.Core {
 
 			 		SimpleTouchFrame touchFrame 
 			 		 				= new SimpleTouchFrame(e.FrameData.FrameTime,
-			 		 										touchPoints/*, 
-			 		 										this._observeArea*/);
+			 		 										touchPoints,
+															e.FrameData.Width,
+															e.FrameData.Height);
 			 		 
 			 		TouchFrameReadyEventArgs eventArgs 
 			 		  				= new TouchFrameReadyEventArgs(touchFrame);
@@ -137,10 +134,7 @@ namespace Touchdown.Core {
 		/// <param name='rawPoints'>
 		/// Raw points.
 		/// </param>
-		private bool[,] ConvertToMatrix(short[] rawPoints){
-			int width = this._settings.DepthFrameResolution.Width;
-			int height = this._settings.DepthFrameResolution.Height;
-			
+		private bool[,] ConvertToMatrix(short[] rawPoints, int width, int height){
 			// first dimension is the column (X)
 			// second holds the row (Y)
 			bool[,] matrix = new bool[width, height];

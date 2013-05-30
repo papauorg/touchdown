@@ -34,7 +34,7 @@ namespace Touchdown.Core {
 					avgDistance[i] = (byte)(sumDistance[i] / _Frames.Count);
 				}
 				
-				RGBFrame result = new RGBFrame(DateTime.Now, avgDistance);
+				RGBFrame result = new RGBFrame(DateTime.Now, avgDistance, _Frames[0].Width, _Frames[0].Height);
 				return result;
 			} else {
 				return null;

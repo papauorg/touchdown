@@ -13,12 +13,11 @@ namespace Touchdown.Win.UI {
 	public partial class frmWizard : Form {
 		private int currentStep;
 		private List<UserControls.InitWizzard.InitKinectWizzardControl> wizzardPages;
-		private Dictionary<String, Object> wizzardInfo;
-
+		
 		public frmWizard() {
 			InitializeComponent();
 			currentStep = 0;
-			wizzardInfo = new Dictionary<string,object>();
+			WizzardInfo = new Dictionary<string,object>();
 
 			this.Load += frmWizard_Load;
 			this.btnNext.Click += NextStep;
@@ -41,7 +40,7 @@ namespace Touchdown.Win.UI {
 		private void ApplyCurrentStep(){
 			if (currentStep < wizzardPages.Count) {
 				pnlWizzardControl.Controls.Clear();
-				wizzardPages[currentStep].SetWizzardInfo(this.wizzardInfo);
+				wizzardPages[currentStep].SetWizzardInfo(this.WizzardInfo);
 				pnlWizzardControl.Controls.Add(wizzardPages[currentStep]);
 			} else { 
 				this.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -50,11 +49,12 @@ namespace Touchdown.Win.UI {
 		}
 
 		private void NextStep(object sender, System.EventArgs e) {
-			wizzardPages[currentStep].AddOrUpdateWizzardInfo(wizzardInfo);
+			wizzardPages[currentStep].AddOrUpdateWizzardInfo(WizzardInfo);
 
 			this.currentStep++;
 			ApplyCurrentStep();
 		}
 
+		public Dictionary<String, Object> WizzardInfo{get; private set;}
 	}
 }

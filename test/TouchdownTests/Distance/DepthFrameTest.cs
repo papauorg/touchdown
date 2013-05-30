@@ -18,9 +18,9 @@ namespace TouchTests.Distance {
 		public void DepthFrameSubstractionTest(){
 			
 			int[] modelData = {1, 1, 1, 1};
-			DepthFrame backgroundModel = new DepthFrame(DateTime.Now, modelData);
+			DepthFrame backgroundModel = new DepthFrame(DateTime.Now, modelData, 2, 2);
 			int[] frameData = {1, 2, 3, 4};
-			DepthFrame touchFrame = new DepthFrame(DateTime.Now, frameData);
+			DepthFrame touchFrame = new DepthFrame(DateTime.Now, frameData, 2, 2);
 
 			var result = touchFrame - backgroundModel;
 

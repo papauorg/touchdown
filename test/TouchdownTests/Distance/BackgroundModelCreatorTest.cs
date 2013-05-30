@@ -18,11 +18,11 @@ namespace TouchTests.Distance {
 			var creator = new BackgroundModelCreatorDepth();
 			
 			int[] FrameDataTwo = {2,2,2,2};
-			creator.Add(new DepthFrame(DateTime.Now, FrameDataTwo));
-			creator.Add(new DepthFrame(DateTime.Now, FrameDataTwo));
+			creator.Add(new DepthFrame(DateTime.Now, FrameDataTwo, 2, 2));
+			creator.Add(new DepthFrame(DateTime.Now, FrameDataTwo, 2 ,2));
 			int[] FrameDataFour = {4,4,4,4};
-			creator.Add(new DepthFrame(DateTime.Now, FrameDataFour));
-			creator.Add(new DepthFrame(DateTime.Now, FrameDataFour));
+			creator.Add(new DepthFrame(DateTime.Now, FrameDataFour, 2, 2));
+			creator.Add(new DepthFrame(DateTime.Now, FrameDataFour, 2, 2));
 
 			var result = creator.GetBackgroundModel();
 
