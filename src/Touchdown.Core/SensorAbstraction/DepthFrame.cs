@@ -44,6 +44,20 @@ namespace Touchdown.SensorAbstraction {
 			// ToDo: create depth bitmap.
 			return null;
 		}
+
+		public string GetVisualization() {
+			StringBuilder builder = new StringBuilder();
+
+			for (int i = 0; i < _distance.Length; ++i) {
+				builder.Append(_distance[i]);
+				builder.Append("\t");
+				if (i % this.Width == 0 && i > 0) { 
+					builder.AppendLine();
+				}
+			}
+
+			return builder.ToString();
+		}
 		#endregion
 
 		#region Operator

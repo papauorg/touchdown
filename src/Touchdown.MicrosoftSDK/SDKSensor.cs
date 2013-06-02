@@ -74,6 +74,8 @@ namespace Touchdown.MicrosoftSDK {
 			this.lastDepthFrameCount = DateTime.Now;
 			this.rgbFrameCount = 0;
 			this.depthFrameCount = 0;
+			this.DepthFPS = 0;
+			this.ColorFPS = 0;
 		}
 
 		/// <summary>
@@ -81,6 +83,10 @@ namespace Touchdown.MicrosoftSDK {
 		/// </summary>
 		void SensorAbstraction.IKinectSensorProvider.Stop() {
 			_sensor.Stop();
+			this.rgbFrameCount = 0;
+			this.depthFrameCount = 0;
+			this.DepthFPS = 0;
+			this.ColorFPS = 0;
 		}
 
 		#endregion
@@ -114,6 +120,7 @@ namespace Touchdown.MicrosoftSDK {
 			if (DateTime.Now.Subtract(this.lastRgbFrameCount).TotalSeconds >= 1) { 
 				this.ColorFPS = this.rgbFrameCount;
 				this.lastRgbFrameCount = DateTime.Now;
+				this.rgbFrameCount = 0;
 			}
 
 		}
@@ -141,10 +148,11 @@ namespace Touchdown.MicrosoftSDK {
 				}
 			}
 			
-			this.rgbFrameCount++;
-			if (DateTime.Now.Subtract(this.lastRgbFrameCount).TotalSeconds >= 1) { 
-				this.ColorFPS = this.rgbFrameCount;
-				this.lastRgbFrameCount = DateTime.Now;
+			this.depthFrameCount++;
+			if (DateTime.Now.Subtract(this.lastDepthFrameCount).TotalSeconds >= 1) { 
+				this.DepthFPS = this.depthFrameCount;
+				this.lastDepthFrameCount = DateTime.Now;
+				this.depthFrameCount = 0;
 			}
 		}
 

@@ -4,6 +4,8 @@ using System.Text;
 using Touchdown.SensorAbstraction;
 using System.Linq;
 using System.Drawing;
+using System.Threading;
+using System.ComponentModel;
 
 namespace Touchdown.Core {
 	/// <summary>
@@ -12,8 +14,10 @@ namespace Touchdown.Core {
 	public class SimpleTouchAreaObserver : ITouchObserver<Touchdown.SensorAbstraction.SimpleTouchFrame> {
 		private IKinectSensorProvider _sensor;
 		private TouchSettings _settings;
-
 		private DepthFrame _avgBackground;
+
+		private BackgroundWorker worker;
+
 
 		/// <summary>
 		///  Occurs when touch frame is ready. 
@@ -56,6 +60,12 @@ namespace Touchdown.Core {
 			// register events needed for recognition of touch frames.
 			this._sensor.DepthFrameReady 	+= this.DepthFrameReadyHandler;
 			this._sensor.RGBFrameReady		+= this.RGBFrameReadyHandler;
+
+			this.worker = new BackgroundWorker();
+			worker.WorkerReportsProgress = false;
+			worker.WorkerSupportsCancellation = false;
+			worker.RunWorkerCompleted += BackgroundWorkerFinished;
+			worker.DoWork += BackgroundWorkerDoWork;
 		}
 		#endregion
 		
@@ -64,44 +74,59 @@ namespace Touchdown.Core {
 
 			// recognition of touch points
 			if (TouchFrameReady != null){
-				/* remove the background model from the current frame to have only 
+				// check if the worker is busy, if so drop the frame;
+				if (!worker.IsBusy) {
+					/* remove the background model from the current frame to have only 
 					objects left that are not part of the background.
 					Those objects should be used for recognition. (could be a hand for example) */
-				using(DepthFrame foreGround = e.FrameData - this._avgBackground){
-					
-					/*  apply the threshold of the settings to recognize all points that 
-					*  are close enough to the background */
-					short[] rawPoints = 
-					this.ApplyThreshold(foreGround.DistanceInMM, 
-					 					this._settings.MinDistanceFromBackround, 
-					 					this._settings.MaxDistanceFromBackground);
-					 			
-					// create matrix that contains information if the pixel is
-					// considered a touched pixel. Use a matrix instead of an array 
-					// for easier access.
-					bool[,] isTouched = this.ConvertToMatrix(rawPoints, e.FrameData.Width, e.FrameData.Height);
-					 					 
-					/* the extracted background contains now only the parts of the image where something is different
-			* 		  *	than the background. In this case usually fingers. 
-			 		*	There are very "blury" areas where the finger are located. Extract the touchpoints of it. */
-			 		List<TouchPoint> touchPoints = this.ExtractTouchPoints(ref isTouched);
+					DepthFrame foreGround =  this._avgBackground - e.FrameData;
 
-					using (SimpleTouchFrame touchFrame
-									= new SimpleTouchFrame(e.FrameData.FrameTime,
-															touchPoints,
-															e.FrameData.Width,
-															e.FrameData.Height)) { 
-			 		 
-			 			TouchFrameReadyEventArgs eventArgs 
-			 		  					= new TouchFrameReadyEventArgs(touchFrame);
-			 		  					
-			 			TouchFrameReady(this, eventArgs);
-					}
+					worker.RunWorkerAsync(foreGround);
 				}
 			}
 		}
 		
-		
+		private void BackgroundWorkerDoWork(object sender, DoWorkEventArgs e){
+			var foreGround = e.Argument as DepthFrame;
+
+			/*  apply the threshold of the settings to recognize all points that 
+			 *  are close enough to the background */
+			short[] rawPoints = 
+			this.ApplyThreshold(foreGround.DistanceInMM, 
+					 			this._settings.MinDistanceFromBackround, 
+					 			this._settings.MaxDistanceFromBackground);
+					 			
+			// create matrix that contains information if the pixel is
+			// considered a touched pixel. Use a matrix instead of an array 
+			// for easier access.
+			bool[,] isTouched = this.ConvertToMatrix(rawPoints, foreGround.Width, foreGround.Height);
+					 					 
+			/* the extracted background contains now only the parts of the image where something is different*
+	 		 *	than the background. In this case usually fingers. 
+			 *	There are very "blury" areas where the finger are located. Extract the touchpoints of it. */
+			List<TouchPoint> touchPoints = this.ExtractTouchPoints(ref isTouched);
+			e.Result = new SimpleTouchFrame(DateTime.Now, touchPoints, foreGround.Height, foreGround.Width);
+
+			foreGround.Dispose();
+		}
+
+		private void BackgroundWorkerFinished(object sender, RunWorkerCompletedEventArgs e) {
+			var originalFrame = e.Result as SimpleTouchFrame;
+
+			using (SimpleTouchFrame touchFrame
+							= new SimpleTouchFrame(originalFrame.FrameTime,
+													originalFrame.TouchPoints.ToList(),
+													originalFrame.Width,
+													originalFrame.Height)) { 
+			 		 
+			 	TouchFrameReadyEventArgs eventArgs 
+			 		  			= new TouchFrameReadyEventArgs(touchFrame);
+			 		  					
+			 	TouchFrameReady(this, eventArgs);
+			}
+			originalFrame.Dispose();
+		}
+
 		private void RGBFrameReadyHandler(object sender, RGBFrameReadyEventArgs e){
 			if (TouchFrameReady != null){
 				// Nothing to do here for simple touch area observer.

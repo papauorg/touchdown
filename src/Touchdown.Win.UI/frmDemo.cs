@@ -30,7 +30,14 @@ namespace Touchdown.Win.UI {
 			var backgroundModel = info[InitWizzard.INFOKEY_BACKGROUND_MODEL] as DepthFrame;
 			var area =  (Rectangle)info[InitWizzard.INFOKEY_TOUCHAREA];
 
-			var observer = new SimpleTouchAreaObserver(sensor, new TouchSettings(), backgroundModel);
+			var touchSettings = new TouchSettings();
+			touchSettings.MinContourLength = 15;
+			touchSettings.MaxContourLength = 150;
+			touchSettings.MinDistanceFromBackround = 7;
+			touchSettings.MaxDistanceFromBackground = 35;
+			touchSettings.ContourThreshold = 5;
+
+			var observer = new SimpleTouchAreaObserver(sensor, touchSettings, backgroundModel);
 			this.touchProvider = new AreaFilter(observer, area, true);
 			this.touchProvider.TouchFrameReady += UpdateTouchFrameVisualization;
 
@@ -42,10 +49,16 @@ namespace Touchdown.Win.UI {
 		}
 
 		private void UpdateTouchFrameVisualization(object sender, TouchFrameReadyEventArgs e) {
-			if (this.Visible && this.frameCount % 5 == 0) {
+			if (this.Visible) {
+				this.frameCount = 0;
 				pbTouchPoints.Image = e.FrameData.CreateBitmap();
 			}
 			frameCount++;
+
+			if (e.FrameData.TouchPoints.Count > 0) { 
+				//pbTouchPoints.Image.Save("C:\\tmp\\test.bmp");
+			}
+
 		}
 
 		private void UpdateLabels(){

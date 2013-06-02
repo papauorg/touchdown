@@ -32,7 +32,7 @@ namespace Touchdown.SensorAbstraction {
 								IList<TouchPoint> touchpoints,
 								int height,
 								int width
-								) : base(frameTime, height, width) {
+								) : base(frameTime, width, height) {
 			this.touchPoints = touchpoints;
 		}
 		#endregion
@@ -60,7 +60,7 @@ namespace Touchdown.SensorAbstraction {
 				}
 				using (SolidBrush brush = new SolidBrush(touchPoints)) { 
 					foreach(var point in this.TouchPoints){
-						int size = 3; //px
+						int size = 10; //px
 
 						bufferGraphics.FillEllipse(brush, point.X - size, point.Y - size, size, size);
 					}

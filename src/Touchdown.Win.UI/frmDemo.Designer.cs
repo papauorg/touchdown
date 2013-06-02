@@ -120,7 +120,7 @@
 			this.pbTouchPoints.Location = new System.Drawing.Point(3, 16);
 			this.pbTouchPoints.Name = "pbTouchPoints";
 			this.pbTouchPoints.Size = new System.Drawing.Size(219, 143);
-			this.pbTouchPoints.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.pbTouchPoints.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pbTouchPoints.TabIndex = 5;
 			this.pbTouchPoints.TabStop = false;
 			// 
@@ -152,7 +152,7 @@
 			this.pbLastGesture.Location = new System.Drawing.Point(3, 16);
 			this.pbLastGesture.Name = "pbLastGesture";
 			this.pbLastGesture.Size = new System.Drawing.Size(224, 143);
-			this.pbLastGesture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.pbLastGesture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pbLastGesture.TabIndex = 6;
 			this.pbLastGesture.TabStop = false;
 			// 
@@ -219,6 +219,7 @@
 			this.pbRecognized.Location = new System.Drawing.Point(3, 16);
 			this.pbRecognized.Name = "pbRecognized";
 			this.pbRecognized.Size = new System.Drawing.Size(225, 137);
+			this.pbRecognized.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pbRecognized.TabIndex = 7;
 			this.pbRecognized.TabStop = false;
 			// 
@@ -263,10 +264,12 @@
 			this.grpLastGesture.ResumeLayout(false);
 			this.grpLastGesture.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
+			this.groupBox3.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbLastGesture)).EndInit();
 			this.lastRecognized.ResumeLayout(false);
 			this.lastRecognized.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
+			this.groupBox4.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbRecognized)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.ResumeLayout(false);
