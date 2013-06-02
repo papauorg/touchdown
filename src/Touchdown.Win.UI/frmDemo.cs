@@ -15,6 +15,7 @@ namespace Touchdown.Win.UI {
 	public partial class frmDemo : Form {
 		private Dictionary<string, object> info;
 		
+		private SimpleTouchAreaObserver observer;
 		private AreaFilter touchProvider;
 		private IKinectSensorProvider sensor;
 		private int frameCount;
@@ -26,18 +27,17 @@ namespace Touchdown.Win.UI {
 			InitializeComponent();
 			this.info = info;
 			this.sensor = info[InitWizzard.INFOKEY_SENSOR] as IKinectSensorProvider;
-			
 			var backgroundModel = info[InitWizzard.INFOKEY_BACKGROUND_MODEL] as DepthFrame;
 			var area =  (Rectangle)info[InitWizzard.INFOKEY_TOUCHAREA];
 
 			var touchSettings = new TouchSettings();
 			touchSettings.MinContourLength = 15;
 			touchSettings.MaxContourLength = 150;
-			touchSettings.MinDistanceFromBackround = 7;
-			touchSettings.MaxDistanceFromBackground = 35;
+			touchSettings.MinDistanceFromBackround = 6;
+			touchSettings.MaxDistanceFromBackground = 30;
 			touchSettings.ContourThreshold = 5;
 
-			var observer = new SimpleTouchAreaObserver(sensor, touchSettings, backgroundModel);
+			this.observer = new SimpleTouchAreaObserver(sensor, touchSettings, backgroundModel);
 			this.touchProvider = new AreaFilter(observer, area, true);
 			this.touchProvider.TouchFrameReady += UpdateTouchFrameVisualization;
 
@@ -55,16 +55,13 @@ namespace Touchdown.Win.UI {
 			}
 			frameCount++;
 
-			if (e.FrameData.TouchPoints.Count > 0) { 
-				//pbTouchPoints.Image.Save("C:\\tmp\\test.bmp");
-			}
-
 		}
 
 		private void UpdateLabels(){
 			SetLabelIsRunning(this.sensor.IsRunning);
 			SetLabelColorFPS(this.sensor.ColorFPS);
 			SetLabelDepthFPS(this.sensor.DepthFPS);
+			SetLabelTouchFPS(this.observer.TouchFPS);
 			//SetLabelRegisteredPatterns(this.PatterRecognicer.RegisteredPatterns.Count);
 		}
 
@@ -72,6 +69,9 @@ namespace Touchdown.Win.UI {
 
 		private void SetLabelIsRunning(bool isrunning){
 			lblSensorStatus.Text = isrunning ? "running" : "stopped";
+		}
+		private void SetLabelTouchFPS(int fps){
+			lblTouchFPS.Text = String.Format("Touch FPS: {0}", fps);
 		}
 		private void SetLabelColorFPS(int fps){
 			lblColorFPS.Text = String.Format("Color FPS: {0}", fps);

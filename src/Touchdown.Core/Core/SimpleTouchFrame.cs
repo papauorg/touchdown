@@ -60,9 +60,13 @@ namespace Touchdown.SensorAbstraction {
 				}
 				using (SolidBrush brush = new SolidBrush(touchPoints)) { 
 					foreach(var point in this.TouchPoints){
-						int size = 10; //px
+						int size = 15; //px
 
-						bufferGraphics.FillEllipse(brush, point.X - size, point.Y - size, size, size);
+						// upside down:
+						int x = point.X - size;
+						int y = this.Height - point.Y - size;
+
+						bufferGraphics.FillEllipse(brush, x, y, size, size);
 					}
 				}
 			}

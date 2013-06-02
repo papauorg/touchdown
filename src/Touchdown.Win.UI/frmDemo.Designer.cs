@@ -44,6 +44,7 @@
 			this.pbRecognized = new System.Windows.Forms.PictureBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.btnStart = new System.Windows.Forms.Button();
+			this.lblTouchFPS = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusStrip1.SuspendLayout();
 			this.grpTouchpoints.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -63,7 +64,8 @@
             this.lblSensorStatus,
             this.lblDepthFPS,
             this.lblColorFPS,
-            this.lblPatternsRegistered});
+            this.lblPatternsRegistered,
+            this.lblTouchFPS});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 452);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(753, 22);
@@ -243,6 +245,12 @@
 			this.btnStart.UseVisualStyleBackColor = true;
 			this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
 			// 
+			// lblTouchFPS
+			// 
+			this.lblTouchFPS.Name = "lblTouchFPS";
+			this.lblTouchFPS.Size = new System.Drawing.Size(69, 17);
+			this.lblTouchFPS.Text = "Touch FPS: ";
+			// 
 			// frmDemo
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -299,6 +307,7 @@
 		private System.Windows.Forms.ToolStripStatusLabel lblSensorStatus;
 		private System.Windows.Forms.ToolStripStatusLabel lblPatternsRegistered;
 		private System.Windows.Forms.Button btnStart;
+		private System.Windows.Forms.ToolStripStatusLabel lblTouchFPS;
 
 	}
 }

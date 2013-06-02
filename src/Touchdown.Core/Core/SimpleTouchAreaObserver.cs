@@ -16,6 +16,9 @@ namespace Touchdown.Core {
 		private TouchSettings _settings;
 		private DepthFrame _avgBackground;
 
+		private int touchFrameCount;
+		private DateTime lastTouchFrameCount;
+
 		private BackgroundWorker worker;
 
 
@@ -66,6 +69,9 @@ namespace Touchdown.Core {
 			worker.WorkerSupportsCancellation = false;
 			worker.RunWorkerCompleted += BackgroundWorkerFinished;
 			worker.DoWork += BackgroundWorkerDoWork;
+
+			touchFrameCount = 0;
+			lastTouchFrameCount = DateTime.Now;
 		}
 		#endregion
 		
@@ -125,6 +131,13 @@ namespace Touchdown.Core {
 			 	TouchFrameReady(this, eventArgs);
 			}
 			originalFrame.Dispose();
+
+			this.touchFrameCount++;
+			if (DateTime.Now.Subtract(this.lastTouchFrameCount).TotalSeconds >= 1) { 
+				this.TouchFPS = this.touchFrameCount;
+				this.lastTouchFrameCount = DateTime.Now;
+				this.touchFrameCount = 0;
+			}
 		}
 
 		private void RGBFrameReadyHandler(object sender, RGBFrameReadyEventArgs e){
@@ -211,5 +224,10 @@ namespace Touchdown.Core {
 			return result;
 		}
 		#endregion
+	
+		/// <summary>
+		/// returns the framereate of the observer
+		/// </summary>
+		public int TouchFPS {get; private set;} 
 	}
 }

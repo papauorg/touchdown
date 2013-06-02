@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace Touchdown.SensorAbstraction {
 	/// <summary>
@@ -41,8 +44,41 @@ namespace Touchdown.SensorAbstraction {
 		///  The bitmap. 
 		/// </returns>
 		public override System.Drawing.Bitmap CreateBitmap() {
-			// ToDo: create depth bitmap.
-			return null;
+			byte[] colorFrame = new byte[this.Height * this.Width * 4];
+
+			int maxValue = this._distance.Where(x=> x<2047).Max();
+			int minValue = this._distance.Min();
+
+			// Process each row in parallel
+			Parallel.For(0, this.Height, depthArrayRowIndex => {
+				// Process each pixel in the row
+				for (int depthArrayColumnIndex = 0; depthArrayColumnIndex < this.Width; depthArrayColumnIndex++) {
+					var distanceIndex = depthArrayColumnIndex + (depthArrayRowIndex * this.Width);
+					var index = distanceIndex * 4;
+
+					// Map the distance to an intesity that can be represented in RGB
+					int newMax = _distance[distanceIndex] - minValue;
+					var intensity = (byte)(255 - (255 * newMax / (3150)));
+
+					// Apply the intensity to the color channels
+					colorFrame[index + 0] = intensity;
+					colorFrame[index + 1] = intensity;
+					colorFrame[index + 2] = intensity;
+				}
+			});
+
+			var bitmap = new Bitmap(this.Width, this.Height, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+
+			var data = bitmap.LockBits(
+				new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height), 
+				System.Drawing.Imaging.ImageLockMode.ReadWrite,
+				bitmap.PixelFormat);
+
+			Marshal.Copy(colorFrame, 0, data.Scan0, colorFrame.Length);
+
+			bitmap.UnlockBits(data);
+
+			return bitmap;
 		}
 
 		public string GetVisualization() {

@@ -29,13 +29,29 @@
 			this.rbSpecificArea = new System.Windows.Forms.RadioButton();
 			this.btnReset = new System.Windows.Forms.Button();
 			this.rbAll = new System.Windows.Forms.RadioButton();
+			this.numX = new System.Windows.Forms.NumericUpDown();
+			this.numY = new System.Windows.Forms.NumericUpDown();
+			this.numWidth = new System.Windows.Forms.NumericUpDown();
+			this.numHeight = new System.Windows.Forms.NumericUpDown();
+			this.lblXY = new System.Windows.Forms.Label();
+			this.lblWidth = new System.Windows.Forms.Label();
 			this.pnlContent.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbChooseArea)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numX)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numY)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numWidth)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numHeight)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pnlContent
 			// 
+			this.pnlContent.Controls.Add(this.lblWidth);
+			this.pnlContent.Controls.Add(this.lblXY);
+			this.pnlContent.Controls.Add(this.numHeight);
+			this.pnlContent.Controls.Add(this.numWidth);
+			this.pnlContent.Controls.Add(this.numY);
+			this.pnlContent.Controls.Add(this.numX);
 			this.pnlContent.Controls.Add(this.btnReset);
 			this.pnlContent.Controls.Add(this.rbSpecificArea);
 			this.pnlContent.Controls.Add(this.rbWholeArea);
@@ -82,6 +98,7 @@
 			this.rbSpecificArea.TabIndex = 2;
 			this.rbSpecificArea.Text = "Choose specific area";
 			this.rbSpecificArea.UseVisualStyleBackColor = true;
+			this.rbSpecificArea.CheckedChanged += new System.EventHandler(this.rbSpecificArea_CheckedChanged);
 			// 
 			// btnReset
 			// 
@@ -104,6 +121,52 @@
 			this.rbAll.Text = "Use the whole area";
 			this.rbAll.UseVisualStyleBackColor = true;
 			// 
+			// numX
+			// 
+			this.numX.Location = new System.Drawing.Point(349, 68);
+			this.numX.Name = "numX";
+			this.numX.Size = new System.Drawing.Size(54, 20);
+			this.numX.TabIndex = 4;
+			// 
+			// numY
+			// 
+			this.numY.Location = new System.Drawing.Point(409, 68);
+			this.numY.Name = "numY";
+			this.numY.Size = new System.Drawing.Size(53, 20);
+			this.numY.TabIndex = 5;
+			// 
+			// numWidth
+			// 
+			this.numWidth.Location = new System.Drawing.Point(349, 94);
+			this.numWidth.Name = "numWidth";
+			this.numWidth.Size = new System.Drawing.Size(54, 20);
+			this.numWidth.TabIndex = 6;
+			// 
+			// numHeight
+			// 
+			this.numHeight.Location = new System.Drawing.Point(409, 94);
+			this.numHeight.Name = "numHeight";
+			this.numHeight.Size = new System.Drawing.Size(53, 20);
+			this.numHeight.TabIndex = 7;
+			// 
+			// lblXY
+			// 
+			this.lblXY.AutoSize = true;
+			this.lblXY.Location = new System.Drawing.Point(264, 70);
+			this.lblXY.Name = "lblXY";
+			this.lblXY.Size = new System.Drawing.Size(32, 13);
+			this.lblXY.TabIndex = 8;
+			this.lblXY.Text = "X / Y";
+			// 
+			// lblWidth
+			// 
+			this.lblWidth.AutoSize = true;
+			this.lblWidth.Location = new System.Drawing.Point(261, 96);
+			this.lblWidth.Name = "lblWidth";
+			this.lblWidth.Size = new System.Drawing.Size(77, 13);
+			this.lblWidth.TabIndex = 9;
+			this.lblWidth.Text = "Width / Height";
+			// 
 			// TouchAreaSelectionControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -112,6 +175,10 @@
 			this.pnlContent.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pbChooseArea)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numX)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numY)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numWidth)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numHeight)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -124,6 +191,12 @@
 		private System.Windows.Forms.RadioButton rbSpecificArea;
 		private System.Windows.Forms.RadioButton rbWholeArea;
 		private System.Windows.Forms.RadioButton rbAll;
+		private System.Windows.Forms.Label lblWidth;
+		private System.Windows.Forms.Label lblXY;
+		private System.Windows.Forms.NumericUpDown numHeight;
+		private System.Windows.Forms.NumericUpDown numWidth;
+		private System.Windows.Forms.NumericUpDown numY;
+		private System.Windows.Forms.NumericUpDown numX;
 
 	}
 }
