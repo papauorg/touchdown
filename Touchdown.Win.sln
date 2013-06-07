@@ -110,6 +110,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4A9FE975-2F69-470C-9FF2-ECFBE68D721F} = {5A736C24-AE99-408F-8F96-399474627FD5}
 	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = src\TouchdownUI\TouchdownUI.csproj
 		Policies = $0

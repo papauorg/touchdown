@@ -65,6 +65,9 @@
     <Compile Include="Core\DistanceCalculation\EucledianDistanceProvider.cs" />
     <Compile Include="Core\Contour.cs" />
     <Compile Include="Core\ContourPoint.cs" />
+    <Compile Include="Smoothing\AveragedSmoothing.cs" />
+    <Compile Include="Smoothing\BilinearFilter.cs" />
+    <Compile Include="Smoothing\FilteredSmoothing.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

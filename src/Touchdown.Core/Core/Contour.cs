@@ -79,7 +79,7 @@ namespace Touchdown.Core {
 		/// matrix with the information if a pixel is considered as touched.
 		/// </param>
 		/// <param name="settings">settings</param>
-		public static List<Contour> FindContours(ref bool[,] isTouched, TouchSettings settings){
+		public static List<Contour> FindContours(bool[,] isTouched, TouchSettings settings){
 			List<Contour> result = new List<Contour>();
 			
 			

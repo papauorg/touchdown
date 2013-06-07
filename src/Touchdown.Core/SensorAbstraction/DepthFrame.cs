@@ -81,13 +81,23 @@ namespace Touchdown.SensorAbstraction {
 			return bitmap;
 		}
 
-		public string GetVisualization() {
+		/// <summary>
+		/// multiplies depthvalues by the multiplicator to lighten or darken the image.
+		/// </summary>
+		/// <param name="multiplicator">multiplicator</param>
+		public void MultiplyBy(float multiplicator){
+			Parallel.For(0, this.DistanceInMM.Length, i=>{
+				this._distance[i] = (int)(this._distance[i] * multiplicator);
+			});
+		}
+
+		public static string GetVisualization(int[] arr, int width) {
 			StringBuilder builder = new StringBuilder();
 
-			for (int i = 0; i < _distance.Length; ++i) {
-				builder.Append(_distance[i]);
+			for (int i = 0; i < arr.Length; ++i) {
+				builder.Append(arr[i]);
 				builder.Append("\t");
-				if (i % this.Width == 0 && i > 0) { 
+				if (i % width == 0 && i > 0) { 
 					builder.AppendLine();
 				}
 			}
@@ -109,11 +119,13 @@ namespace Touchdown.SensorAbstraction {
 			// original - background = only elements to recognize.
 			// neg. values not allowed so: if neg then use 0;
 			for (int i = 0; i < orig.DistanceInMM.Length; ++i){
-				result[i] = (int)Math.Max(orig.DistanceInMM[i] - toRemove.DistanceInMM[i], 0);
+				// add 20 to the original so negative values are avoided and not flattened to 0
+				result[i] = (int)Math.Max((orig.DistanceInMM[i]) - toRemove.DistanceInMM[i], 0);
 			}
 			
 			return new DepthFrame(DateTime.Now, result, orig.Width, orig.Height);
 		}
+
 		#endregion 
 		
 		#region Private Methods
@@ -150,7 +162,8 @@ namespace Touchdown.SensorAbstraction {
 			}
 		}
 
-		public void Dispose() {
+		public override void Dispose() {
+			base.Dispose();
 			this._distance = null;
 		}
 	}

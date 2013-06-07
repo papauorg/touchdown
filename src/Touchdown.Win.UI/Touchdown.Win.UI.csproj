@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Touchdown.Win.UI</RootNamespace>
-    <AssemblyName>Touchdown.Win.UI</AssemblyName>
+    <AssemblyName>Touchdown DEMO Applicaton</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

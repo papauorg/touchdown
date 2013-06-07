@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using Touchdown.Core;
 using Touchdown.SensorAbstraction;
+using System.Threading.Tasks;
 
 namespace Touchdown.Win.UI.UserControls.InitWizzard {
 	public partial class TouchAreaSelectionControl : Touchdown.Win.UI.UserControls.InitWizzard.InitKinectWizzardControl {
@@ -52,11 +53,29 @@ namespace Touchdown.Win.UI.UserControls.InitWizzard {
 			base.AddOrUpdateWizzardInfo(info);
 
 			var wholeFrame = info[INFOKEY_BACKGROUND_MODEL] as DepthFrame;
-			var area = new Rectangle(0, 0, wholeFrame.Width, wholeFrame.Height);
 
 			if (rbSpecificArea.Checked) {
 				info.AddOrUpdate(INFOKEY_TOUCHAREA, selection);
+				int[] newModel = new int[selection.Width*selection.Height];
+
+				Parallel.For(0, wholeFrame.Height, y=>{
+					for(int x = 0; x < wholeFrame.Width; ++x){
+						if (y > selection.Top && y < selection.Bottom){
+							if (x > selection.Left && x < selection.Right){
+								int index = y*wholeFrame.Width+x;
+								int newX = x - selection.X;
+								int newY = y - selection.Y;
+								int newIndex = newY*selection.Width+newX;
+								newModel[newIndex] = wholeFrame.DistanceInMM[index];
+							}
+						}
+					}
+				});
+
+				var newFrame = new DepthFrame(DateTime.Now, newModel, selection.Width, selection.Height);
+				info.AddOrUpdate(INFOKEY_BACKGROUND_MODEL, newFrame);
 			} else { 
+				var area = new Rectangle(0, 0, wholeFrame.Width, wholeFrame.Height);
 				info.AddOrUpdate(INFOKEY_TOUCHAREA, area);
 			}
 		}
@@ -97,10 +116,10 @@ namespace Touchdown.Win.UI.UserControls.InitWizzard {
 			numWidth.Enabled = rbSpecificArea.Checked;
 			numHeight.Enabled = rbSpecificArea.Checked;
 
-			numX.Value = 0;
-			numY.Value = 0;
-			numWidth.Value = originalImage.Width;
-			numHeight.Value = originalImage.Height;
+			numX.Value = 100;
+			numY.Value = 50;
+			numWidth.Value = 480;
+			numHeight.Value = 380;
 		}
 
 

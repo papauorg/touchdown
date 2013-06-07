@@ -7,6 +7,8 @@ using Touchdown.SensorAbstraction;
 using Touchdown.Core;
 using log4net;
 using Microsoft.Kinect;
+using Touchdown.Core.Smoothing;
+using System.Drawing;
 
 namespace Touchdown.MicrosoftSDK {
 	/// <summary>
@@ -21,11 +23,21 @@ namespace Touchdown.MicrosoftSDK {
 		private byte[] temporaryRGBData;
 		private static ILog _log = LogManager.GetLogger(typeof(SDKSensor));
 
+		// area
+		private Rectangle recognizedArea;
+
 		// framecount
 		private int rgbFrameCount;
 		private DateTime lastRgbFrameCount;
 		private int depthFrameCount;
 		private DateTime lastDepthFrameCount;
+
+		// depth filters
+		private KinectDepthSmoothing.FilteredSmoothing zeroSmoother;
+		private KinectDepthSmoothing.AveragedSmoothing averageSmoother;
+		private BilinearFilter lateralFilter;
+
+		private const int KERNEL_SIZE = 3;
 		#endregion
 
 		#region Objectevents
@@ -45,7 +57,7 @@ namespace Touchdown.MicrosoftSDK {
 		/// Initializes a new instance of the <see cref="SDKSensor"/> class.
 		/// </summary>
 		/// <param name='sensor'>
-		/// Sensor.
+		/// Native Kinect sensor
 		/// </param>
 		/// <exception cref="ArgumentNullException">if the sensor is null</exception>
 		public SDKSensor(Microsoft.Kinect.KinectSensor sensor){
@@ -59,12 +71,39 @@ namespace Touchdown.MicrosoftSDK {
 			this._sensor.ColorFrameReady += HandleRGBDataReceived;
 			this._sensor.DepthFrameReady += HandleDepthDataReceived;
 
+			zeroSmoother= new KinectDepthSmoothing.FilteredSmoothing();
+			averageSmoother = new KinectDepthSmoothing.AveragedSmoothing(3);
+			lateralFilter = new BilinearFilter(640, 480, 3);
 			this.ColorFPS = 0;
 			this.DepthFPS = 0;
+
+			this.recognizedArea = new Rectangle(0,0,640,480);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SDKSensor"/> class.
+		/// </summary>
+		/// <param name="sensor">Native Kinect sensor</param>
+		/// <param name="area">Area that is used for recognition.</param>
+		public SDKSensor(Microsoft.Kinect.KinectSensor sensor, Rectangle area) : this(sensor){
+			lateralFilter = new BilinearFilter(area.Width, area.Height, KERNEL_SIZE);
+			this.SetArea(area);
 		}
 		#endregion
 
 		#region Public Methods
+		/// <inheritdoc />
+		public void SetArea(Rectangle area) {
+			int x = Math.Min(630, area.X);
+			int y = Math.Min(470, area.Y);
+			this.recognizedArea = new Rectangle(x,
+												y,
+												Math.Min(640-x, area.Width),
+												Math.Min(480-y, area.Height));
+
+			this.convertedDepthData = new int[this.recognizedArea.Width*this.recognizedArea.Height];
+		}
+
 		/// <summary>
 		/// starts the sensor loop
 		/// </summary>
@@ -168,20 +207,33 @@ namespace Touchdown.MicrosoftSDK {
 		private DepthFrame TransformToDepthFrame(DepthImageFrame img) {
 			if (this.temporaryDepthData == null) { 
 				this.temporaryDepthData = new short[img.PixelDataLength];
-				this.convertedDepthData = new int[img.PixelDataLength];
+				this.convertedDepthData = new int[recognizedArea.Width * recognizedArea.Height];
 			}
 			img.CopyPixelDataTo(this.temporaryDepthData);
 
 			// convert to distance in mm
-			for (int i = 0; i < this.temporaryDepthData.Length; ++i) { 
-				this.convertedDepthData[i] = this.temporaryDepthData[i] >> DepthImageFrame.PlayerIndexBitmaskWidth;
-			}
+			Parallel.For(0, img.Height, y=>{
+				for(int x = 0; x < img.Width; ++x){
+					if (y > recognizedArea.Top && y < recognizedArea.Bottom){
+						if (x > recognizedArea.Left && x < recognizedArea.Right){
+							int index = y*img.Width+x;
+							int newX = x - recognizedArea.X;
+							int newY = y - recognizedArea.Y;
+							int newIndex = newY*recognizedArea.Width+newX;
+							this.convertedDepthData[newIndex] = this.temporaryDepthData[index] >> DepthImageFrame.PlayerIndexBitmaskWidth;
+						}
+					}
+				}
+			});
+			
+			//this.convertedDepthData = this.zeroSmoother.CreateFilteredDepthArray(this.convertedDepthData, recognizedArea.Width, recognizedArea.Height);
+			//this.convertedDepthData = this.averageSmoother.CreateAverageDepthArray(this.convertedDepthData, recognizedArea.Width, recognizedArea.Height);
 
 			// calculate the depth
 			DepthFrame result = new DepthFrame(new DateTime(img.Timestamp), 
-											   convertedDepthData, 
-											   img.Width, 
-											   img.Height);
+											   convertedDepthData,
+											   recognizedArea.Width, 
+											   recognizedArea.Height);
 			
 			return result;
 		}

@@ -58,7 +58,7 @@ namespace TouchTests {
 					}
 					
 					// act
-					var result = Contour.FindContours(ref touchAreas2, settings);
+					var result = Contour.FindContours(touchAreas2, settings);
 					
 					// assert
 					Assert.AreEqual(2, result.Count, "Invalid amount of found contours");

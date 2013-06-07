@@ -66,7 +66,7 @@ namespace Touchdown.SensorAbstraction {
 		public int Height{get; private set;}
 		#endregion
 
-		public virtual void Dispose() {
+		public virtual void Dispose(){
 			
 		}
 	}

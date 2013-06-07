@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Touchdown.SensorAbstraction;
+using Touchdown.Core.Smoothing;
 using System.Linq;
 using System.Drawing;
 using System.Threading;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Touchdown.Core {
 	/// <summary>
@@ -20,7 +22,6 @@ namespace Touchdown.Core {
 		private DateTime lastTouchFrameCount;
 
 		private BackgroundWorker worker;
-
 
 		/// <summary>
 		///  Occurs when touch frame is ready. 
@@ -94,26 +95,51 @@ namespace Touchdown.Core {
 		
 		private void BackgroundWorkerDoWork(object sender, DoWorkEventArgs e){
 			var foreGround = e.Argument as DepthFrame;
+			
+			// multiply values of foreground to get clearer shapes:
+			foreGround.MultiplyBy(5.5f);
 
 			/*  apply the threshold of the settings to recognize all points that 
 			 *  are close enough to the background */
-			short[] rawPoints = 
-			this.ApplyThreshold(foreGround.DistanceInMM, 
-					 			this._settings.MinDistanceFromBackround, 
-					 			this._settings.MaxDistanceFromBackground);
-					 			
-			// create matrix that contains information if the pixel is
+			 // create matrix that contains information if the pixel is
 			// considered a touched pixel. Use a matrix instead of an array 
 			// for easier access.
-			bool[,] isTouched = this.ConvertToMatrix(rawPoints, foreGround.Width, foreGround.Height);
+
+			//BilinearFilter filter = new BilinearFilter(foreGround.Width, foreGround.Height, 3);
+			//var result = filter.Apply(foreGround.DistanceInMM);
+			//result = filter.Apply(result);
+			//result = filter.Apply(result);
+
+			bool[,] isTouched = 
+			this.ApplyThreshold(foreGround.DistanceInMM, 
+								foreGround.Width, foreGround.Height,
+					 			(uint)(this._settings.MinDistanceFromBackround * 5.5), 
+					 			(uint)(this._settings.MaxDistanceFromBackground * 5.5));
+
+			// apply morphological closing
 					 					 
 			/* the extracted background contains now only the parts of the image where something is different*
 	 		 *	than the background. In this case usually fingers. 
 			 *	There are very "blury" areas where the finger are located. Extract the touchpoints of it. */
-			List<TouchPoint> touchPoints = this.ExtractTouchPoints(ref isTouched);
-			e.Result = new SimpleTouchFrame(DateTime.Now, touchPoints, foreGround.Height, foreGround.Width);
+			List<TouchPoint> touchPoints = this.ExtractTouchPoints(isTouched);
+			e.Result = new SimpleTouchFrame(DateTime.Now, touchPoints, foreGround.Width, foreGround.Height);
 
+			isTouched = null;
 			foreGround.Dispose();
+		}
+
+		private static String GetVisualization(bool[,] p){
+			StringBuilder builder = new StringBuilder();
+			for (int y = 0; y < p.GetLength(1); ++y) {
+				for (int x = 0; x < p.GetLength(0); ++x) { 
+					String character = p[x,y] ? "#" : "O";
+					builder.Append(character);
+					builder.Append("\t");
+				}
+				builder.AppendLine();
+			}
+
+			return builder.ToString();
 		}
 
 		private void BackgroundWorkerFinished(object sender, RunWorkerCompletedEventArgs e) {
@@ -129,6 +155,8 @@ namespace Touchdown.Core {
 			 		  			= new TouchFrameReadyEventArgs(touchFrame);
 			 		  					
 			 	TouchFrameReady(this, eventArgs);
+
+				eventArgs = null;
 			}
 			originalFrame.Dispose();
 
@@ -155,41 +183,15 @@ namespace Touchdown.Core {
 		/// <param name='isTouched'>
 		/// depthmatrix 
 		/// </param>
-		private List<TouchPoint> ExtractTouchPoints(ref bool[,] isTouched) {
+		private List<TouchPoint> ExtractTouchPoints(bool[,] isTouched) {
 			List<TouchPoint> resultingPoints = new List<TouchPoint>();
 			
-			List<Contour> contours = Contour.FindContours(ref isTouched, this._settings);
+			List<Contour> contours = Contour.FindContours(isTouched, this._settings);
 			
 			if (contours != null && contours.Count > 0){
 				contours.ForEach((x)=> resultingPoints.Add(x.GetMiddle()));
 			}
 			return resultingPoints;
-		}
-		
-		/// <summary>
-		/// Converts the short array of the depth information to a two dimensional matrix.
-		/// </summary>
-		/// <returns>
-		/// The to matrix.
-		/// </returns>
-		/// <param name='rawPoints'>
-		/// Raw points.
-		/// </param>
-		private bool[,] ConvertToMatrix(short[] rawPoints, int width, int height){
-			// first dimension is the column (X)
-			// second holds the row (Y)
-			bool[,] matrix = new bool[width, height];
-			
-			for (int row = 0; row < height; ++row){
-				for (int col = 0; col < width; ++col){
-					int rawIndex = row * width + col;
-					
-					if (col > 0 && col < width-1 && row > 0 )
-					matrix[col,row] = (rawPoints[rawIndex] > this._settings.ContourThreshold);
-				}
-			}
-			
-			return matrix;
 		}
 		
 		/// <summary>
@@ -208,18 +210,21 @@ namespace Touchdown.Core {
 		/// <param name='maxDistance'>
 		/// Max distance.
 		/// </param>
-		private short[] ApplyThreshold(int[] backgroundExtracted, 
+		private bool[,] ApplyThreshold(int[] backgroundExtracted, int width, int height,
 									   uint minDistance, uint maxDistance){
-			short[] result = new short[backgroundExtracted.Length];
+			bool[,] result = new bool[width, height];
 			
-			for (int i = 0; i < backgroundExtracted.Length; ++i){
-				int bgVal = backgroundExtracted[i];
-				if (bgVal >= minDistance && bgVal <= maxDistance){
-					result[i] = (short)bgVal;
-				} else {
-					result[i] = -1;
+			Parallel.For(0, height, y => {
+				for (int x = 0; x < width; ++x){
+					int bgVal = backgroundExtracted[y*width+x];
+				
+					if (bgVal >= minDistance && bgVal <= maxDistance){
+						result[x,y] = true;
+					} else {
+						result[x,y] = false;
+					}
 				}
-			}
+			});
 			
 			return result;
 		}

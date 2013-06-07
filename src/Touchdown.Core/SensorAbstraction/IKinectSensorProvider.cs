@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 
 namespace Touchdown.SensorAbstraction {
 	
@@ -38,6 +39,12 @@ namespace Touchdown.SensorAbstraction {
 		/// <see cref="RGBFrameReady"/> events will stop being fired.
 		/// </summary>
 		void Stop();
+
+		/// <summary>
+		/// Adds the area the depth frame should contain.
+		/// </summary>
+		/// <param name="area">observed area</param>
+		void SetArea(Rectangle area);
 
 		/// <summary>
 		/// Gets a value indicating whether this instance is running.

@@ -30,8 +30,8 @@ namespace Touchdown.SensorAbstraction {
 		/// <param name="width">width of the frame</param>
 		public SimpleTouchFrame(DateTime frameTime, 
 								IList<TouchPoint> touchpoints,
-								int height,
-								int width
+								int width,
+								int height
 								) : base(frameTime, width, height) {
 			this.touchPoints = touchpoints;
 		}
@@ -72,10 +72,12 @@ namespace Touchdown.SensorAbstraction {
 			}
 			return buffer;
 		}
+
 		public override void Dispose() {
 			base.Dispose();
 			touchPoints = null;
 		}
+
 		#endregion
 		
 		#region Properties

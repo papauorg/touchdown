@@ -16,7 +16,6 @@ namespace Touchdown.SensorAbstraction {
 		public TouchSettings(){
 			this.MaxDistanceFromBackground 	= 20;
 			this.MinDistanceFromBackround 	= 7;
-			this.ContourThreshold = 0;
 			this.MaxContourLength = 300;
 			this.MinContourLength = 50;
 		}
@@ -39,15 +38,6 @@ namespace Touchdown.SensorAbstraction {
 		/// The minimum distance from backround threshold.
 		/// </value>
 		public uint MinDistanceFromBackround {get; set;}
-		
-		/// <summary>
-		/// Gets or sets the contour threshold. Defines the depth value of a pixel that 
-		/// must be overwhelmed to be recognized as neighbour.
-		/// </summary>
-		/// <value>
-		/// The contour threshold.
-		/// </value>
-		public uint ContourThreshold{get; set;}
 		
 		/// <summary>
 		/// Gets or sets the max contour lenth.
