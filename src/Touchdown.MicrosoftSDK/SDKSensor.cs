@@ -7,7 +7,6 @@ using Touchdown.SensorAbstraction;
 using Touchdown.Core;
 using log4net;
 using Microsoft.Kinect;
-using Touchdown.Core.Smoothing;
 using System.Drawing;
 
 namespace Touchdown.MicrosoftSDK {
@@ -31,13 +30,6 @@ namespace Touchdown.MicrosoftSDK {
 		private DateTime lastRgbFrameCount;
 		private int depthFrameCount;
 		private DateTime lastDepthFrameCount;
-
-		// depth filters
-		private KinectDepthSmoothing.FilteredSmoothing zeroSmoother;
-		private KinectDepthSmoothing.AveragedSmoothing averageSmoother;
-		private BilinearFilter lateralFilter;
-
-		private const int KERNEL_SIZE = 3;
 		#endregion
 
 		#region Objectevents
@@ -71,9 +63,6 @@ namespace Touchdown.MicrosoftSDK {
 			this._sensor.ColorFrameReady += HandleRGBDataReceived;
 			this._sensor.DepthFrameReady += HandleDepthDataReceived;
 
-			zeroSmoother= new KinectDepthSmoothing.FilteredSmoothing();
-			averageSmoother = new KinectDepthSmoothing.AveragedSmoothing(3);
-			lateralFilter = new BilinearFilter(640, 480, 3);
 			this.ColorFPS = 0;
 			this.DepthFPS = 0;
 
@@ -86,7 +75,6 @@ namespace Touchdown.MicrosoftSDK {
 		/// <param name="sensor">Native Kinect sensor</param>
 		/// <param name="area">Area that is used for recognition.</param>
 		public SDKSensor(Microsoft.Kinect.KinectSensor sensor, Rectangle area) : this(sensor){
-			lateralFilter = new BilinearFilter(area.Width, area.Height, KERNEL_SIZE);
 			this.SetArea(area);
 		}
 		#endregion
@@ -226,8 +214,6 @@ namespace Touchdown.MicrosoftSDK {
 				}
 			});
 			
-			//this.convertedDepthData = this.zeroSmoother.CreateFilteredDepthArray(this.convertedDepthData, recognizedArea.Width, recognizedArea.Height);
-			//this.convertedDepthData = this.averageSmoother.CreateAverageDepthArray(this.convertedDepthData, recognizedArea.Width, recognizedArea.Height);
 
 			// calculate the depth
 			DepthFrame result = new DepthFrame(new DateTime(img.Timestamp), 

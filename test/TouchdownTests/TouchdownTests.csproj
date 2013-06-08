@@ -64,6 +64,7 @@
     <Compile Include="Distance\DummyTest.cs" />
     <Compile Include="Distance\ContourTest.cs" />
     <Compile Include="Misc\MiscTests.cs" />
+    <Compile Include="Misc\MorphologyTests.cs" />
     <Compile Include="Touch\SimpleTouchAreaObserver.cs" />
   </ItemGroup>
   <ItemGroup>

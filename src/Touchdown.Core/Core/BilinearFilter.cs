@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Touchdown.Core.Smoothing{
+namespace Touchdown.Core{
 
 	/// <summary>
 	/// Bilinear filter for reducing noise in depth frames.
 	/// </summary>
-	public class BilinearFilter{
+	public class BilateralFilter{
 		
 		int height, width;
 		uint kernelSize;
@@ -19,7 +19,7 @@ namespace Touchdown.Core.Smoothing{
 		/// </summary>
 		/// <param name="width"></param>
 		/// <param name="height"></param>
-		public BilinearFilter(int width, int height, uint kernelSize){
+		public BilateralFilter(int width, int height, uint kernelSize){
 			this.height = height;
 			this.width = width;	
 			this.kernelSize = kernelSize;

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Touchdown.SensorAbstraction;
-using Touchdown.Core.Smoothing;
 using System.Linq;
 using System.Drawing;
 using System.Threading;
@@ -20,6 +19,9 @@ namespace Touchdown.Core {
 
 		private int touchFrameCount;
 		private DateTime lastTouchFrameCount;
+		private bool[,] structuringElement = {{true,true,true},
+											  {true,true,true},
+											  {true,true,true}};
 
 		private BackgroundWorker worker;
 
@@ -73,6 +75,8 @@ namespace Touchdown.Core {
 
 			touchFrameCount = 0;
 			lastTouchFrameCount = DateTime.Now;
+
+			structuringElement = Morphology.GetDiskStructuringElement(2);
 		}
 		#endregion
 		
@@ -116,14 +120,20 @@ namespace Touchdown.Core {
 					 			(uint)(this._settings.MinDistanceFromBackround * 5.5), 
 					 			(uint)(this._settings.MaxDistanceFromBackground * 5.5));
 
-			// apply morphological closing
-					 					 
+			// apply morphological opening
+			var touched = Morphology.Open(isTouched, this.structuringElement);
+			
 			/* the extracted background contains now only the parts of the image where something is different*
 	 		 *	than the background. In this case usually fingers. 
 			 *	There are very "blury" areas where the finger are located. Extract the touchpoints of it. */
-			List<TouchPoint> touchPoints = this.ExtractTouchPoints(isTouched);
-			e.Result = new SimpleTouchFrame(DateTime.Now, touchPoints, foreGround.Width, foreGround.Height);
+			List<TouchPoint> touchPoints = this.ExtractTouchPoints(touched);
 
+			var currentFrame = new SimpleTouchFrame(DateTime.Now, touchPoints, foreGround.Width, foreGround.Height);
+			e.Result = currentFrame;
+			//e.Result = touchAverageSmoother.Smoothe(currentFrame);
+
+
+			touched = null;
 			isTouched = null;
 			foreGround.Dispose();
 		}

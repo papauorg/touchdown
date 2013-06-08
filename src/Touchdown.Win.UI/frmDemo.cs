@@ -16,7 +16,6 @@ namespace Touchdown.Win.UI {
 		private Dictionary<string, object> info;
 		
 		private SimpleTouchAreaObserver observer;
-		private AreaFilter touchProvider;
 		private IKinectSensorProvider sensor;
 		private int frameCount;
 		//private PatternRecognizer recognizer;
@@ -33,14 +32,12 @@ namespace Touchdown.Win.UI {
 			this.sensor.SetArea(area);
 
 			var touchSettings = new TouchSettings();
-			touchSettings.MinContourLength = 15;
-			touchSettings.MaxContourLength = 150;
-			touchSettings.MinDistanceFromBackround = 6;
-			touchSettings.MaxDistanceFromBackground = 30;
+			touchSettings.MinContourLength = 30;
+			touchSettings.MaxContourLength = 50;
+			touchSettings.MinDistanceFromBackround = 7;
+			touchSettings.MaxDistanceFromBackground = 25;
 
 			this.observer = new SimpleTouchAreaObserver(sensor, touchSettings, backgroundModel);
-			//this.touchProvider = new AreaFilter(observer, area, true);
-			//this.touchProvider.TouchFrameReady += UpdateTouchFrameVisualization;
 			this.observer.TouchFrameReady += UpdateTouchFrameVisualization;
 
 			updateLabelTimer = new Timer();
@@ -55,7 +52,6 @@ namespace Touchdown.Win.UI {
 				pbTouchPoints.Image = e.FrameData.CreateBitmap();
 			}
 			frameCount++;
-
 		}
 
 		private void UpdateLabels(){

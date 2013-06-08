@@ -35,7 +35,6 @@ namespace TouchTests.Touch {
 
 			DepthFrame touchFrame = new DepthFrame(DateTime.Now, touchData, 9, 6);
 			TouchSettings mockSettings = new TouchSettings();
-			mockSettings.ContourThreshold = 1;
 			mockSettings.MaxContourLength = 12;
 			mockSettings.MinContourLength = 7;
 			mockSettings.MinDistanceFromBackround = 1;
