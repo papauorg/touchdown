@@ -8,12 +8,15 @@ namespace Touchdown.SensorAbstraction {
 	/// Frame ready event arguments. Contains information for when a frame is ready.
 	/// Inherited from System.EventArgs to be able to use EventHandlers
 	/// </summary>
-	public abstract class FrameReadyEventArgs<T> : EventArgs where T : Frame{
+	public abstract class FrameReadyEventArgs<T> : EventArgs where T : Frame {
+		#region Members
 		/// <summary>
 		/// Frame information.
 		/// </summary>
 		protected T _frame;
+		#endregion
 
+		#region Constructors
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:Touchdown.SensorAbstraction.FrameReadyEventArgs"/> class.
 		/// </summary>
@@ -26,7 +29,8 @@ namespace Touchdown.SensorAbstraction {
 			}
 			_frame = frame;
 		}
-	
+		#endregion
+		
 		#region Properties
 		/// <summary>
 		/// Gets the frame data.

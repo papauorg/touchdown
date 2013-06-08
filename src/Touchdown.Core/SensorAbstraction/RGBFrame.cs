@@ -51,9 +51,11 @@ namespace Touchdown.SensorAbstraction {
 		}
 		#endregion
 
+		#region Properties
 		/// <summary>
 		/// returns the raw bytes of the color image.
 		/// </summary>
 		public byte[] ColorBytes{get; private set;}
+		#endregion
 	}
 }

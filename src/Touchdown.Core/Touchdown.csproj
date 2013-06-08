@@ -47,6 +47,7 @@
     <Compile Include="Core\BackgroundModelCreatorDepth.cs" />
     <Compile Include="Core\BackgroundModelCreatorRGB.cs" />
     <Compile Include="Core\Extensions.cs" />
+    <Compile Include="Core\TouchPointLabeler.cs" />
     <Compile Include="SensorAbstraction\IKinectSensorProvider.cs" />
     <Compile Include="SensorAbstraction\FrameReadyEventArgs.cs" />
     <Compile Include="SensorAbstraction\Frame.cs" />
@@ -65,7 +66,7 @@
     <Compile Include="Core\DistanceCalculation\EucledianDistanceProvider.cs" />
     <Compile Include="Core\Contour.cs" />
     <Compile Include="Core\ContourPoint.cs" />
-    <Compile Include="Core\BilinearFilter.cs" />
+    <Compile Include="Core\BilateralFilter.cs" />
     <Compile Include="Core\Morphology.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -10,12 +10,15 @@ namespace Touchdown.Core {
 	/// <summary>
 	/// Is used to filter touch points for specific areas.
 	/// </summary>
-	public class AreaFilter{
-		
+	public class AreaFilter {
+
+		#region Members
 		private SimpleTouchAreaObserver observer;
 		private Rectangle area;
 		private bool include;
+		#endregion
 
+		#region Objectevents
 		/// <summary>
 		/// Handles the event when the filtered touchframe is ready.
 		/// </summary>
@@ -39,7 +42,9 @@ namespace Touchdown.Core {
 
 			this.observer.TouchFrameReady += FilterFrames;
 		}
+		#endregion
 
+		#region Private Methods
 		private void FilterFrames(object sender, FrameReadyEventArgs<SimpleTouchFrame> e) {
 			if (TouchFrameReady != null) { 
 				SimpleTouchFrame filteredFrame = FilterTouchPoints(e.FrameData);
@@ -61,7 +66,6 @@ namespace Touchdown.Core {
 
 			return new SimpleTouchFrame(DateTime.Now, points, area.Height, area.Width);
 		}
-
-		
+		#endregion
 	}
 }

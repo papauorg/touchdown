@@ -9,11 +9,14 @@ namespace Touchdown.Core{
 	/// <summary>
 	/// Bilinear filter for reducing noise in depth frames.
 	/// </summary>
-	public class BilateralFilter{
-		
+	public class BilateralFilter {
+
+		#region Members
 		int height, width;
 		uint kernelSize;
+		#endregion
 
+		#region Constructors
 		/// <summary>
 		/// Creates a new instance of the filter
 		/// </summary>
@@ -24,7 +27,9 @@ namespace Touchdown.Core{
 			this.width = width;	
 			this.kernelSize = kernelSize;
 		}
+		#endregion
 
+		#region Public Methods
 		/// <summary>
 		/// Applies the filter to the depth data.
 		/// </summary>
@@ -60,5 +65,6 @@ namespace Touchdown.Core{
 
 			return result;
 		}
+		#endregion
 	}
 }

@@ -5,8 +5,11 @@ namespace Touchdown.SensorAbstraction {
 	/// Defines a recognized touch point as coordinates of the TouchArea.
 	/// </summary>
 	public class TouchPoint {
-		private int x, y;
 		
+		#region Members
+		private Guid ID;
+		#endregion
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.TouchPoint"/> class.
 		/// </summary>
@@ -17,19 +20,18 @@ namespace Touchdown.SensorAbstraction {
 		/// Y position.
 		/// </param>
 		public TouchPoint(int xPosition, int yPosition) {
-			this.x = xPosition;
-			this.y = yPosition;
+			this.X = xPosition;
+			this.Y = yPosition;
 		}
-		
+
+		#region Properties
 		/// <summary>
 		/// Gets the x position.
 		/// </summary>
 		/// <value>
 		/// The x position.
 		/// </value>
-		public int X {
-			get {return this.x; }
-		}
+		public int X {get; private set;}
 		
 		/// <summary>
 		/// Gets the y position.
@@ -37,9 +39,13 @@ namespace Touchdown.SensorAbstraction {
 		/// <value>
 		/// The y.
 		/// </value>
-		public int Y {
-			get {return this.y; }
-		}
+		public int Y {get; private set;}
+
+		/// <summary>
+		/// Gets or sets the ID of the touchpoint.
+		/// </summary>
+		public Guid ID {get; set;}
+		#endregion
 	}
 }
 

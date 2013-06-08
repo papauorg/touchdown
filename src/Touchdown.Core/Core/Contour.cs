@@ -33,9 +33,11 @@ namespace Touchdown.Core {
 			/// </summary>
 			West  = 3
 		}
-	
+
+		#region Constructors
 		public Contour() : base() {
 		}
+		#endregion
 		
 		#region public methods
 		/// <summary>

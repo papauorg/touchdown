@@ -9,9 +9,13 @@ namespace Touchdown.Core {
 	/// Creates a background model by all given <see cref="DepthFrame"/>s that can be used by the
 	/// <see cref="SimpleTouchAreaObserver"/>.
 	/// </summary>
-	public abstract class BackgroundModelCreator<TFrame> : IDisposable where TFrame : Frame{
-		protected int framewidth, frameheight;
+	public abstract class BackgroundModelCreator<TFrame> : IDisposable where TFrame : Frame {
 
+		#region Members
+		protected int framewidth, frameheight;
+		#endregion
+
+		#region Constructors
 		/// <summary>
 		/// New instance of a creator. Can create a simple background model from depthframes used
 		/// by the <see cref="SimpleTouchAreaObserver" />
@@ -19,6 +23,7 @@ namespace Touchdown.Core {
 		public BackgroundModelCreator(){ 
 			this.FrameCount = 0;
 		}
+		#endregion
 
 		#region Public Methods
 		/// <summary>
@@ -52,6 +57,12 @@ namespace Touchdown.Core {
 		}
 		#endregion
 
+		#region Properties
+		/// <summary>
+		/// Gets the current count of frames that are
+		/// evaluated for the background model.
+		/// </summary>
 		public int FrameCount{get; private set;} 
+		#endregion
 	}
 }

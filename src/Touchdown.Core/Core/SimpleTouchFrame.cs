@@ -5,14 +5,16 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 
 namespace Touchdown.SensorAbstraction {
-		/// <summary>
-		/// Represents a simple touch frame. Contains only a list of recognized touch points without
-		/// any additional info about it.
-		/// </summary>
-		public class SimpleTouchFrame : Frame {
-	
+	/// <summary>
+	/// Represents a simple touch frame. Contains only a list of recognized touch points without
+	/// any additional info about it.
+	/// </summary>
+	public class SimpleTouchFrame : Frame {
+
+		#region Members
 		private IList<TouchPoint> touchPoints;
-		
+		#endregion
+
 		#region Constructors / Destructors
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.SimpleTouchFrame"/> class.
@@ -93,5 +95,5 @@ namespace Touchdown.SensorAbstraction {
 			}
 		}
 		#endregion
-		}
+	}
 }

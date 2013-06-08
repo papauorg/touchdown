@@ -9,9 +9,13 @@ namespace Touchdown.Core {
 	/// <summary>
 	/// creates a background model for colorframes
 	/// </summary>
-	public class BackgroundModelCreatorRGB : BackgroundModelCreator<RGBFrame>{
-		private long[] colorSum;
+	public class BackgroundModelCreatorRGB : BackgroundModelCreator<RGBFrame> {
 
+		#region Members
+		private long[] colorSum;
+		#endregion
+
+		#region Public Methods
 		/// <inheritdoc />
 		public override RGBFrame GetBackgroundModel() {
 			return this.CalcColorAverage();
@@ -35,7 +39,15 @@ namespace Touchdown.Core {
 			base.Clear();
 			colorSum = null;
 		}
+		#endregion
 
+		#region Protected Methods
+		protected override void DoDispose() {
+			colorSum = null;
+		}
+		#endregion
+
+		#region Private Methods
 		private RGBFrame CalcColorAverage(){
 			if (this.FrameCount > 0){
 				byte[] avgDistance = new byte[colorSum.Length];	
@@ -51,9 +63,7 @@ namespace Touchdown.Core {
 				return null;
 			}
 		}
+		#endregion
 
-		protected override void DoDispose() {
-			colorSum = null;
-		}
 	}
 }

@@ -13,6 +13,8 @@ namespace Touchdown.Core {
 	/// Simple touch area observer. Observes the given toucharea and creates touchframes of it.
 	/// </summary>
 	public class SimpleTouchAreaObserver : ITouchObserver<Touchdown.SensorAbstraction.SimpleTouchFrame> {
+
+		#region Members
 		private IKinectSensorProvider _sensor;
 		private TouchSettings _settings;
 		private DepthFrame _avgBackground;
@@ -24,11 +26,14 @@ namespace Touchdown.Core {
 											  {true,true,true}};
 
 		private BackgroundWorker worker;
+		#endregion
 
+		#region Object Events
 		/// <summary>
 		///  Occurs when touch frame is ready. 
 		/// </summary>
 		public event EventHandler<FrameReadyEventArgs<SimpleTouchFrame>> TouchFrameReady;
+		#endregion
 
 		#region Constructors / Destructors
 		/// <summary>
@@ -239,10 +244,12 @@ namespace Touchdown.Core {
 			return result;
 		}
 		#endregion
-	
+
+		#region Properties
 		/// <summary>
 		/// returns the framereate of the observer
 		/// </summary>
 		public int TouchFPS {get; private set;} 
+		#endregion
 	}
 }

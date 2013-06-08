@@ -9,9 +9,13 @@ namespace Touchdown.Core {
 	/// <summary>
 	/// creates a depth background model depending on the frames that were given.
 	/// </summary>
-	public class BackgroundModelCreatorDepth : BackgroundModelCreator<DepthFrame>{
+	public class BackgroundModelCreatorDepth : BackgroundModelCreator<DepthFrame> {
+		
+		#region Members
 		private long[] depthSum;
+		#endregion
 
+		#region Public Methods
 		/// <inheritdoc />
 		public override DepthFrame GetBackgroundModel() {
 			return this.CalcDepthAverage();
@@ -35,7 +39,16 @@ namespace Touchdown.Core {
 			base.Clear();
 			depthSum = null;
 		}
+		#endregion
 
+		#region Protected Methods
+		/// <inheritdoc/>
+		protected override void DoDispose() {
+			depthSum = null;
+		}
+		#endregion
+
+		#region Private Methods
 		private DepthFrame CalcDepthAverage(){
 			if (this.FrameCount> 0){
 				int[] avgDistance = new int[depthSum.Length];	
@@ -51,10 +64,6 @@ namespace Touchdown.Core {
 				return null;
 			}
 		}
-
-		/// <inheritdoc/>
-		protected override void DoDispose() {
-			depthSum = null;
-		}
+		#endregion
 	}
 }

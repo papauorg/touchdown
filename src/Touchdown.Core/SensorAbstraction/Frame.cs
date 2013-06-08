@@ -38,6 +38,13 @@ namespace Touchdown.SensorAbstraction {
 		/// The bitmap.
 		/// </returns>
 		public abstract Bitmap CreateBitmap();
+
+		/// <summary>
+		/// Dispose the frame.
+		/// </summary>
+		public virtual void Dispose(){
+			
+		}
 		#endregion
 		
 		#region Properties
@@ -65,9 +72,5 @@ namespace Touchdown.SensorAbstraction {
 		/// </summary>
 		public int Height{get; private set;}
 		#endregion
-
-		public virtual void Dispose(){
-			
-		}
 	}
 }

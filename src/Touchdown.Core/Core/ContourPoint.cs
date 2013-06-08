@@ -5,9 +5,12 @@ namespace Touchdown.Core {
 	/// <summary>
 	/// defines one point in a contour.
 	/// </summary>
-	public class ContourPoint{
+	public class ContourPoint {
+		#region Members
 		private Point _internalPoint;
-		
+		#endregion
+
+		#region Constructors
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Touchdown.Core.ContourPoint"/> class.
 		/// </summary>
@@ -29,6 +32,7 @@ namespace Touchdown.Core {
 		/// </param>
 		public ContourPoint(ContourPoint point) : this(point.X, point.Y){
 		}
+		#endregion
 
 		#region public methods
 		/// <param name='orig'>
@@ -105,7 +109,8 @@ namespace Touchdown.Core {
 			}
 		}
 		#endregion
-		
+
+		#region Properties
 		/// <summary>
 		/// Gets or sets the x.
 		/// </summary>
@@ -121,7 +126,7 @@ namespace Touchdown.Core {
 		/// The y.
 		/// </value>
 		public int Y{get{return _internalPoint.Y;} set {_internalPoint.Y = value;}}
-		
+		#endregion
 	}
 }
 

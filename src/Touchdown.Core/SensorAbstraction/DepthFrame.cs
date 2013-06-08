@@ -11,7 +11,9 @@ namespace Touchdown.SensorAbstraction {
 	/// Represents a Depth frame. Contains depth data for recognizing by depth.
 	/// </summary>
 	public class DepthFrame : Frame {
+		#region Members
 		private int[] _distance;
+		#endregion
 
 		#region Constructors / Destructors
 		/// <summary>
@@ -91,18 +93,24 @@ namespace Touchdown.SensorAbstraction {
 			});
 		}
 
-		public static string GetVisualization(int[] arr, int width) {
-			StringBuilder builder = new StringBuilder();
+		//public static string GetVisualization(int[] arr, int width) {
+		//	StringBuilder builder = new StringBuilder();
 
-			for (int i = 0; i < arr.Length; ++i) {
-				builder.Append(arr[i]);
-				builder.Append("\t");
-				if (i % width == 0 && i > 0) { 
-					builder.AppendLine();
-				}
-			}
+		//	for (int i = 0; i < arr.Length; ++i) {
+		//		builder.Append(arr[i]);
+		//		builder.Append("\t");
+		//		if (i % width == 0 && i > 0) { 
+		//			builder.AppendLine();
+		//		}
+		//	}
 
-			return builder.ToString();
+		//	return builder.ToString();
+		//}
+
+		/// <inheritdoc />
+		public override void Dispose() {
+			base.Dispose();
+			this._distance = null;
 		}
 		#endregion
 
@@ -149,7 +157,8 @@ namespace Touchdown.SensorAbstraction {
 			return (int)result;
 		}
 		#endregion
-		
+
+		#region Properties
 		/// <summary>
 		/// Gets the distance in millimeters.
 		/// </summary>
@@ -161,10 +170,6 @@ namespace Touchdown.SensorAbstraction {
 				return _distance;
 			}
 		}
-
-		public override void Dispose() {
-			base.Dispose();
-			this._distance = null;
-		}
+		#endregion
 	}
 }
