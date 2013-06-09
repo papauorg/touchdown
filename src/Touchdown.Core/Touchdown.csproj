@@ -47,6 +47,12 @@
     <Compile Include="Core\BackgroundModelCreatorDepth.cs" />
     <Compile Include="Core\BackgroundModelCreatorRGB.cs" />
     <Compile Include="Core\Extensions.cs" />
+    <Compile Include="Core\PatternRecognition\SimpleTouchFrameComparer.cs" />
+    <Compile Include="Core\PatternRecognition\SimpleTouchPatternComparer.cs" />
+    <Compile Include="Core\PatternRecognition\TouchPattern.cs" />
+    <Compile Include="Core\PatternRecognition\TouchPatternRecognizedEventArgs.cs" />
+    <Compile Include="Core\PatternRecognition\TouchPatternRecognizer.cs" />
+    <Compile Include="Core\PatternRecognition\TouchPatternRecordingEventArgs.cs" />
     <Compile Include="Core\TouchPointLabeler.cs" />
     <Compile Include="SensorAbstraction\IKinectSensorProvider.cs" />
     <Compile Include="SensorAbstraction\FrameReadyEventArgs.cs" />

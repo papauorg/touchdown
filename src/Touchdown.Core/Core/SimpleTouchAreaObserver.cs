@@ -26,6 +26,8 @@ namespace Touchdown.Core {
 											  {true,true,true}};
 
 		private BackgroundWorker worker;
+
+		private Queue<SimpleTouchFrame> smoothingQueue;
 		#endregion
 
 		#region Object Events
@@ -80,7 +82,7 @@ namespace Touchdown.Core {
 
 			touchFrameCount = 0;
 			lastTouchFrameCount = DateTime.Now;
-
+			smoothingQueue = new Queue<SimpleTouchFrame>(4);
 			structuringElement = Morphology.GetDiskStructuringElement(2);
 		}
 		#endregion
@@ -135,27 +137,25 @@ namespace Touchdown.Core {
 
 			var currentFrame = new SimpleTouchFrame(DateTime.Now, touchPoints, foreGround.Width, foreGround.Height);
 			e.Result = currentFrame;
-			//e.Result = touchAverageSmoother.Smoothe(currentFrame);
-
 
 			touched = null;
 			isTouched = null;
 			foreGround.Dispose();
 		}
 
-		private static String GetVisualization(bool[,] p){
-			StringBuilder builder = new StringBuilder();
-			for (int y = 0; y < p.GetLength(1); ++y) {
-				for (int x = 0; x < p.GetLength(0); ++x) { 
-					String character = p[x,y] ? "#" : "O";
-					builder.Append(character);
-					builder.Append("\t");
-				}
-				builder.AppendLine();
-			}
+		//private static String GetVisualization(bool[,] p){
+		//	StringBuilder builder = new StringBuilder();
+		//	for (int y = 0; y < p.GetLength(1); ++y) {
+		//		for (int x = 0; x < p.GetLength(0); ++x) { 
+		//			String character = p[x,y] ? "#" : "O";
+		//			builder.Append(character);
+		//			builder.Append("\t");
+		//		}
+		//		builder.AppendLine();
+		//	}
 
-			return builder.ToString();
-		}
+		//	return builder.ToString();
+		//}
 
 		private void BackgroundWorkerFinished(object sender, RunWorkerCompletedEventArgs e) {
 			var originalFrame = e.Result as SimpleTouchFrame;

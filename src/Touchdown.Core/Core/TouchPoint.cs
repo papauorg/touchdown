@@ -5,10 +5,6 @@ namespace Touchdown.SensorAbstraction {
 	/// Defines a recognized touch point as coordinates of the TouchArea.
 	/// </summary>
 	public class TouchPoint {
-		
-		#region Members
-		private Guid ID;
-		#endregion
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Touchdown.SensorAbstraction.TouchPoint"/> class.

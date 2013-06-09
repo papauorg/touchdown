@@ -29,6 +29,7 @@
 			this.lblDepthFPS = new System.Windows.Forms.ToolStripStatusLabel();
 			this.lblColorFPS = new System.Windows.Forms.ToolStripStatusLabel();
 			this.lblPatternsRegistered = new System.Windows.Forms.ToolStripStatusLabel();
+			this.lblTouchFPS = new System.Windows.Forms.ToolStripStatusLabel();
 			this.grpTouchpoints = new System.Windows.Forms.GroupBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.pbTouchPoints = new System.Windows.Forms.PictureBox();
@@ -38,13 +39,12 @@
 			this.btnNewGesture = new System.Windows.Forms.Button();
 			this.tbGestureName = new System.Windows.Forms.TextBox();
 			this.lastRecognized = new System.Windows.Forms.GroupBox();
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.tbRecognizedGestureName = new System.Windows.Forms.TextBox();
 			this.lblGestureName = new System.Windows.Forms.Label();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.pbRecognized = new System.Windows.Forms.PictureBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.btnStart = new System.Windows.Forms.Button();
-			this.lblTouchFPS = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusStrip1.SuspendLayout();
 			this.grpTouchpoints.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -64,8 +64,8 @@
             this.lblSensorStatus,
             this.lblDepthFPS,
             this.lblColorFPS,
-            this.lblPatternsRegistered,
-            this.lblTouchFPS});
+            this.lblTouchFPS,
+            this.lblPatternsRegistered});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 452);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(753, 22);
@@ -95,6 +95,12 @@
 			this.lblPatternsRegistered.Name = "lblPatternsRegistered";
 			this.lblPatternsRegistered.Size = new System.Drawing.Size(111, 17);
 			this.lblPatternsRegistered.Text = "Patterns Registered:";
+			// 
+			// lblTouchFPS
+			// 
+			this.lblTouchFPS.Name = "lblTouchFPS";
+			this.lblTouchFPS.Size = new System.Drawing.Size(69, 17);
+			this.lblTouchFPS.Text = "Touch FPS: ";
 			// 
 			// grpTouchpoints
 			// 
@@ -154,7 +160,7 @@
 			this.pbLastGesture.Location = new System.Drawing.Point(3, 16);
 			this.pbLastGesture.Name = "pbLastGesture";
 			this.pbLastGesture.Size = new System.Drawing.Size(224, 143);
-			this.pbLastGesture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.pbLastGesture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pbLastGesture.TabIndex = 6;
 			this.pbLastGesture.TabStop = false;
 			// 
@@ -177,7 +183,7 @@
 			// 
 			// lastRecognized
 			// 
-			this.lastRecognized.Controls.Add(this.textBox1);
+			this.lastRecognized.Controls.Add(this.tbRecognizedGestureName);
 			this.lastRecognized.Controls.Add(this.lblGestureName);
 			this.lastRecognized.Controls.Add(this.groupBox4);
 			this.lastRecognized.Location = new System.Drawing.Point(500, 12);
@@ -187,14 +193,14 @@
 			this.lastRecognized.TabStop = false;
 			this.lastRecognized.Text = "Last Recognized Gesture";
 			// 
-			// textBox1
+			// tbRecognizedGestureName
 			// 
-			this.textBox1.Location = new System.Drawing.Point(47, 184);
-			this.textBox1.MaxLength = 20;
-			this.textBox1.Name = "textBox1";
-			this.textBox1.ReadOnly = true;
-			this.textBox1.Size = new System.Drawing.Size(187, 20);
-			this.textBox1.TabIndex = 7;
+			this.tbRecognizedGestureName.Location = new System.Drawing.Point(47, 184);
+			this.tbRecognizedGestureName.MaxLength = 20;
+			this.tbRecognizedGestureName.Name = "tbRecognizedGestureName";
+			this.tbRecognizedGestureName.ReadOnly = true;
+			this.tbRecognizedGestureName.Size = new System.Drawing.Size(187, 20);
+			this.tbRecognizedGestureName.TabIndex = 7;
 			// 
 			// lblGestureName
 			// 
@@ -221,7 +227,7 @@
 			this.pbRecognized.Location = new System.Drawing.Point(3, 16);
 			this.pbRecognized.Name = "pbRecognized";
 			this.pbRecognized.Size = new System.Drawing.Size(225, 137);
-			this.pbRecognized.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.pbRecognized.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pbRecognized.TabIndex = 7;
 			this.pbRecognized.TabStop = false;
 			// 
@@ -245,12 +251,6 @@
 			this.btnStart.UseVisualStyleBackColor = true;
 			this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
 			// 
-			// lblTouchFPS
-			// 
-			this.lblTouchFPS.Name = "lblTouchFPS";
-			this.lblTouchFPS.Size = new System.Drawing.Size(69, 17);
-			this.lblTouchFPS.Text = "Touch FPS: ";
-			// 
 			// frmDemo
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -272,12 +272,10 @@
 			this.grpLastGesture.ResumeLayout(false);
 			this.grpLastGesture.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
-			this.groupBox3.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbLastGesture)).EndInit();
 			this.lastRecognized.ResumeLayout(false);
 			this.lastRecognized.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
-			this.groupBox4.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbRecognized)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -301,7 +299,7 @@
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TextBox tbRecognizedGestureName;
 		private System.Windows.Forms.Label lblGestureName;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.ToolStripStatusLabel lblSensorStatus;

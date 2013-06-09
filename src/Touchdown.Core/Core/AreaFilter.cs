@@ -10,10 +10,10 @@ namespace Touchdown.Core {
 	/// <summary>
 	/// Is used to filter touch points for specific areas.
 	/// </summary>
-	public class AreaFilter {
+	public class AreaFilter : ITouchObserver<SimpleTouchFrame> {
 
 		#region Members
-		private SimpleTouchAreaObserver observer;
+		private ITouchObserver<SimpleTouchFrame> observer;
 		private Rectangle area;
 		private bool include;
 		#endregion
@@ -22,7 +22,7 @@ namespace Touchdown.Core {
 		/// <summary>
 		/// Handles the event when the filtered touchframe is ready.
 		/// </summary>
-		public event EventHandler<TouchFrameReadyEventArgs> TouchFrameReady;
+		public event EventHandler<FrameReadyEventArgs<SimpleTouchFrame>> TouchFrameReady;
 
 		/// <summary>
 		/// New instance of the area filter

@@ -54,6 +54,12 @@ namespace Touchdown.SensorAbstraction {
 			return this.CreateBitmap(blue, red);
 		}
 
+		/// <summary>
+		///  Creates a visual representation of the frame. 
+		/// </summary>
+		/// <returns>
+		///  The bitmap. 
+		/// </returns>
 		public Bitmap CreateBitmap(Color background, Color touchPoints){
 			Bitmap buffer = new Bitmap(this.Width, this.Height);
 			using (Graphics bufferGraphics = Graphics.FromImage(buffer)) {

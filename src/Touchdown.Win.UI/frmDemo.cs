@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Touchdown.Core;
 using Touchdown.SensorAbstraction;
+using Touchdown.Core.PatternRecognition;
+
 using InitWizzard = Touchdown.Win.UI.UserControls.InitWizzard.InitKinectWizzardControl;
 
 namespace Touchdown.Win.UI {
@@ -17,8 +19,9 @@ namespace Touchdown.Win.UI {
 		
 		private SimpleTouchAreaObserver observer;
 		private IKinectSensorProvider sensor;
+		private TouchPatternRecognizer recognizer;
 		private int frameCount;
-		//private PatternRecognizer recognizer;
+		private TouchPattern lastDrawnPattern = null;
 
 		private Timer updateLabelTimer = new Timer();
 
@@ -40,10 +43,30 @@ namespace Touchdown.Win.UI {
 			this.observer = new SimpleTouchAreaObserver(sensor, touchSettings, backgroundModel);
 			this.observer.TouchFrameReady += UpdateTouchFrameVisualization;
 
+			var comparer = new SimpleTouchPatternComparer(new SimpleTouchFrameComparer(new EucledianDistanceProvider()));
+			this.recognizer = new TouchPatternRecognizer(this.observer, comparer, 7.5, 5);
+			this.recognizer.TouchPatternRecording += recognizer_TouchPatternRecording;
+			this.recognizer.TouchPatternRecognized += recognizer_TouchPatternRecognized;
+			this.recognizer.TouchPatternPartiallyRecognized += recognizer_TouchPatternRecognized;
+
 			updateLabelTimer = new Timer();
 			updateLabelTimer.Interval = 1000;
 			updateLabelTimer.Tick += (s,e) => UpdateLabels();
 			updateLabelTimer.Start();
+		}
+
+		void recognizer_TouchPatternRecognized(object sender, TouchPatternRecognizedEventArgs e) {
+			if (this.Visible) {
+				pbRecognized.Image = e.OriginalPattern.CreateBitmap();
+			}
+		}
+
+		void recognizer_TouchPatternRecording(object sender, TouchPatternRecordingEventArgs e) {
+			if (this.Visible && e.Frame.TouchPoints.Count > 0) { 
+				pbLastGesture.Image = e.Pattern.CreateBitmap();
+				this.lastDrawnPattern = e.Pattern;
+				this.tbGestureName.Text = "";
+			}
 		}
 
 		private void UpdateTouchFrameVisualization(object sender, FrameReadyEventArgs<SimpleTouchFrame> e) {
@@ -51,6 +74,7 @@ namespace Touchdown.Win.UI {
 				this.frameCount = 0;
 				pbTouchPoints.Image = e.FrameData.CreateBitmap();
 			}
+
 			frameCount++;
 		}
 
@@ -59,7 +83,7 @@ namespace Touchdown.Win.UI {
 			SetLabelColorFPS(this.sensor.ColorFPS);
 			SetLabelDepthFPS(this.sensor.DepthFPS);
 			SetLabelTouchFPS(this.observer.TouchFPS);
-			//SetLabelRegisteredPatterns(this.PatterRecognicer.RegisteredPatterns.Count);
+			SetLabelRegisteredPatterns(this.recognizer.RegisteredPatters.Count);
 		}
 
 
@@ -77,7 +101,7 @@ namespace Touchdown.Win.UI {
 			lblDepthFPS.Text = String.Format("Depth FPS: {0}", fps);
 		}
 		private void SetLabelRegisteredPatterns(int count){
-			lblPatternsRegistered.Text = "Registered Patterns: {0}";
+			lblPatternsRegistered.Text = String.Format("Registered Patterns: {0}", count);
 		}
 
 		private void btnStart_Click(object sender, EventArgs e) {
