@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Runtime.Serialization;
 
 namespace Touchdown.SensorAbstraction {
 	/// <summary>
 	/// Represents a simple touch frame. Contains only a list of recognized touch points without
 	/// any additional info about it.
 	/// </summary>
+	[DataContract]
 	public class SimpleTouchFrame : Frame {
 
 		#region Members
@@ -95,7 +97,8 @@ namespace Touchdown.SensorAbstraction {
 		/// <value>
 		/// The touch points.
 		/// </value>
-		public ReadOnlyCollection<TouchPoint> TouchPoints {
+		[DataMember]
+		public IList<TouchPoint> TouchPoints {
 			get{
 				return new ReadOnlyCollection<TouchPoint>(this.touchPoints);
 			}

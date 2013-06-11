@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Touchdown.Core;
 using Touchdown.SensorAbstraction;
 using Touchdown.Core.PatternRecognition;
+using System.Runtime.Serialization;
 
 using InitWizzard = Touchdown.Win.UI.UserControls.InitWizzard.InitKinectWizzardControl;
 
@@ -64,7 +65,7 @@ namespace Touchdown.Win.UI {
 		void recognizer_TouchPatternRecording(object sender, TouchPatternRecordingEventArgs e) {
 			if (this.Visible && e.Frame.TouchPoints.Count > 0) { 
 				pbLastGesture.Image = e.Pattern.CreateBitmap();
-				this.lastDrawnPattern = e.Pattern;
+				this.lastDrawnPattern = e.Pattern.Normalize();
 				this.tbGestureName.Text = "";
 			}
 		}
@@ -86,8 +87,6 @@ namespace Touchdown.Win.UI {
 			SetLabelRegisteredPatterns(this.recognizer.RegisteredPatters.Count);
 		}
 
-
-
 		private void SetLabelIsRunning(bool isrunning){
 			lblSensorStatus.Text = isrunning ? "running" : "stopped";
 		}
@@ -104,6 +103,14 @@ namespace Touchdown.Win.UI {
 			lblPatternsRegistered.Text = String.Format("Registered Patterns: {0}", count);
 		}
 
+		private void btnNewGesture_Click(object sender, EventArgs e) {
+			if (this.lastDrawnPattern != null) { 
+				//string result = lastDrawnPattern.Save();
+				this.recognizer.RegisterPattern(this.lastDrawnPattern);
+				this.tbGestureName.Text = String.Empty;
+			}
+		}
+
 		private void btnStart_Click(object sender, EventArgs e) {
 			if (this.sensor.IsRunning) {
 				this.sensor.Stop();
@@ -114,5 +121,7 @@ namespace Touchdown.Win.UI {
 			}
 
 		}
+
+
 	}
 }

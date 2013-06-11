@@ -40,7 +40,7 @@ namespace Touchdown.Core.PatternRecognition {
 		/// <param name="other">other frame</param>
 		/// <returns>distance between the touch points of the frames or 999 if there are a 
 		/// different count of touchpoints per frame.</returns>
-		public virtual double Comparer(SimpleTouchFrame first, SimpleTouchFrame other){
+		public virtual double Compare(SimpleTouchFrame first, SimpleTouchFrame other){
 			double result = 999;
 
 			if (first.TouchPoints.Count == 1 && other.TouchPoints.Count == 1){

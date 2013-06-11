@@ -5,11 +5,14 @@ using System.Text;
 using Touchdown.SensorAbstraction;
 using System.Drawing;
 using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
+using System.Xml;
 
 namespace Touchdown.Core {
 	/// <summary>
 	/// Represents a sequence of touchframes.
 	/// </summary>
+	[DataContract]
 	public class TouchPattern : IDisposable {
 
 		#region Members
@@ -75,8 +78,8 @@ namespace Touchdown.Core {
 			var thisBounds	= GetBounds();
 			var scaleBounds	= scaleAs.GetBounds();
 
-			double scaleFactorX = scaleBounds.Width / thisBounds.Width;
-			double scaleFactorY = scaleBounds.Height / thisBounds.Height;
+			double scaleFactorX = (double)scaleBounds.Width / (double)thisBounds.Width;
+			double scaleFactorY = (double)scaleBounds.Height / (double)thisBounds.Height;
 
 			TouchPattern result = new TouchPattern();
 			foreach (var frame in this.Frames) { 
@@ -144,6 +147,51 @@ namespace Touchdown.Core {
 		}
 
 		/// <summary>
+		/// Saves this object data to a string.
+		/// </summary>
+		/// <returns>string representation of this object.</returns>
+		public String Save(){
+			String result = string.Empty;
+
+			using (var stream = new System.IO.MemoryStream()) { 
+				this.Save(stream);
+				stream.Position = 0;
+				using (var reader = new System.IO.StreamReader(stream)) { 
+					result = reader.ReadToEnd();
+				}
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Saves this object to a stream.
+		/// </summary>
+		/// <param name="output">stream to output to.</param>
+		public void Save(System.IO.Stream output){
+			var serializer = new DataContractSerializer(typeof(TouchPattern));
+			var settings = new XmlWriterSettings {Indent = true};
+
+			using (var writer = XmlWriter.Create(output, settings)) { 
+				serializer.WriteObject(writer, this);
+			}
+		}
+
+		/// <summary>
+		/// loads an serialized instance of this object.
+		/// </summary>
+		/// <param name="input">input stream</param>
+		public static TouchPattern Load(System.IO.Stream input) {
+			if (input != null) {
+				var serializer = new DataContractSerializer(typeof(TouchPattern));
+				TouchPattern result = serializer.ReadObject(input) as TouchPattern;
+				return result;
+			} else { 
+				throw new ArgumentNullException("input");
+			}
+		}
+
+		/// <summary>
 		/// disposes this object
 		/// </summary>
 		public void Dispose() {
@@ -192,12 +240,14 @@ namespace Touchdown.Core {
 		/// <summary>
 		/// Gets or sets the name of the TouchPattern
 		/// </summary>
+		[DataMember]
 		public String Name{get; set;}
 
 		/// <summary>
 		/// returns the list of frames that are contained in this pattern
 		/// </summary>
-		public ReadOnlyCollection<SimpleTouchFrame> Frames{
+		[DataMember]
+		public IList<SimpleTouchFrame> Frames{
 			get{
 				return frameList.AsReadOnly();
 			}

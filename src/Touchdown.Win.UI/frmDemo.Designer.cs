@@ -28,8 +28,8 @@
 			this.lblSensorStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.lblDepthFPS = new System.Windows.Forms.ToolStripStatusLabel();
 			this.lblColorFPS = new System.Windows.Forms.ToolStripStatusLabel();
-			this.lblPatternsRegistered = new System.Windows.Forms.ToolStripStatusLabel();
 			this.lblTouchFPS = new System.Windows.Forms.ToolStripStatusLabel();
+			this.lblPatternsRegistered = new System.Windows.Forms.ToolStripStatusLabel();
 			this.grpTouchpoints = new System.Windows.Forms.GroupBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.pbTouchPoints = new System.Windows.Forms.PictureBox();
@@ -90,17 +90,17 @@
 			this.lblColorFPS.Size = new System.Drawing.Size(61, 17);
 			this.lblColorFPS.Text = "Color FPS:";
 			// 
-			// lblPatternsRegistered
-			// 
-			this.lblPatternsRegistered.Name = "lblPatternsRegistered";
-			this.lblPatternsRegistered.Size = new System.Drawing.Size(111, 17);
-			this.lblPatternsRegistered.Text = "Patterns Registered:";
-			// 
 			// lblTouchFPS
 			// 
 			this.lblTouchFPS.Name = "lblTouchFPS";
 			this.lblTouchFPS.Size = new System.Drawing.Size(69, 17);
 			this.lblTouchFPS.Text = "Touch FPS: ";
+			// 
+			// lblPatternsRegistered
+			// 
+			this.lblPatternsRegistered.Name = "lblPatternsRegistered";
+			this.lblPatternsRegistered.Size = new System.Drawing.Size(111, 17);
+			this.lblPatternsRegistered.Text = "Patterns Registered:";
 			// 
 			// grpTouchpoints
 			// 
@@ -172,6 +172,7 @@
 			this.btnNewGesture.TabIndex = 0;
 			this.btnNewGesture.Text = "Save";
 			this.btnNewGesture.UseVisualStyleBackColor = true;
+			this.btnNewGesture.Click += new System.EventHandler(this.btnNewGesture_Click);
 			// 
 			// tbGestureName
 			// 

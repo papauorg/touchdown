@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Runtime.Serialization;
 
 namespace Touchdown.SensorAbstraction {
 	
 	/// <summary>
 	/// Represents a frame. Contains basic information about it.
 	/// </summary>
+	[DataContract]
 	public abstract class Frame : IDisposable{
 		private DateTime _frameTime;
 
@@ -54,22 +56,27 @@ namespace Touchdown.SensorAbstraction {
 		/// <value>
 		/// The frame time.
 		/// </value>
-		public DateTime FrameTime
-		{
+		[DataMember]
+		public DateTime FrameTime{
 			get
 			{
 				return _frameTime;
+			}
+			private set {
+				_frameTime = value;
 			}
 		}
 		
 		/// <summary>
 		/// width of the frame.
 		/// </summary>
+		[DataMember]
 		public int Width{get; private set;}
 
 		/// <summary>
 		/// height of the frame.
 		/// </summary>
+		[DataMember]
 		public int Height{get; private set;}
 		#endregion
 	}

@@ -44,8 +44,41 @@ namespace Touchdown.Core.PatternRecognition {
 			double[,] matrix = new double[first.Frames.Count, second.Frames.Count];
 
 			// calculate distance matrix using DTW
+			for (int i = 0; i < first.Frames.Count; ++i) {
+				for (int k = 0; k < second.Frames.Count; ++i) { 
 
-			return 0;
+					double lowestNeighbour = 0;
+					// first run starts with 0
+					if (i > 0 || k > 0) { 
+						double left			= double.MaxValue;
+						double lowerLeft	= double.MaxValue;
+						double lower		= double.MaxValue;
+
+						// determine lowest neighbour
+						if (i - 1 >= 0) { 
+							lower = matrix[i-1,k];
+						}
+						if (i - 1 >= 0 && k - 1 >= 0) { 
+							lowerLeft = matrix[i-1,k-1];
+						}
+						if (k - 1 >= 0) { 
+							left = matrix[i, k-1];
+						}
+
+						lowestNeighbour = Math.Min(Math.Min(lower, left), lowerLeft);
+					}
+
+					// current calculation includes always the lowest neighbour --> we need to know
+					// the total costs and therefore the cheapest path.
+					matrix[i,k] = this.frameComparer.Compare(first.Frames[i], second.Frames[k]) + lowestNeighbour;
+				}
+			}
+
+			// after the matrix is calculated, use the total costs and devide it by the needed steps.
+			double neededSteps = Math.Sqrt(Math.Pow(first.Frames.Count, 2)+Math.Pow(second.Frames.Count, 2));
+			double result = matrix[first.Frames.Count -1, second.Frames.Count -1] / neededSteps;
+
+			return result;
 		}
 		#endregion
 	}
