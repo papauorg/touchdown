@@ -45,7 +45,7 @@ namespace Touchdown.Core.PatternRecognition {
 
 			// calculate distance matrix using DTW
 			for (int i = 0; i < first.Frames.Count; ++i) {
-				for (int k = 0; k < second.Frames.Count; ++i) { 
+				for (int k = 0; k < second.Frames.Count; ++k) { 
 
 					double lowestNeighbour = 0;
 					// first run starts with 0

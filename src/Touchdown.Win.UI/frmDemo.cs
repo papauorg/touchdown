@@ -28,10 +28,17 @@ namespace Touchdown.Win.UI {
 
 		public frmDemo(Dictionary<string, object> info) {
 			InitializeComponent();
+
+			tbMaxDistance.Scroll += slideInt;
+			tbMinDistance.Scroll += slideInt;
+			tbGestureSeparator.Scroll += slideInt;
+			tbGestureQuality.Scroll += slideDecimal;
+
 			this.info = info;
 			this.sensor = info[InitWizzard.INFOKEY_SENSOR] as IKinectSensorProvider;
 			var backgroundModel = info[InitWizzard.INFOKEY_BACKGROUND_MODEL] as DepthFrame;
 			var area =  (Rectangle)info[InitWizzard.INFOKEY_TOUCHAREA];
+			var defaultPatterns = info[InitWizzard.INFOKEY_DEFAULT_GESTURES] as List<TouchPattern>;
 
 			this.sensor.SetArea(area);
 
@@ -46,6 +53,8 @@ namespace Touchdown.Win.UI {
 
 			var comparer = new SimpleTouchPatternComparer(new SimpleTouchFrameComparer(new EucledianDistanceProvider()));
 			this.recognizer = new TouchPatternRecognizer(this.observer, comparer, 7.5, 5);
+			defaultPatterns.ForEach(pat => this.recognizer.RegisterPattern(pat));
+			
 			this.recognizer.TouchPatternRecording += recognizer_TouchPatternRecording;
 			this.recognizer.TouchPatternRecognized += recognizer_TouchPatternRecognized;
 			this.recognizer.TouchPatternPartiallyRecognized += recognizer_TouchPatternRecognized;
@@ -60,6 +69,19 @@ namespace Touchdown.Win.UI {
 			if (this.Visible) {
 				pbRecognized.Image = e.OriginalPattern.CreateBitmap();
 			}
+			
+			tbRecognizedGestureName.Text = e.OriginalPattern.Name;
+
+			tbStartX.Text = e.StartPoint.X.ToString();
+			tbStartY.Text = e.StartPoint.Y.ToString();
+
+			tbGestureQuality.Text = e.RecognitionQuality.ToString();
+			
+			tbFramesOrig.Text = e.OriginalPattern.Frames.Count.ToString();
+			tbFramesNew.Text  = e.RecognizedPattern.Frames.Count.ToString();
+
+			//tbDurationOrig.Text = e.OriginalPattern.Duration.Millis
+
 		}
 
 		void recognizer_TouchPatternRecording(object sender, TouchPatternRecordingEventArgs e) {
@@ -84,7 +106,7 @@ namespace Touchdown.Win.UI {
 			SetLabelColorFPS(this.sensor.ColorFPS);
 			SetLabelDepthFPS(this.sensor.DepthFPS);
 			SetLabelTouchFPS(this.observer.TouchFPS);
-			SetLabelRegisteredPatterns(this.recognizer.RegisteredPatters.Count);
+			SetLabelRegisteredPatterns(this.recognizer.RegisteredPatterns.Count);
 		}
 
 		private void SetLabelIsRunning(bool isrunning){
@@ -105,23 +127,53 @@ namespace Touchdown.Win.UI {
 
 		private void btnNewGesture_Click(object sender, EventArgs e) {
 			if (this.lastDrawnPattern != null) { 
-				//string result = lastDrawnPattern.Save();
+				// string result = lastDrawnPattern.Save();
+				// System.Windows.Forms.Clipboard.SetText(result);
 				this.recognizer.RegisterPattern(this.lastDrawnPattern);
 				this.tbGestureName.Text = String.Empty;
 			}
 		}
 
-		private void btnStart_Click(object sender, EventArgs e) {
+		private void toolStripMenuItem1_Click(object sender, EventArgs e) {
 			if (this.sensor.IsRunning) {
 				this.sensor.Stop();
-				btnStart.Text = "Start";
+				toolStripMenuItem1.Text = "Start";
 			} else { 
 				this.sensor.Start();
-				btnStart.Text = "Stop";
+				toolStripMenuItem1.Text = "Stop";
 			}
-
 		}
 
+		private void slideDecimal(object sender, EventArgs e){
+			var bar = sender as TrackBar;
 
+			toolTip1.SetToolTip(bar, Math.Round((double)bar.Value / 10, 1).ToString("n1"));
+		}
+
+		private void slideInt(object sender, EventArgs e){
+			var bar = sender as TrackBar;
+
+			toolTip1.SetToolTip(bar, bar.Value.ToString());
+		}
+
+		private void tbMinDistance_Scroll(object sender, EventArgs e) {
+			this.observer.Settings.MinDistanceFromBackround = (uint)tbMinDistance.Value;
+		}
+
+		private void tbMaxDistance_Scroll(object sender, EventArgs e) {
+			this.observer.Settings.MaxDistanceFromBackground = (uint)tbMaxDistance.Value;
+		}
+
+		private void tbGestureSeparator_Scroll(object sender, EventArgs e) {
+			this.recognizer.MaxConsecutiveNullFrames = tbGestureSeparator.Value;
+		}
+
+		private void tbGestureQuality_Scroll(object sender, EventArgs e) {
+			this.recognizer.MaxDistancePerPixel = (double)tbGestureQuality.Value / 10;
+		}
+
+		private void tbRecognizedGestureName_TextChanged(object sender, EventArgs e) {
+
+		}
 	}
 }

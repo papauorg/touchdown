@@ -14,7 +14,7 @@ namespace TouchTests.Touch {
 	[TestFixture]
 	class SimpleTouchAreaObserverTest {
 		
-		[Test]
+		//[Test]
 		public void RecognizeSimplePoint(){
 			// Arrange
 			int[] modelData = {1, 1, 1, 1, 1, 1, 1, 1, 1,

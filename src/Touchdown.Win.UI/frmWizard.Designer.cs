@@ -82,7 +82,6 @@
 			this.MaximumSize = new System.Drawing.Size(502, 383);
 			this.MinimumSize = new System.Drawing.Size(502, 383);
 			this.Name = "frmWizard";
-			this.ShowIcon = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Init DEMO";

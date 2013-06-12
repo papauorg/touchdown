@@ -100,7 +100,13 @@ namespace Touchdown.SensorAbstraction {
 		[DataMember]
 		public IList<TouchPoint> TouchPoints {
 			get{
+				if (this.touchPoints == null) { 
+					this.touchPoints = new List<TouchPoint>();
+				}
 				return new ReadOnlyCollection<TouchPoint>(this.touchPoints);
+			}
+			private set{
+				this.touchPoints = new List<TouchPoint>(value);
 			}
 		}
 		#endregion

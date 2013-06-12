@@ -192,6 +192,27 @@ namespace Touchdown.Core {
 		}
 
 		/// <summary>
+		/// loads an serialized instance of this object.
+		/// </summary>
+		/// <param name="input">serialized string representation</param>
+		/// <returns>object</returns>
+		public static TouchPattern Load(String input){
+			TouchPattern result;
+
+			using (var stream = new System.IO.MemoryStream()) { 
+				using (var writer = new System.IO.StreamWriter(stream)){
+					writer.Write(input);
+					writer.Flush();
+
+					stream.Position = 0;
+					result = Load(stream);
+				}
+			}
+
+			return result;
+		}
+
+		/// <summary>
 		/// disposes this object
 		/// </summary>
 		public void Dispose() {
@@ -218,12 +239,16 @@ namespace Touchdown.Core {
 		
 		private Rectangle GetBounds(){
 			var allPoints = frameList.SelectMany(f => f.TouchPoints);
-			var minX = allPoints.AsParallel().Min(p => p.X);
-			var minY = allPoints.AsParallel().Min(p => p.Y);
-			var maxX = allPoints.AsParallel().Max(p => p.X);
-			var maxY = allPoints.AsParallel().Max(p => p.Y);
-
-			return new Rectangle(minX, minY, maxX - minX, maxY - minY);
+			if (allPoints.Any()) {
+				var minX = allPoints.AsParallel().Min(p => p.X);
+				var minY = allPoints.AsParallel().Min(p => p.Y);
+				var maxX = allPoints.AsParallel().Max(p => p.X);
+				var maxY = allPoints.AsParallel().Max(p => p.Y);
+				return new Rectangle(minX, minY, maxX - minX, maxY - minY);
+			} else { 
+				return new Rectangle(0, 0, 0, 0);
+			}
+			
 		}
 		
 		private SimpleTouchFrame CopyFrame(SimpleTouchFrame frame){
@@ -249,7 +274,13 @@ namespace Touchdown.Core {
 		[DataMember]
 		public IList<SimpleTouchFrame> Frames{
 			get{
+				if (frameList == null) { 
+					frameList = new List<SimpleTouchFrame>();
+				}
 				return frameList.AsReadOnly();
+			}
+			private set{
+				frameList = value.ToList();
 			}
 		}
 		#endregion

@@ -122,6 +122,13 @@ namespace Touchdown.Win.UI.UserControls.InitWizzard {
 			numHeight.Value = 380;
 		}
 
+		private void btnReset_Click(object sender, EventArgs e) {
+			numX.Value = 100;
+			numY.Value = 50;
+			numWidth.Value = 480;
+			numHeight.Value = 380;
+		}
+
 
 	}
 }

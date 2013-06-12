@@ -34,6 +34,7 @@ namespace Touchdown.Win.UI {
 			wizzardPages.Add(new KinectSensorSelectionControl(this.btnNext));
 			wizzardPages.Add(new BackgroundModelGenerationControl(this.btnNext));
 			wizzardPages.Add(new TouchAreaSelectionControl(this.btnNext));
+			wizzardPages.Add(new LoadDefaultGesturesControl(this.btnNext));
 			wizzardPages.Add(new FinishInitWizzardControl(this.btnNext));
 		}
 		

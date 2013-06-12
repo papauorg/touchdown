@@ -250,6 +250,13 @@ namespace Touchdown.Core {
 		/// returns the framereate of the observer
 		/// </summary>
 		public int TouchFPS {get; private set;} 
+		
+		/// <summary>
+		/// gets the touchsettings.
+		/// </summary>
+		public TouchSettings Settings{
+			get{ return this._settings;} 
+		}
 		#endregion
 	}
 }

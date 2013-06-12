@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="Touchdown.Core.AreaFilter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAACAAAAAQIAAAAAAAAAAAAAACAAAAAAAAAAAE=</HashCode>
+      <FileName>Core\AreaFilter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Touchdown.Core.BackgroundModelCreator&lt;TFrame&gt;" Collapsed="true">
+    <Position X="2.25" Y="6.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAACAAAAAAAAABAACAQAAgAAABAABAAAA=</HashCode>
+      <FileName>Core\BackgroundModelCreator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Touchdown.Core.BackgroundModelCreatorDepth" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AEIAAAAAAAAAACAAAAAAAAAAAACAAAAAAAAAAABAAAI=</HashCode>
+      <FileName>Core\BackgroundModelCreatorDepth.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.Core.BackgroundModelCreatorRGB" Collapsed="true">
+    <Position X="3.75" Y="7.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAACAAAAAAAAAAAACAAAAAYAAAAABAAAA=</HashCode>
+      <FileName>Core\BackgroundModelCreatorRGB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.Core.BilateralFilter" Collapsed="true">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAQAQAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Core\BilateralFilter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.Core.Contour" Collapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Touchdown.Core.Contour.ContourDirection" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\Contour.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Contour.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.Core.ContourPoint" Collapsed="true">
+    <Position X="18" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAIAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAYiA=</HashCode>
+      <FileName>Core\ContourPoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.Core.EucledianDistanceProvider" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\DistanceCalculation\EucledianDistanceProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Touchdown.Core.Extensions" Collapsed="true">
+    <Position X="13" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Extensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.Core.Morphology" Collapsed="true">
+    <Position X="15" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAIAAAAAAAAQAAAAAEAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Core\Morphology.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.Core.TouchPattern" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAACgAAAAAGAIAQAQAAIAAEAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Core\PatternRecognition\TouchPattern.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Touchdown.Core.SimpleTouchAreaObserver" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AwAAAAEACAAYAAgAgAQIgAAAAAAAAgAgAAAAAAQAgAA=</HashCode>
+      <FileName>Core\SimpleTouchAreaObserver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Touchdown.Core.TouchFrameReadyEventArgs" Collapsed="true">
+    <Position X="6.75" Y="2" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\TouchFrameReadyEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.Core.TouchPointLabeler" Collapsed="true">
+    <Position X="13" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAACAAwAAAAAAAAAAAAAAAAACAAAEgAAAAAAA=</HashCode>
+      <FileName>Core\TouchPointLabeler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.Core.DepthFrameList" Collapsed="true">
+    <Position X="20.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SensorAbstraction\DepthFrameList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.Core.PatternRecognition.SimpleTouchFrameComparer" Collapsed="true">
+    <Position X="20.25" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Core\PatternRecognition\SimpleTouchFrameComparer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.Core.PatternRecognition.SimpleTouchPatternComparer" Collapsed="true">
+    <Position X="10.5" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAABAAAAAAAA=</HashCode>
+      <FileName>Core\PatternRecognition\SimpleTouchPatternComparer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.Core.PatternRecognition.TouchPatternRecognizedEventArgs" Collapsed="true">
+    <Position X="15" Y="2.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAACBAAAAAAAAAAAAAQAAAAAAAAQAAAAAAg=</HashCode>
+      <FileName>Core\PatternRecognition\TouchPatternRecognizedEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.Core.PatternRecognition.TouchPatternRecognizer" Collapsed="true">
+    <Position X="18" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAJBAAAAAAAAAACACAoAgAAAEAAACQAgAAAAAAAAKA=</HashCode>
+      <FileName>Core\PatternRecognition\TouchPatternRecognizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.Core.PatternRecognition.TouchPatternRecordingEventArgs" Collapsed="true">
+    <Position X="20.25" Y="2.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Core\PatternRecognition\TouchPatternRecordingEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.SensorAbstraction.SimpleTouchFrame" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAIAAAAAAAgAAAAIAAAA=</HashCode>
+      <FileName>Core\SimpleTouchFrame.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.SensorAbstraction.TouchPoint" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAYAA=</HashCode>
+      <FileName>Core\TouchPoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.SensorAbstraction.DepthFrame" Collapsed="true">
+    <Position X="0.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAEAAEAAAAAAIAAAAIAAACAAAAAIAA=</HashCode>
+      <FileName>SensorAbstraction\DepthFrame.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.SensorAbstraction.DepthFrameReadyEventArgs" Collapsed="true">
+    <Position X="3.75" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SensorAbstraction\DepthFrameReadyEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.SensorAbstraction.Frame" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABCAAIAAAAAAAAEAAAIAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SensorAbstraction\Frame.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Touchdown.SensorAbstraction.FrameReadyEventArgs&lt;T&gt;" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAgAAAAAA=</HashCode>
+      <FileName>SensorAbstraction\FrameReadyEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.SensorAbstraction.RGBFrame" Collapsed="true">
+    <Position X="5.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SensorAbstraction\RGBFrame.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.SensorAbstraction.RGBFrameReadyEventArgs" Collapsed="true">
+    <Position X="0.75" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SensorAbstraction\RGBFrameReadyEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Touchdown.SensorAbstraction.TouchSettings" Collapsed="true">
+    <Position X="15" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAUAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>SensorAbstraction\TouchSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Touchdown.Core.IPointDistanceProvider" Collapsed="true">
+    <Position X="12.25" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\DistanceCalculation\IPointDistanceProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Touchdown.Core.ITouchObserver&lt;TFrame&gt;" Collapsed="true">
+    <Position X="14" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\ITouchObserver.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Touchdown.SensorAbstraction.IKinectSensorProvider" Collapsed="true">
+    <Position X="10.5" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAEAAAAAAAQAAAAAAAAAEAIAAAEAQAAQA=</HashCode>
+      <FileName>SensorAbstraction\IKinectSensorProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

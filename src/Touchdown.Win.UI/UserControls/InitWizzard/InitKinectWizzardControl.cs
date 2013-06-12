@@ -14,6 +14,7 @@ namespace Touchdown.Win.UI.UserControls.InitWizzard {
 		internal const string INFOKEY_BACKGROUND_MODEL = "backgroundModel";
 		internal const string INFOKEY_COLOR_BACKGROUND_MODEL = "colorBackgroundModel";
 		internal const string INFOKEY_TOUCHAREA = "touchArea";
+		internal const string INFOKEY_DEFAULT_GESTURES = "defaultGestures";
 
 		private Button _nextButton;
 

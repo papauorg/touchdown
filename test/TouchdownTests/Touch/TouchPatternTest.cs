@@ -69,5 +69,46 @@ namespace TouchTests.Touch {
 			Assert.AreEqual(10, growResult.Frames[0].TouchPoints[0].Y);
 
 		}
+	
+		[Test]
+		public void PatternSaveLoadTest() {
+			// arrange
+			var pattern = new TouchPattern();
+			pattern.Name = "PapauPattern";
+
+			var touchpoints = new List<TouchPoint>();
+			touchpoints.Add(new TouchPoint(10,10));
+			touchpoints.Add(new TouchPoint(0,0));
+			
+			var frame = new SimpleTouchFrame(new DateTime(2013,12,31,10,05,02,200), touchpoints, 10, 10);
+			pattern.AddFrame(frame);
+
+			touchpoints.Clear();
+			touchpoints.Add(new TouchPoint(5,5));
+			frame = new SimpleTouchFrame(new DateTime(2013,12,31,10,05,02,230), touchpoints, 10, 10);
+			pattern.AddFrame(frame);
+
+			// act
+			String serialized = pattern.Save();
+			TouchPattern resultPattern = TouchPattern.Load(serialized);
+
+			// assert
+			Assert.AreEqual(2, resultPattern.Frames.Count);
+			Assert.AreEqual("PapauPattern", resultPattern.Name);
+
+			Assert.AreEqual(2, resultPattern.Frames[0].TouchPoints.Count);
+			Assert.AreEqual(10, resultPattern.Frames[0].Width);
+			Assert.AreEqual(10, resultPattern.Frames[0].Height);
+			Assert.AreEqual(10, resultPattern.Frames[0].TouchPoints[0].X);
+			Assert.AreEqual(10, resultPattern.Frames[0].TouchPoints[0].Y);
+			Assert.AreEqual(0, resultPattern.Frames[0].TouchPoints[1].X);
+			Assert.AreEqual(0, resultPattern.Frames[0].TouchPoints[1].Y);
+
+			Assert.AreEqual(1, resultPattern.Frames[1].TouchPoints.Count);
+			Assert.AreEqual(10, resultPattern.Frames[1].Width);
+			Assert.AreEqual(10, resultPattern.Frames[1].Height);
+			Assert.AreEqual(5, resultPattern.Frames[1].TouchPoints[0].X);
+			Assert.AreEqual(5, resultPattern.Frames[1].TouchPoints[0].Y);
+		}	
 	}
 }

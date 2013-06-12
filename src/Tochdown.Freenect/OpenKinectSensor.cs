@@ -102,6 +102,10 @@ namespace Touchdown.Freenect {
 				_isRunning = false;
 			}
 		}
+
+		public void SetArea(System.Drawing.Rectangle area) {
+			throw new NotImplementedException();
+		}
 		#endregion
 		
 		#region Private Methods
@@ -222,5 +226,6 @@ namespace Touchdown.Freenect {
 		/// <inheritdoc />
 		public int DepthFPS{get; private set;}
 		#endregion
+
 	}
 }

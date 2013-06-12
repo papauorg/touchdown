@@ -18,13 +18,11 @@ namespace Touchdown.Core.PatternRecognition {
 		ITouchObserver<SimpleTouchFrame> observer;
 		SimpleTouchPatternComparer patternComparer;
 		List<TouchPattern> registeredPatters;
-		double threshold;
 
 		TouchPattern recordingPattern;
 		TouchPattern lastRecognizedPatter;
 
 		int consecutiveNullFrames;
-		int maxConsecutiveNullFrames;
 		#endregion
 
 		#region Object events
@@ -60,15 +58,16 @@ namespace Touchdown.Core.PatternRecognition {
 									  double threshold, 
 									  int consecutiveNullFrames){
 			this.patternComparer = comparer;
-			this.threshold = threshold;
 			this.observer = provider;
-
+			this.MaxDistancePerPixel = threshold;
+			this.MaxConsecutiveNullFrames = consecutiveNullFrames;
+	
 			this.registeredPatters = new List<TouchPattern>();
 			this.recordingPattern = new TouchPattern();
 			this.lastRecognizedPatter = new TouchPattern();
 			this.consecutiveNullFrames = 0;
-			this.maxConsecutiveNullFrames = consecutiveNullFrames;
-
+			
+			
 			this.observer.TouchFrameReady += observer_TouchFrameReady;
 		}
 
@@ -100,11 +99,11 @@ namespace Touchdown.Core.PatternRecognition {
 			}
 			
 			// reset pattern and try end-recognition of pattern
-			if (consecutiveNullFrames >= maxConsecutiveNullFrames) {
+			if (consecutiveNullFrames >= this.MaxConsecutiveNullFrames) {
 				// when whole pattern is recognized raise event
 				if (this.TouchPatternRecognized != null) { 
 					var result = TryRecognize();
-					if (result != null) { 
+					if (result != null) {
 						this.TouchPatternRecognized(this, result);
 					}
 				}
@@ -126,10 +125,10 @@ namespace Touchdown.Core.PatternRecognition {
 			// try partial recognition
 			if (this.TouchPatternPartiallyRecognized != null) { 
 				// try partial recognition.
-				var result = TryRecognize();
-				if (result != null) { 
-					this.TouchPatternPartiallyRecognized(this, result);
-				}
+				// var result = TryRecognize();
+				//if (result != null) { 
+				//	this.TouchPatternPartiallyRecognized(this, result);
+				//}
 			}
 			
 		}
@@ -137,9 +136,20 @@ namespace Touchdown.Core.PatternRecognition {
 		private TouchPatternRecognizedEventArgs TryRecognize(){
 			TouchPatternRecognizedEventArgs result = null;
 
+			TouchPattern lowestPattern = null;
+			double lowest = double.MaxValue;
+
 			Parallel.ForEach(this.registeredPatters, pattern => {
-				patternComparer.Compare(recordingPattern, pattern);
+				double current = patternComparer.Compare(pattern, recordingPattern);
+
+				if (current < lowest) { 
+					lowestPattern = pattern;
+				}
 			});
+
+			if (lowest < this.MaxDistancePerPixel) { 
+				result = new TouchPatternRecognizedEventArgs(DateTime.Now, this.recordingPattern, lowestPattern, lowest, new TimeSpan(), recordingPattern.Frames[0].TouchPoints[0]);
+			}
 
 			return result;
 		}
@@ -149,11 +159,23 @@ namespace Touchdown.Core.PatternRecognition {
 		/// <summary>
 		/// Gets readonly access to all currently registered patterns.
 		/// </summary>
-		public ReadOnlyCollection<TouchPattern> RegisteredPatters{
+		public ReadOnlyCollection<TouchPattern> RegisteredPatterns{
 			get{
 				return this.registeredPatters.AsReadOnly();
 			}
 		}
+
+		/// <summary>
+		/// gets or sets the max distance per pixel for recognition.
+		/// </summary>
+		public double MaxDistancePerPixel{
+			get; set;
+		}
+		
+		/// <summary>
+		/// gets or sets the amount of null frames that is considered an end of a pattern.
+		/// </summary>
+		public int MaxConsecutiveNullFrames{get;set;}
 		#endregion
 	}
 }
