@@ -23,6 +23,7 @@ namespace Touchdown.Win.UI {
 		private TouchPatternRecognizer recognizer;
 		private int frameCount;
 		private TouchPattern lastDrawnPattern = null;
+		private TouchPattern lastRecognizedPattern = null;
 
 		private Timer updateLabelTimer = new Timer();
 
@@ -69,18 +70,17 @@ namespace Touchdown.Win.UI {
 			if (this.Visible) {
 				pbRecognized.Image = e.OriginalPattern.CreateBitmap();
 			}
-			
+			this.lastRecognizedPattern = e.OriginalPattern;
+
 			tbRecognizedGestureName.Text = e.OriginalPattern.Name;
 
 			tbStartX.Text = e.StartPoint.X.ToString();
 			tbStartY.Text = e.StartPoint.Y.ToString();
 
-			tbGestureQuality.Text = e.RecognitionQuality.ToString();
+			tbGestureQuality.Text = Math.Round(e.RecognitionQuality, 2).ToString("n2");
 			
 			tbFramesOrig.Text = e.OriginalPattern.Frames.Count.ToString();
 			tbFramesNew.Text  = e.RecognizedPattern.Frames.Count.ToString();
-
-			//tbDurationOrig.Text = e.OriginalPattern.Duration.Millis
 
 		}
 
@@ -127,8 +127,7 @@ namespace Touchdown.Win.UI {
 
 		private void btnNewGesture_Click(object sender, EventArgs e) {
 			if (this.lastDrawnPattern != null) { 
-				// string result = lastDrawnPattern.Save();
-				// System.Windows.Forms.Clipboard.SetText(result);
+				lastDrawnPattern.Name = this.tbGestureName.Text;
 				this.recognizer.RegisterPattern(this.lastDrawnPattern);
 				this.tbGestureName.Text = String.Empty;
 			}
@@ -172,8 +171,28 @@ namespace Touchdown.Win.UI {
 			this.recognizer.MaxDistancePerPixel = (double)tbGestureQuality.Value / 10;
 		}
 
-		private void tbRecognizedGestureName_TextChanged(object sender, EventArgs e) {
+		private void btnPersist_Click(object sender, EventArgs e) {
+			if (lastRecognizedPattern == null) { 
+				return;
+			}
 
+			using (SaveFileDialog dia = new SaveFileDialog()) { 
+				dia.OverwritePrompt = true;
+				dia.RestoreDirectory =  true;
+				dia.ValidateNames = true;
+				dia.Title = "Save Gesture";
+				dia.Filter = "*.pat|Touchdown Gesture";
+				dia.SupportMultiDottedExtensions = true;
+				
+				if (dia.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+					using (var stream = new System.IO.FileStream(dia.FileName, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write)) {
+						using (var writer = new System.IO.StreamWriter(stream)) { 
+							writer.Write(lastRecognizedPattern.Save());
+							writer.Flush();
+						}
+					}
+				}
+			}
 		}
 	}
 }

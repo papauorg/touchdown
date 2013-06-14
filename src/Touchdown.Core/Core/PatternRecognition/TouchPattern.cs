@@ -119,9 +119,11 @@ namespace Touchdown.Core {
 			if (frameList.Count <= 0) { 
 				return null;
 			}
+			
+			int size = 15; //px
 
 			var firstFrame = this.frameList[0];
-			Bitmap buffer = new Bitmap(firstFrame.Width, firstFrame.Height);
+			Bitmap buffer = new Bitmap(firstFrame.Width + size, firstFrame.Height + size);
 			using (Graphics bufferGraphics = Graphics.FromImage(buffer)) {
 				using (SolidBrush brush = new SolidBrush(background)){
 					bufferGraphics.FillRectangle(brush, 0, 0, buffer.Width, buffer.Height);
@@ -132,11 +134,10 @@ namespace Touchdown.Core {
 						var frame = this.frameList[i];
 
 						foreach(var point in frame.TouchPoints){
-							int size = 15; //px
 
 							// upside down:
-							int x = point.X - size;
-							int y = frame.Height - point.Y - size;
+							int x = point.X;
+							int y = frame.Height - point.Y;
 
 							bufferGraphics.FillEllipse(brush, x, y, size, size);
 						}

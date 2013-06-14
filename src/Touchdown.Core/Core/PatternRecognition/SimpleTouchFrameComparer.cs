@@ -44,7 +44,9 @@ namespace Touchdown.Core.PatternRecognition {
 			double result = 999;
 
 			if (first.TouchPoints.Count == 1 && other.TouchPoints.Count == 1){
-				return pointProvider.GetDistance(first.TouchPoints[0], other.TouchPoints[0]);
+				result = pointProvider.GetDistance(first.TouchPoints[0], other.TouchPoints[0]);
+			} else if (first.TouchPoints.Count == 0 || other.TouchPoints.Count == 0) { 
+				result = Math.Sqrt(Math.Pow(first.TouchPoints.Count + other.TouchPoints.Count, 2));
 			}
 
 			return result;

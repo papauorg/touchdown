@@ -66,6 +66,7 @@
     <Compile Include="Misc\MiscTests.cs" />
     <Compile Include="Misc\MorphologyTests.cs" />
     <Compile Include="Touch\SimpleTouchAreaObserver.cs" />
+    <Compile Include="Touch\SimpleTouchFrameComparerTest.cs" />
     <Compile Include="Touch\SimpleTouchPatternComparerTest.cs" />
     <Compile Include="Touch\TouchPatternTest.cs" />
   </ItemGroup>

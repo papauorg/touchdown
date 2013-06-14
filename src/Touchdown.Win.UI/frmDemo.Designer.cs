@@ -40,6 +40,11 @@
 			this.btnNewGesture = new System.Windows.Forms.Button();
 			this.tbGestureName = new System.Windows.Forms.TextBox();
 			this.lastRecognized = new System.Windows.Forms.GroupBox();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.tbFramesNew = new System.Windows.Forms.TextBox();
+			this.tbFramesOrig = new System.Windows.Forms.TextBox();
+			this.label3 = new System.Windows.Forms.Label();
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.lblQuality = new System.Windows.Forms.Label();
 			this.tbStartY = new System.Windows.Forms.TextBox();
@@ -63,15 +68,7 @@
 			this.sensorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.label3 = new System.Windows.Forms.Label();
-			this.tbFramesOrig = new System.Windows.Forms.TextBox();
-			this.tbFramesNew = new System.Windows.Forms.TextBox();
-			this.lblDuration = new System.Windows.Forms.Label();
-			this.tbDurationOrig = new System.Windows.Forms.TextBox();
-			this.tbDurationNew = new System.Windows.Forms.TextBox();
-			this.label4 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
-			this.label6 = new System.Windows.Forms.Label();
+			this.btnPersist = new System.Windows.Forms.Button();
 			this.statusStrip1.SuspendLayout();
 			this.grpTouchpoints.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -217,12 +214,9 @@
 			// 
 			// lastRecognized
 			// 
-			this.lastRecognized.Controls.Add(this.label6);
+			this.lastRecognized.Controls.Add(this.btnPersist);
 			this.lastRecognized.Controls.Add(this.label5);
 			this.lastRecognized.Controls.Add(this.label4);
-			this.lastRecognized.Controls.Add(this.tbDurationNew);
-			this.lastRecognized.Controls.Add(this.tbDurationOrig);
-			this.lastRecognized.Controls.Add(this.lblDuration);
 			this.lastRecognized.Controls.Add(this.tbFramesNew);
 			this.lastRecognized.Controls.Add(this.tbFramesOrig);
 			this.lastRecognized.Controls.Add(this.label3);
@@ -240,6 +234,49 @@
 			this.lastRecognized.TabIndex = 3;
 			this.lastRecognized.TabStop = false;
 			this.lastRecognized.Text = "Last Recognized Gesture";
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(150, 257);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(12, 13);
+			this.label5.TabIndex = 19;
+			this.label5.Text = "/";
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(150, 205);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(12, 13);
+			this.label4.TabIndex = 8;
+			this.label4.Text = "/";
+			// 
+			// tbFramesNew
+			// 
+			this.tbFramesNew.Location = new System.Drawing.Point(163, 254);
+			this.tbFramesNew.Name = "tbFramesNew";
+			this.tbFramesNew.ReadOnly = true;
+			this.tbFramesNew.Size = new System.Drawing.Size(40, 20);
+			this.tbFramesNew.TabIndex = 15;
+			// 
+			// tbFramesOrig
+			// 
+			this.tbFramesOrig.Location = new System.Drawing.Point(107, 254);
+			this.tbFramesOrig.Name = "tbFramesOrig";
+			this.tbFramesOrig.ReadOnly = true;
+			this.tbFramesOrig.Size = new System.Drawing.Size(40, 20);
+			this.tbFramesOrig.TabIndex = 14;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(4, 257);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(92, 13);
+			this.label3.TabIndex = 13;
+			this.label3.Text = "Frames (orig/new)";
 			// 
 			// textBox1
 			// 
@@ -291,7 +328,6 @@
 			this.tbRecognizedGestureName.ReadOnly = true;
 			this.tbRecognizedGestureName.Size = new System.Drawing.Size(96, 20);
 			this.tbRecognizedGestureName.TabIndex = 7;
-			this.tbRecognizedGestureName.TextChanged += new System.EventHandler(this.tbRecognizedGestureName_TextChanged);
 			// 
 			// lblGestureName
 			// 
@@ -456,82 +492,15 @@
 			this.toolStripMenuItem1.Text = "Start";
 			this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
 			// 
-			// label3
+			// btnPersist
 			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(4, 257);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(92, 13);
-			this.label3.TabIndex = 13;
-			this.label3.Text = "Frames (orig/new)";
-			// 
-			// tbFramesOrig
-			// 
-			this.tbFramesOrig.Location = new System.Drawing.Point(107, 254);
-			this.tbFramesOrig.Name = "tbFramesOrig";
-			this.tbFramesOrig.ReadOnly = true;
-			this.tbFramesOrig.Size = new System.Drawing.Size(40, 20);
-			this.tbFramesOrig.TabIndex = 14;
-			// 
-			// tbFramesNew
-			// 
-			this.tbFramesNew.Location = new System.Drawing.Point(163, 254);
-			this.tbFramesNew.Name = "tbFramesNew";
-			this.tbFramesNew.ReadOnly = true;
-			this.tbFramesNew.Size = new System.Drawing.Size(40, 20);
-			this.tbFramesNew.TabIndex = 15;
-			// 
-			// lblDuration
-			// 
-			this.lblDuration.AutoSize = true;
-			this.lblDuration.Location = new System.Drawing.Point(3, 283);
-			this.lblDuration.Name = "lblDuration";
-			this.lblDuration.Size = new System.Drawing.Size(98, 13);
-			this.lblDuration.TabIndex = 16;
-			this.lblDuration.Text = "Duration (orig/new)";
-			// 
-			// tbDurationOrig
-			// 
-			this.tbDurationOrig.Location = new System.Drawing.Point(107, 280);
-			this.tbDurationOrig.Name = "tbDurationOrig";
-			this.tbDurationOrig.ReadOnly = true;
-			this.tbDurationOrig.Size = new System.Drawing.Size(40, 20);
-			this.tbDurationOrig.TabIndex = 17;
-			// 
-			// tbDurationNew
-			// 
-			this.tbDurationNew.Location = new System.Drawing.Point(163, 280);
-			this.tbDurationNew.Name = "tbDurationNew";
-			this.tbDurationNew.ReadOnly = true;
-			this.tbDurationNew.Size = new System.Drawing.Size(40, 20);
-			this.tbDurationNew.TabIndex = 18;
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(150, 205);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(12, 13);
-			this.label4.TabIndex = 8;
-			this.label4.Text = "/";
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(150, 257);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(12, 13);
-			this.label5.TabIndex = 19;
-			this.label5.Text = "/";
-			// 
-			// label6
-			// 
-			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(150, 283);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(12, 13);
-			this.label6.TabIndex = 9;
-			this.label6.Text = "/";
+			this.btnPersist.Location = new System.Drawing.Point(6, 278);
+			this.btnPersist.Name = "btnPersist";
+			this.btnPersist.Size = new System.Drawing.Size(197, 23);
+			this.btnPersist.TabIndex = 20;
+			this.btnPersist.Text = "Save To File";
+			this.btnPersist.UseVisualStyleBackColor = true;
+			this.btnPersist.Click += new System.EventHandler(this.btnPersist_Click);
 			// 
 			// frmDemo
 			// 
@@ -617,15 +586,12 @@
 		private System.Windows.Forms.TextBox tbStartY;
 		private System.Windows.Forms.TextBox tbStartX;
 		private System.Windows.Forms.Label lblStart;
-		private System.Windows.Forms.TextBox tbDurationNew;
-		private System.Windows.Forms.TextBox tbDurationOrig;
-		private System.Windows.Forms.Label lblDuration;
 		private System.Windows.Forms.TextBox tbFramesNew;
 		private System.Windows.Forms.TextBox tbFramesOrig;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Button btnPersist;
 
 	}
 }
