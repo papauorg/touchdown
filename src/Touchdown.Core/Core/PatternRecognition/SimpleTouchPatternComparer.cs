@@ -7,11 +7,13 @@ using Touchdown.SensorAbstraction;
 using System.Threading.Tasks;
 
 namespace Touchdown.Core.PatternRecognition {
+
 	/// <summary>
 	/// Compares all <see cref="TouchPoint"/>s of all <see cref="SimpleTouchFrame"/>s of two 
 	/// <see cref="TouchPattern"/>s.
 	/// </summary>
-	public class SimpleTouchPatternComparer{
+	public class SimpleTouchPatternComparer : ITouchPatternComparer{
+		
 		#region Members
 		private SimpleTouchFrameComparer frameComparer;
 		#endregion

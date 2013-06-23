@@ -20,6 +20,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <GenerateDocumentation>true</GenerateDocumentation>
+    <DocumentationFile>bin\Debug\TouchdownCore.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -49,6 +50,8 @@
     <Compile Include="Core\BackgroundModelCreatorDepth.cs" />
     <Compile Include="Core\BackgroundModelCreatorRGB.cs" />
     <Compile Include="Core\Extensions.cs" />
+    <Compile Include="Core\PatternRecognition\ITouchFrameComparer.cs" />
+    <Compile Include="Core\PatternRecognition\ITouchPatternComparer.cs" />
     <Compile Include="Core\PatternRecognition\SimpleTouchFrameComparer.cs" />
     <Compile Include="Core\PatternRecognition\SimpleTouchPatternComparer.cs" />
     <Compile Include="Core\PatternRecognition\TouchPattern.cs" />

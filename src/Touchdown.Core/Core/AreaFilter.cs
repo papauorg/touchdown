@@ -7,6 +7,7 @@ using Touchdown.SensorAbstraction;
 using System.Drawing;
 
 namespace Touchdown.Core {
+	
 	/// <summary>
 	/// Is used to filter touch points for specific areas.
 	/// </summary>

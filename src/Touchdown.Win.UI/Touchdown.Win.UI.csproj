@@ -150,10 +150,18 @@
     <Content Include="Gestures\WipeLeft.pat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Gestures\L.pat" />
-    <None Include="Gestures\WipeDown.pat" />
-    <None Include="Gestures\WipeRight.pat" />
-    <None Include="Gestures\WipeUp.pat" />
+    <Content Include="Gestures\L.pat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Gestures\WipeDown.pat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Gestures\WipeRight.pat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Gestures\WipeUp.pat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

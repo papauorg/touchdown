@@ -16,7 +16,7 @@ namespace Touchdown.Core.PatternRecognition {
 		
 		#region Members
 		ITouchObserver<SimpleTouchFrame> observer;
-		SimpleTouchPatternComparer patternComparer;
+		ITouchPatternComparer patternComparer;
 		List<TouchPattern> registeredPatters;
 
 		TouchPattern recordingPattern;
@@ -54,7 +54,7 @@ namespace Touchdown.Core.PatternRecognition {
 		/// <param name="consecutiveNullFrames">max count of frames that have no touchpoints - end of recording</param>
 		/// <param name="threshold">value that defines a pattern as recognized.</param>
 		public TouchPatternRecognizer(ITouchObserver<SimpleTouchFrame> provider, 
-									  SimpleTouchPatternComparer comparer, 
+									  ITouchPatternComparer comparer, 
 									  double threshold, 
 									  int consecutiveNullFrames){
 			this.patternComparer = comparer;

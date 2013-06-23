@@ -9,7 +9,7 @@ namespace Touchdown.Core.PatternRecognition {
 	/// <summary>
 	/// takes two frames and compares their touchpoints. If one frame has more than one touchpoint
 	/// </summary>
-	public class SimpleTouchFrameComparer {
+	public class SimpleTouchFrameComparer : ITouchFrameComparer {
 
 		#region Members
 		private IPointDistanceProvider pointProvider;

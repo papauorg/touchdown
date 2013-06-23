@@ -143,6 +143,27 @@ namespace Touchdown.Core {
 			foreGround.Dispose();
 		}
 
+		private static void SaveBitmap(String path, bool[,] map){
+			var bitmap = new Bitmap(map.GetLength(0), map.GetLength(1));
+			using (var graphics = Graphics.FromImage(bitmap)){
+				using (var brush = new SolidBrush(Color.Black)){
+					graphics.FillRectangle(brush, 0, 0, bitmap.Width, bitmap.Height);
+				}
+				using (var brush = new SolidBrush(Color.White)){
+					for (int y = 0; y < map.GetLength(1); ++y) {
+						for (int x = 0; x < map.GetLength(0); ++x) { 
+						
+							if (map[x, y]) { 
+								graphics.FillRectangle(brush, x, y, 1, 1);
+							}
+						}
+					}
+				}
+			}
+			bitmap.Save(path);
+
+		}
+
 		//private static String GetVisualization(bool[,] p){
 		//	StringBuilder builder = new StringBuilder();
 		//	for (int y = 0; y < p.GetLength(1); ++y) {

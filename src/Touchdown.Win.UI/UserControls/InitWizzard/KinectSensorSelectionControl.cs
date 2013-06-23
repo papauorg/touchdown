@@ -32,6 +32,19 @@ namespace Touchdown.Win.UI.UserControls.InitWizzard {
 			}
 		}
 
+		public override void SetWizzardInfo(Dictionary<string, object> info) {
+			base.SetWizzardInfo(info);
+
+			if (KinectSensor.KinectSensors.Count > 0) {
+				this.cbAvailable.DataSource = KinectSensor.KinectSensors;
+				this.cbAvailable.DisplayMember = "UniqueKinectId" ;
+			} else { 
+				this.lblError.Visible = true;
+				this.lblError.Text = "Error: No Kinect Sensor could be detected.";
+				this.NextButtonEnabled = false;
+			}
+		}
+
 		public override void AddOrUpdateWizzardInfo(Dictionary<string, object> info) {
 			base.AddOrUpdateWizzardInfo(info);
 
