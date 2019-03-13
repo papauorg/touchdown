@@ -11,7 +11,7 @@ The idea was to enable this functionality on windows using microsofts SDK and us
 The project contains a demo application that uses the library to perform the sensor setup and basic gesture recording and recognition. 
 
 ## Documentation
-Documentation is avaliable as it was used in the thesis for which the project was created as PDF. It is only available in german. See the doc/TouchdownProjectDocumentation.pdf.
+Documentation is avaliable as it was used in the thesis for which the project was created as PDF. It is only available in german. See the [PDF Documentation](https://github.com/papauorg/touchdown/blob/master/doc/TouchdownProjectDocumentation_de.pdf).
 
 ## Credits
 Thanks to Jason M. Simanek for the football logo that I got from (via openclipart.org). http://openclipart.org/detail/102853/football-by-simanek
