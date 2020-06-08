@@ -8,7 +8,7 @@ sing algorithms were used.
 The idea was to enable this functionality on windows using microsofts SDK and using the Freenect library. Unfortunately the Freenect part was never properly implemented. So there only is support for it at the moment.
 
 ## Demo application
-The project contains a demo application that uses the library to perform the sensor setup and basic gesture recording and recognition. 
+The project contains a demo application that uses the library to perform the sensor setup and basic gesture recording and recognition.
 
 ## Documentation
 Documentation is avaliable as it was used in the thesis for which the project was created as PDF. It is only available in german. See the [PDF Documentation](https://github.com/papauorg/touchdown/blob/master/doc/TouchdownProjectDocumentation_de.pdf).
